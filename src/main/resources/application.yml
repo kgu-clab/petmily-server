@@ -34,7 +34,7 @@ resource:
 # Configure Swagger UI and generate OpenAPI documentation
 springdoc:
   version: v1.0.0
-  packages-to-scan: page.clab.securecoding
+  packages-to-scan: com.clab.securecoding
   swagger-ui:
     tags-sorter: alpha
     operations-sorter: alpha
