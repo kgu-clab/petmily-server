@@ -1,5 +1,6 @@
 package com.clab.securecoding.type.dto;
 
+import com.clab.securecoding.type.etc.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,6 +22,6 @@ public class UserUpdateRequestDto {
 
     private String contact;
 
-    private String type;
+    private UserType type;
 
 }

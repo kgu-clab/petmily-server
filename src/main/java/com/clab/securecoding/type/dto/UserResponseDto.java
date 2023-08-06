@@ -2,6 +2,7 @@ package com.clab.securecoding.type.dto;
 
 import com.clab.securecoding.type.etc.OAuthProvider;
 import com.clab.securecoding.type.etc.Role;
+import com.clab.securecoding.type.etc.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class UserResponseDto {
 
     private String contact;
 
-    private String type;
+    private UserType type;
 
     private Role role;
 

@@ -3,15 +3,17 @@ package com.clab.securecoding.service;
 import com.clab.securecoding.auth.util.AuthUtil;
 import com.clab.securecoding.exception.NotFoundException;
 import com.clab.securecoding.exception.SearchResultNotExistException;
+import com.clab.securecoding.mapper.AnimalMapper;
 import com.clab.securecoding.repository.AnimalRepository;
 import com.clab.securecoding.type.dto.AnimalRequestDto;
 import com.clab.securecoding.type.dto.AnimalResponseDto;
 import com.clab.securecoding.type.entity.Animal;
 import com.clab.securecoding.type.entity.User;
+import com.clab.securecoding.type.etc.UserType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -22,24 +24,29 @@ public class AnimalService {
 
     private final UserService userService;
 
+    private final AnimalMapper animalMapper;
+
+    @Transactional
     public void createAnimal(AnimalRequestDto animalResquestDto) {
         Long userId = AuthUtil.getAuthenticationInfoUserId();
         User user = userService.getUserByIdOrThrow(userId);
-        Animal animal = toAnimal(animalResquestDto);
+        Animal animal = animalMapper.mapDtoToEntity(animalResquestDto);
         animal.setUser(user);
         animalRepository.save(animal);
     }
 
     public List<AnimalResponseDto> getAnimals() {
         List<Animal> animals = animalRepository.findAll();
-        List<AnimalResponseDto> animalResponseDtos = toAnimalResponseDto(animals);
+        List<AnimalResponseDto> animalResponseDtos = animalMapper.mapEntityToDto(animals);
         return animalResponseDtos;
     }
 
-    public List<AnimalResponseDto> searchAnimal(Long userId, String species) {
+    public List<AnimalResponseDto> searchAnimal(Long userId, UserType userType, String species) {
         List<Animal> animals = null;
         if (userId != null)
             animals = animalRepository.findAllByUser_Id(userId);
+        else if (userType != null)
+            animals = animalRepository.findAllByUser_Type(userType);
         else if (species != null)
             animals = animalRepository.findAllBySpecies(species);
         else
@@ -47,7 +54,7 @@ public class AnimalService {
 
         if (animals == null)
             throw new SearchResultNotExistException("검색 결과가 존재하지 않습니다.");
-        List<AnimalResponseDto> animalResponseDtos = toAnimalResponseDto(animals);
+        List<AnimalResponseDto> animalResponseDtos = animalMapper.mapEntityToDto(animals);
         return animalResponseDtos;
     }
 
@@ -66,52 +73,14 @@ public class AnimalService {
         animalRepository.save(animal);
     }
 
+    public void deleteAnimal(Long animalId) {
+        getAnimalByIdOrThrow(animalId);
+        animalRepository.deleteById(animalId);
+    }
+
     public Animal getAnimalByIdOrThrow(Long animalId) {
         return animalRepository.findById(animalId)
                 .orElseThrow(() -> new NotFoundException("해당 동물이 없습니다."));
-    }
-
-    private Animal toAnimal(AnimalRequestDto animalRequestDto) {
-        Animal animal = Animal.builder()
-                .species(animalRequestDto.getSpecies())
-                .age(animalRequestDto.getAge())
-                .gender(animalRequestDto.getGender())
-                .specialNotes(animalRequestDto.getSpecialNotes())
-                .vaccine(animalRequestDto.getVaccine())
-                .isNeutered(animalRequestDto.getIsNeutered())
-                .reasonForAdoption(animalRequestDto.getReasonForAdoption())
-                .previousHomeEnvironment(animalRequestDto.getPreviousHomeEnvironment())
-                .likes(animalRequestDto.getLikes())
-                .dislikes(animalRequestDto.getDislikes())
-                .build();
-        return animal;
-    }
-
-    private AnimalResponseDto toAnimalResponseDto(Animal animal) {
-        AnimalResponseDto animalResponseDto = AnimalResponseDto.builder()
-                .id(animal.getId())
-                .species(animal.getSpecies())
-                .age(animal.getAge())
-                .gender(animal.getGender())
-                .specialNotes(animal.getSpecialNotes())
-                .vaccine(animal.getVaccine())
-                .isNeutered(animal.getIsNeutered())
-                .reasonForAdoption(animal.getReasonForAdoption())
-                .previousHomeEnvironment(animal.getPreviousHomeEnvironment())
-                .likes(animal.getLikes())
-                .dislikes(animal.getDislikes())
-                .user(animal.getUser())
-                .build();
-        return animalResponseDto;
-    }
-
-    private List<AnimalResponseDto> toAnimalResponseDto(List<Animal> animals) {
-        List<AnimalResponseDto> animalResponseDtos = new ArrayList<>();
-        for (Animal animal : animals) {
-            AnimalResponseDto animalResponseDto = toAnimalResponseDto(animal);
-            animalResponseDtos.add(animalResponseDto);
-        }
-        return animalResponseDtos;
     }
 
 }

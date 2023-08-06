@@ -5,12 +5,12 @@ import com.clab.securecoding.exception.AssociatedAccountExistsException;
 import com.clab.securecoding.exception.NotFoundException;
 import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.exception.SearchResultNotExistException;
+import com.clab.securecoding.mapper.UserMapper;
 import com.clab.securecoding.repository.UserRepository;
 import com.clab.securecoding.type.dto.UserUpdateRequestDto;
 import com.clab.securecoding.type.dto.UserRequestDto;
 import com.clab.securecoding.type.dto.UserResponseDto;
 import com.clab.securecoding.type.entity.User;
-import com.clab.securecoding.type.etc.OAuthProvider;
 import com.clab.securecoding.type.etc.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,11 +24,13 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final UserMapper userMapper;
+
     public void createUser(UserRequestDto userRequestDto) throws PermissionDeniedException {
         checkUserAdminRole();
         if (userRepository.findById(userRequestDto.getId()).isPresent())
             throw new AssociatedAccountExistsException();
-        User user = toUser(userRequestDto);
+        User user = userMapper.mapDtoToEntity(userRequestDto);
         userRepository.save(user);
     }
 
@@ -37,7 +39,7 @@ public class UserService {
         List<User> users = userRepository.findAll();
         List<UserResponseDto> userResponseDtos = new ArrayList<>();
         for (User user : users) {
-            UserResponseDto userResponseDto = toUserResponseDto(user);
+            UserResponseDto userResponseDto = userMapper.mapEntityToDto(user);
             userResponseDtos.add(userResponseDto);
         }
         return userResponseDtos;
@@ -55,7 +57,7 @@ public class UserService {
 
         if (user == null)
             throw new SearchResultNotExistException("검색 결과가 존재하지 않습니다.");
-        return toUserResponseDto(user);
+        return userMapper.mapEntityToDto(user);
     }
 
     public void updateUserInfoByUser(UserUpdateRequestDto userUpdateRequestDto) {
@@ -97,36 +99,6 @@ public class UserService {
     public User getUserByNicknameOrThrow(String nickname) {
         return userRepository.findByNickname(nickname)
                 .orElseThrow(() -> new NotFoundException("해당 유저가 없습니다."));
-    }
-
-    private User toUser(UserRequestDto userRequestDto) {
-        User user = User.builder()
-                .id(userRequestDto.getId())
-                .password(userRequestDto.getPassword())
-                .nickname(userRequestDto.getNickname())
-                .email(userRequestDto.getEmail())
-                .address(userRequestDto.getAddress())
-                .contact(userRequestDto.getContact())
-                .type(userRequestDto.getType())
-                .role(Role.USER)
-                .provider(OAuthProvider.LOCAL)
-                .build();
-        return user;
-    }
-
-    private UserResponseDto toUserResponseDto(User user) {
-        UserResponseDto userResponseDto = UserResponseDto.builder()
-                .id(user.getId())
-                .nickname(user.getNickname())
-                .email(user.getEmail())
-                .address(user.getAddress())
-                .contact(user.getContact())
-                .type(user.getType())
-                .role(user.getRole())
-                .provider(user.getProvider())
-                .createdAt(user.getCreatedAt())
-                .build();
-        return userResponseDto;
     }
 
 }
