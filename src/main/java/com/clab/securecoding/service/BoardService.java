@@ -8,7 +8,6 @@ import com.clab.securecoding.repository.BoardRepository;
 import com.clab.securecoding.repository.CommentRepository;
 import com.clab.securecoding.type.dto.BoardRequestDto;
 import com.clab.securecoding.type.dto.BoardResponseDto;
-import com.clab.securecoding.type.dto.BoardUpdateRequestDto;
 import com.clab.securecoding.type.entity.Board;
 import com.clab.securecoding.type.entity.Comment;
 import com.clab.securecoding.type.entity.User;
@@ -70,13 +69,13 @@ public class BoardService {
         return boardResponseDtos;
     }
 
-    public void updateBoard(Long boardId, BoardUpdateRequestDto boardUpdateRequestDto) throws PermissionDeniedException {
+    public void updateBoard(Long boardId, BoardRequestDto boardRequestDto) throws PermissionDeniedException {
         User writer = userService.getCurrentUser();
         Board board = getBoardByIdOrThrow(boardId);
         if (writer != board.getWriter())
             throw new PermissionDeniedException();
-        board.setTitle(boardUpdateRequestDto.getTitle());
-        board.setContent(boardUpdateRequestDto.getContent());
+        board.setTitle(boardRequestDto.getTitle());
+        board.setContent(boardRequestDto.getContent());
         boardRepository.save(board);
     }
 

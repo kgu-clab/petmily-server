@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/shelters")
 @RequiredArgsConstructor
-@Tag(name = "AnimalShelter")
+@Tag(name = "Animal Shelter")
 @Slf4j
 public class AnimalShelterController {
 
