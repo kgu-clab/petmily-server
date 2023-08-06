@@ -31,7 +31,7 @@ public class AnimalShelterService {
     @Value("${data.api.key}")
     private String apiKey;
 
-    public void saveAnimalShelters() {
+    public void retrieveShelters() {
         String apiUrl = "http://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo";
         RestTemplate restTemplate = new RestTemplate();
 
@@ -47,6 +47,15 @@ public class AnimalShelterService {
             JSONParser parser = new JSONParser();
             JSONObject jsonResponse = (JSONObject) parser.parse(new StringReader(responseBody));
             JSONObject response = (JSONObject) jsonResponse.get("response");
+
+            JSONObject header = (JSONObject) response.get("header");
+            String resultCode = (String) header.get("resultCode");
+            if (!"00".equals(resultCode)) {
+                String errorMsg = (String) header.get("resultMsg");
+                log.info("resultMsg : {}", errorMsg);
+                throw new ApiRequestFailedException();
+            }
+
             JSONObject body = (JSONObject) response.get("body");
             JSONObject items = (JSONObject) body.get("items");
             JSONArray itemList = (JSONArray) items.get("item");

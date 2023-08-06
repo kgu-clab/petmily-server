@@ -25,7 +25,7 @@ public class AnimalShelterController {
     @Operation(summary = "동물보호소 정보 가져오기", description = "공공데이터에 API 요청을 보내 동물보호소 정보를 가져옴")
     @GetMapping("/retrieve")
     public ResponseModel retrieveShelters() {
-        animalShelterService.saveAnimalShelters();
+        animalShelterService.retrieveShelters();
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }
