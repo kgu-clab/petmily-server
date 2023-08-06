@@ -5,10 +5,12 @@ import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.exception.SearchResultNotExistException;
 import com.clab.securecoding.mapper.BoardMapper;
 import com.clab.securecoding.repository.BoardRepository;
+import com.clab.securecoding.repository.CommentRepository;
 import com.clab.securecoding.type.dto.BoardRequestDto;
 import com.clab.securecoding.type.dto.BoardResponseDto;
 import com.clab.securecoding.type.dto.BoardUpdateRequestDto;
 import com.clab.securecoding.type.entity.Board;
+import com.clab.securecoding.type.entity.Comment;
 import com.clab.securecoding.type.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ public class BoardService {
     private final BoardMapper boardMapper;
 
     private final UserService userService;
+
+    private final CommentRepository commentRepository;
 
     public void createBoard(BoardRequestDto boardRequestDto) {
         User writer = userService.getCurrentUser();
@@ -79,10 +83,14 @@ public class BoardService {
     public void deleteBoard(Long boardId) throws PermissionDeniedException {
         User writer = userService.getCurrentUser();
         Board board = getBoardByIdOrThrow(boardId);
-        if (writer == board.getWriter() || userService.checkUserAdminRole())
+        if (writer == board.getWriter() || userService.checkUserAdminRole()) {
+            List<Comment> comments = commentRepository.findByBoard(board);
+            commentRepository.deleteAll(comments);
             boardRepository.delete(board);
-        else
+        }
+        else {
             throw new PermissionDeniedException();
+        }
     }
 
     public Board getBoardByIdOrThrow(Long boardId) {

@@ -57,7 +57,7 @@ public class CommentController {
         return responseModel;
     }
 
-    @Operation(summary = "댓글 삭제", description = "댓글 삭제")
+    @Operation(summary = "댓글 삭제", description = "댓글 삭제(본인 또는 관리자만 가능)")
     @DeleteMapping("/delete/{commentId}")
     public ResponseModel deleteComment(
             @PathVariable Long commentId

@@ -69,7 +69,7 @@ public class BoardController {
         return responseModel;
     }
 
-    @Operation(summary = "게시글 삭제", description = "게시글 삭제")
+    @Operation(summary = "게시글 삭제", description = "게시글 삭제(본인 또는 관리자만 가능)")
     @DeleteMapping("/delete/{boardId}")
     public ResponseModel deleteBoard(
             @PathVariable Long boardId
