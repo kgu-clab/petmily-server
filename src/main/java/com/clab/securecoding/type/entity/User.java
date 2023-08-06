@@ -2,6 +2,7 @@ package com.clab.securecoding.type.entity;
 
 import com.clab.securecoding.type.etc.OAuthProvider;
 import com.clab.securecoding.type.etc.Role;
+import com.clab.securecoding.type.etc.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,7 +33,8 @@ public class User {
 
     private String contact;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private UserType type;
 
     @Enumerated(EnumType.STRING)
     private Role role;

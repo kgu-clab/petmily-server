@@ -2,6 +2,7 @@ package com.clab.securecoding.controller;
 
 import com.clab.securecoding.service.AnimalService;
 import com.clab.securecoding.type.dto.*;
+import com.clab.securecoding.type.etc.UserType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -48,13 +49,14 @@ public class AnimalController {
         return responseModel;
     }
 
-    @Operation(summary = "동물 검색", description = "유저의 ID 또는 동물의 종류를 기반으로 검색")
+    @Operation(summary = "동물 검색", description = "유저의 ID, Type 또는 동물의 종류를 기반으로 검색")
     @GetMapping("/search")
     public ResponseModel searchAnimal(
             @RequestParam(required = false) Long userId,
+            @RequestParam(required = false) UserType userType,
             @RequestParam(required = false) String species
     ) {
-        List<AnimalResponseDto> animals = animalService.searchAnimal(userId, species);
+        List<AnimalResponseDto> animals = animalService.searchAnimal(userId, userType, species);
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData(animals);
         return responseModel;
@@ -77,6 +79,16 @@ public class AnimalController {
             @RequestBody AnimalRequestDto animalRequestDto
     ) {
         animalService.updateAnimalInfoByUser(animalId, animalRequestDto);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        return responseModel;
+    }
+
+    @Operation(summary = "동물 삭제", description = "동물 삭제")
+    @DeleteMapping("/delete/{animalId}")
+    public ResponseModel deleteAnimal(
+            @PathVariable("animalId") Long animalId
+    ) {
+        animalService.deleteAnimal(animalId);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }

@@ -8,9 +8,11 @@ import com.clab.securecoding.type.dto.AnimalRequestDto;
 import com.clab.securecoding.type.dto.AnimalResponseDto;
 import com.clab.securecoding.type.entity.Animal;
 import com.clab.securecoding.type.entity.User;
+import com.clab.securecoding.type.etc.UserType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class AnimalService {
 
     private final UserService userService;
 
+    @Transactional
     public void createAnimal(AnimalRequestDto animalResquestDto) {
         Long userId = AuthUtil.getAuthenticationInfoUserId();
         User user = userService.getUserByIdOrThrow(userId);
@@ -36,10 +39,12 @@ public class AnimalService {
         return animalResponseDtos;
     }
 
-    public List<AnimalResponseDto> searchAnimal(Long userId, String species) {
+    public List<AnimalResponseDto> searchAnimal(Long userId, UserType userType, String species) {
         List<Animal> animals = null;
         if (userId != null)
             animals = animalRepository.findAllByUser_Id(userId);
+        else if (userType != null)
+            animals = animalRepository.findAllByUser_Type(userType);
         else if (species != null)
             animals = animalRepository.findAllBySpecies(species);
         else
@@ -64,6 +69,11 @@ public class AnimalService {
         animal.setLikes(animalRequestDto.getLikes());
         animal.setDislikes(animalRequestDto.getDislikes());
         animalRepository.save(animal);
+    }
+
+    public void deleteAnimal(Long animalId) {
+        getAnimalByIdOrThrow(animalId);
+        animalRepository.deleteById(animalId);
     }
 
     public Animal getAnimalByIdOrThrow(Long animalId) {
