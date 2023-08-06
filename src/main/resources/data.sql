@@ -19,3 +19,19 @@ insert into animal(species, age, gender, special_notes, vaccine, is_neutered, re
 values ('animal3', 3, 'female', null, 'no', true, 'reason3', 'home', 'fox', 'person', 2);
 insert into animal(species, age, gender, special_notes, vaccine, is_neutered, reason_for_adoption, previous_home_environment, likes, dislikes, user)
 values ('animal4', 4, 'female', null, 'no', false, 'reason4', 'toilet', 'tiger', 'person', 4);
+
+-- Board
+insert into board(writer, title, content)
+values (1, 'title1', 'content1');
+insert into board(writer, title, content)
+values (1, 'title2', 'content2');
+insert into board(writer, title, content)
+values (2, 'title3', 'content3');
+insert into board(writer, title, content)
+values (2, 'title4', 'content4');
+insert into board(writer, title, content)
+values (3, 'title5', 'content5');
+insert into board(writer, title, content)
+values (3, 'title6', 'content6');
+insert into board(writer, title, content)
+values (4, 'title7', 'content7');
