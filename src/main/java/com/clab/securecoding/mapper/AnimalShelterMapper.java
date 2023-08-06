@@ -74,34 +74,35 @@ public class AnimalShelterMapper {
 
     public AnimalShelterDto mapJsonToDto(JSONObject item) {
         AnimalShelterDto dto = new AnimalShelterDto();
-        dto.setCareNm((String) item.get("careNm"));
-        dto.setOrgNm((String) item.get("orgNm"));
-        dto.setDivisionNm((String) item.get("divisionNm"));
-        dto.setSaveTrgtAnimal((String) item.get("saveTrgtAnimal"));
-        dto.setCareAddr((String) item.get("careAddr"));
-        dto.setJibunAddr((String) item.get("jibunAddr"));
-        dto.setLat((double) item.get("lat"));
-        dto.setLng((double) item.get("lng"));
-        dto.setDsignationDate((String) item.get("dsignationDate"));
-        dto.setWeekOprStime((String) item.get("weekOprStime"));
-        dto.setWeekOprEtime((String) item.get("weekOprEtime"));
-        dto.setWeekCellStime((String) item.get("weekCellStime"));
-        dto.setWeekCellEtime((String) item.get("weekCellEtime"));
-        dto.setWeekendOprStime((String) item.get("weekendOprStime"));
-        dto.setWeekendOprEtime((String) item.get("weekendOprEtime"));
-        dto.setWeekendCellStime((String) item.get("weekendCellStime"));
-        dto.setWeekendCellEtime((String) item.get("weekendCellEtime"));
-        dto.setCloseDay((String) item.get("closeDay"));
-        dto.setVetPersonCnt(((Long) item.get("vetPersonCnt")).intValue());
-        dto.setSpecsPersonCnt(((Long) item.get("specsPersonCnt")).intValue());
-        dto.setMedicalCnt(((Long) item.get("medicalCnt")).intValue());
-        dto.setBreedCnt(((Long) item.get("breedCnt")).intValue());
-        dto.setQuarabtineCnt(((Long) item.get("quarabtineCnt")).intValue());
-        dto.setFeedCnt(((Long) item.get("feedCnt")).intValue());
-        dto.setTransCarCnt(((Long) item.get("transCarCnt")).intValue());
-        dto.setCareTel((String) item.get("careTel"));
-        dto.setDataStdDt((String) item.get("dataStdDt"));
+        if (item.containsKey("careNm")) dto.setCareNm((String) item.get("careNm"));
+        if (item.containsKey("orgNm")) dto.setOrgNm((String) item.get("orgNm"));
+        if (item.containsKey("divisionNm")) dto.setDivisionNm((String) item.get("divisionNm"));
+        if (item.containsKey("saveTrgtAnimal")) dto.setSaveTrgtAnimal((String) item.get("saveTrgtAnimal"));
+        if (item.containsKey("careAddr")) dto.setCareAddr((String) item.get("careAddr"));
+        if (item.containsKey("jibunAddr")) dto.setJibunAddr((String) item.get("jibunAddr"));
+        if (item.containsKey("lat")) dto.setLat((double) item.get("lat"));
+        if (item.containsKey("lng")) dto.setLng((double) item.get("lng"));
+        if (item.containsKey("dsignationDate")) dto.setDsignationDate((String) item.get("dsignationDate"));
+        if (item.containsKey("weekOprStime")) dto.setWeekOprStime((String) item.get("weekOprStime"));
+        if (item.containsKey("weekOprEtime")) dto.setWeekOprEtime((String) item.get("weekOprEtime"));
+        if (item.containsKey("weekCellStime")) dto.setWeekCellStime((String) item.get("weekCellStime"));
+        if (item.containsKey("weekCellEtime")) dto.setWeekCellEtime((String) item.get("weekCellEtime"));
+        if (item.containsKey("weekendOprStime")) dto.setWeekendOprStime((String) item.get("weekendOprStime"));
+        if (item.containsKey("weekendOprEtime")) dto.setWeekendOprEtime((String) item.get("weekendOprEtime"));
+        if (item.containsKey("weekendCellStime")) dto.setWeekendCellStime((String) item.get("weekendCellStime"));
+        if (item.containsKey("weekendCellEtime")) dto.setWeekendCellEtime((String) item.get("weekendCellEtime"));
+        if (item.containsKey("closeDay")) dto.setCloseDay((String) item.get("closeDay"));
+        if (item.containsKey("vetPersonCnt")) dto.setVetPersonCnt(((Long) item.get("vetPersonCnt")).intValue());
+        if (item.containsKey("specsPersonCnt")) dto.setSpecsPersonCnt(((Long) item.get("specsPersonCnt")).intValue());
+        if (item.containsKey("medicalCnt")) dto.setMedicalCnt(((Long) item.get("medicalCnt")).intValue());
+        if (item.containsKey("breedCnt")) dto.setBreedCnt(((Long) item.get("breedCnt")).intValue());
+        if (item.containsKey("quarabtineCnt")) dto.setQuarabtineCnt(((Long) item.get("quarabtineCnt")).intValue());
+        if (item.containsKey("feedCnt")) dto.setFeedCnt(((Long) item.get("feedCnt")).intValue());
+        if (item.containsKey("transCarCnt")) dto.setTransCarCnt(((Long) item.get("transCarCnt")).intValue());
+        if (item.containsKey("careTel")) dto.setCareTel((String) item.get("careTel"));
+        if (item.containsKey("dataStdDt")) dto.setDataStdDt((String) item.get("dataStdDt"));
         return dto;
     }
+
 
 }

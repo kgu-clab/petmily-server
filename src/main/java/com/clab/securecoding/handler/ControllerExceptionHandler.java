@@ -4,6 +4,7 @@ import com.clab.securecoding.exception.*;
 import com.clab.securecoding.type.dto.ResponseModel;
 import com.google.gson.stream.MalformedJsonException;
 import lombok.extern.slf4j.Slf4j;
+import org.quartz.SchedulerException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -89,6 +90,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler({
             NotFoundException.class,
             Exception.class,
+            SchedulerException.class
     })
     public ResponseModel unExceptedError(HttpServletRequest request, HttpServletResponse response, Exception e) {
         ResponseModel responseModel = ResponseModel.builder()
