@@ -1,9 +1,6 @@
 package com.clab.securecoding.handler;
 
-import com.clab.securecoding.exception.AssociatedAccountExistsException;
-import com.clab.securecoding.exception.NotFoundException;
-import com.clab.securecoding.exception.PermissionDeniedException;
-import com.clab.securecoding.exception.SearchResultNotExistException;
+import com.clab.securecoding.exception.*;
 import com.clab.securecoding.type.dto.ResponseModel;
 import com.google.gson.stream.MalformedJsonException;
 import lombok.extern.slf4j.Slf4j;
@@ -78,8 +75,20 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler({
+            ApiRequestFailedException.class
+    })
+    public ResponseModel ApiRequestFailedExceptionError(HttpServletRequest request, HttpServletResponse response,
+                                                               Exception e) {
+        ResponseModel responseModel = ResponseModel.builder()
+                .success(false)
+                .build();
+        response.setStatus(404);
+        return responseModel;
+    }
+
+    @ExceptionHandler({
             NotFoundException.class,
-            Exception.class
+            Exception.class,
     })
     public ResponseModel unExceptedError(HttpServletRequest request, HttpServletResponse response, Exception e) {
         ResponseModel responseModel = ResponseModel.builder()

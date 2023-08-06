@@ -1,10 +1,12 @@
 package com.clab.securecoding.service;
 
+import com.clab.securecoding.exception.ApiRequestFailedException;
 import com.clab.securecoding.mapper.AnimalShelterMapper;
 import com.clab.securecoding.repository.AnimalShelterRepository;
 import com.clab.securecoding.type.dto.AnimalShelterDto;
 import com.clab.securecoding.type.entity.AnimalShelter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,6 +21,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AnimalShelterService {
 
     private final AnimalShelterRepository animalShelterRepository;
@@ -55,7 +58,7 @@ public class AnimalShelterService {
                 animalShelterRepository.save(shelter);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new ApiRequestFailedException();
         }
     }
 
