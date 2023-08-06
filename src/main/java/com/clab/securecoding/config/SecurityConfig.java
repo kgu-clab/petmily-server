@@ -13,20 +13,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private static final String[] PERMIT_ALL = {
-            "/login/**",
-            "/v2/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**",
-            "/v3/api-docs/**",
-            "/swagger-ui/**",
-            "/"
-    };
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -35,8 +21,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(PERMIT_ALL).permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().permitAll();
         return http.build();
     }
 
