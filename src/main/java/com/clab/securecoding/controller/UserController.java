@@ -3,7 +3,7 @@ package com.clab.securecoding.controller;
 import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.service.UserService;
 import com.clab.securecoding.type.dto.ResponseModel;
-import com.clab.securecoding.type.dto.UpdateUserRequestDto;
+import com.clab.securecoding.type.dto.UserUpdateRequestDto;
 import com.clab.securecoding.type.dto.UserRequestDto;
 import com.clab.securecoding.type.dto.UserResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -70,9 +70,9 @@ public class UserController {
             "String type;")
     @PutMapping("/update")
     public ResponseModel updateUserInfoByUser(
-            @RequestBody UpdateUserRequestDto updateUserRequestDto
+            @RequestBody UserUpdateRequestDto userUpdateRequestDto
     ) {
-        userService.updateUserInfoByUser(updateUserRequestDto);
+        userService.updateUserInfoByUser(userUpdateRequestDto);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }

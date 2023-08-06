@@ -6,7 +6,7 @@ import com.clab.securecoding.exception.NotFoundException;
 import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.exception.SearchResultNotExistException;
 import com.clab.securecoding.repository.UserRepository;
-import com.clab.securecoding.type.dto.UpdateUserRequestDto;
+import com.clab.securecoding.type.dto.UserUpdateRequestDto;
 import com.clab.securecoding.type.dto.UserRequestDto;
 import com.clab.securecoding.type.dto.UserResponseDto;
 import com.clab.securecoding.type.entity.User;
@@ -58,15 +58,15 @@ public class UserService {
         return toUserResponseDto(user);
     }
 
-    public void updateUserInfoByUser(UpdateUserRequestDto updateUserRequestDto) {
+    public void updateUserInfoByUser(UserUpdateRequestDto userUpdateRequestDto) {
         Long userId = AuthUtil.getAuthenticationInfoUserId();
         User user = userRepository.findById(userId).get();
-        user.setPassword(updateUserRequestDto.getPassword());
-        user.setNickname(updateUserRequestDto.getNickname());
-        user.setEmail(updateUserRequestDto.getEmail());
-        user.setAddress(updateUserRequestDto.getAddress());
-        user.setContact(updateUserRequestDto.getContact());
-        user.setType(updateUserRequestDto.getType());
+        user.setPassword(userUpdateRequestDto.getPassword());
+        user.setNickname(userUpdateRequestDto.getNickname());
+        user.setEmail(userUpdateRequestDto.getEmail());
+        user.setAddress(userUpdateRequestDto.getAddress());
+        user.setContact(userUpdateRequestDto.getContact());
+        user.setType(userUpdateRequestDto.getType());
         userRepository.save(user);
     }
 
@@ -81,7 +81,7 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    private void checkUserAdminRole() throws PermissionDeniedException {
+    public void checkUserAdminRole() throws PermissionDeniedException {
         Long userId = AuthUtil.getAuthenticationInfoUserId();
         User user = userRepository.findById(userId).get();
         if (!user.getRole().equals(Role.ADMIN)) {

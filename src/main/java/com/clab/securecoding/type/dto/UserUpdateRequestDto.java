@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @Builder
-public class UpdateUserRequestDto {
+public class UserUpdateRequestDto {
 
     private String password;
 
