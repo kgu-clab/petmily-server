@@ -1,21 +1,17 @@
-package com.clab.securecoding.type.entity;
+package com.clab.securecoding.type.dto;
 
+import com.clab.securecoding.type.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.*;
-
-@Entity
-@Data
-@Builder
+@Getter
+@Setter
 @AllArgsConstructor
-@NoArgsConstructor
-public class Animal {
+@Builder
+public class AnimalResponseDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String species;
@@ -38,8 +34,6 @@ public class Animal {
 
     private String dislikes;
 
-    @ManyToOne
-    @JoinColumn(name = "user")
     private User user;
 
 }
