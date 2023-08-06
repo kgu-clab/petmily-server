@@ -1,5 +1,9 @@
 package com.clab.securecoding.handler;
 
+import com.clab.securecoding.exception.AssociatedAccountExistsException;
+import com.clab.securecoding.exception.NotFoundException;
+import com.clab.securecoding.exception.PermissionDeniedException;
+import com.clab.securecoding.exception.SearchResultNotExistException;
 import com.clab.securecoding.type.dto.ResponseModel;
 import com.google.gson.stream.MalformedJsonException;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +13,6 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.webjars.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +42,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler({
             AccessDeniedException.class,
+            PermissionDeniedException.class
     })
     public ResponseModel unAuthorizeRequestError(HttpServletRequest request, HttpServletResponse response,
                                                  Exception e) {
@@ -46,6 +50,30 @@ public class ControllerExceptionHandler {
                 .success(false)
                 .build();
         response.setStatus(401);
+        return responseModel;
+    }
+
+    @ExceptionHandler({
+            SearchResultNotExistException.class
+    })
+    public ResponseModel searchResultNotExistError(HttpServletRequest request, HttpServletResponse response,
+                                                   Exception e) {
+        ResponseModel responseModel = ResponseModel.builder()
+                .success(false)
+                .build();
+        response.setStatus(404);
+        return responseModel;
+    }
+
+    @ExceptionHandler({
+            AssociatedAccountExistsException.class
+    })
+    public ResponseModel AssociatedAccountExistsExceptionError(HttpServletRequest request, HttpServletResponse response,
+                                                   Exception e) {
+        ResponseModel responseModel = ResponseModel.builder()
+                .success(false)
+                .build();
+        response.setStatus(404);
         return responseModel;
     }
 
