@@ -3,15 +3,13 @@ package com.clab.securecoding.mapper;
 import com.clab.securecoding.type.dto.BoardRequestDto;
 import com.clab.securecoding.type.dto.BoardResponseDto;
 import com.clab.securecoding.type.entity.Board;
-import com.clab.securecoding.type.entity.User;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BoardMapper {
 
-    public Board mapDtoToEntity(BoardRequestDto boardRequestDto, User writer) {
+    public Board mapDtoToEntity(BoardRequestDto boardRequestDto) {
         return Board.builder()
-                .writer(writer)
                 .title(boardRequestDto.getTitle())
                 .content(boardRequestDto.getContent())
                 .build();

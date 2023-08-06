@@ -35,3 +35,33 @@ insert into board(writer, title, content)
 values (3, 'title6', 'content6');
 insert into board(writer, title, content)
 values (4, 'title7', 'content7');
+
+-- Comment
+insert into comment(board, writer, content)
+values (1, 1, 'comment1');
+insert into comment(board, writer, content)
+values (1, 2, 'comment2');
+insert into comment(board, writer, content)
+values (1, 3, 'comment3');
+insert into comment(board, writer, content)
+values (1, 4, 'comment4');
+insert into comment(board, writer, content)
+values (1, 5, 'comment5');
+insert into comment(board, writer, content)
+values (2, 1, 'comment6');
+insert into comment(board, writer, content)
+values (2, 2, 'comment7');
+insert into comment(board, writer, content)
+values (2, 3, 'comment8');
+insert into comment(board, writer, content)
+values (3, 4, 'comment9');
+insert into comment(board, writer, content)
+values (3, 5, 'comment10');
+insert into comment(board, writer, content)
+values (4, 5, 'comment11');
+insert into comment(board, writer, content)
+values (5, 1, 'comment12');
+insert into comment(board, writer, content)
+values (6, 1, 'comment13');
+insert into comment(board, writer, content)
+values (7, 1, 'comment14');

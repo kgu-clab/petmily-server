@@ -28,7 +28,8 @@ public class BoardService {
 
     public void createBoard(BoardRequestDto boardRequestDto) {
         User writer = userService.getCurrentUser();
-        Board board = boardMapper.mapDtoToEntity(boardRequestDto, writer);
+        Board board = boardMapper.mapDtoToEntity(boardRequestDto);
+        board.setWriter(writer);
         boardRepository.save(board);
     }
 
