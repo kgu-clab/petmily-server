@@ -24,7 +24,6 @@ public class BoardController {
     private final BoardService boardService;
 
     @Operation(summary = "게시글 생성", description = "게시글 생성<br>" +
-            "User writer;<br>" +
             "String title;<br>" +
             "String content;")
     @PostMapping("/create")

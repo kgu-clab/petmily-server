@@ -23,7 +23,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @Operation(summary = "댓글 생성", description = "댓글 생성<br>" +
-            "Board board;<br>" +
+            "Long board;<br>" +
             "String content;")
     @PostMapping("/create/{boardId}")
     public ResponseModel createComment(

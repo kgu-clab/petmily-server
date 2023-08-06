@@ -12,7 +12,7 @@ import lombok.Setter;
 @Builder
 public class CommentRequestDto {
 
-    private Board board;
+    private Long board;
 
     private String content;
 

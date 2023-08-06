@@ -1,16 +1,23 @@
 package com.clab.securecoding.mapper;
 
+import com.clab.securecoding.service.BoardService;
 import com.clab.securecoding.type.dto.CommentRequestDto;
 import com.clab.securecoding.type.dto.CommentResponseDto;
+import com.clab.securecoding.type.entity.Board;
 import com.clab.securecoding.type.entity.Comment;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class CommentMapper {
 
+    private final BoardService boardService;
+
     public Comment mapDtoToEntity(CommentRequestDto commentRequestDto) {
+        Board board = boardService.getBoardByIdOrThrow(commentRequestDto.getBoard());
         return Comment.builder()
-                .board(commentRequestDto.getBoard())
+                .board(board)
                 .content(commentRequestDto.getContent())
                 .build();
     }
