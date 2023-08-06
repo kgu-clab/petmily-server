@@ -28,8 +28,7 @@ public class AnimalService {
 
     @Transactional
     public void createAnimal(AnimalRequestDto animalResquestDto) {
-        Long userId = AuthUtil.getAuthenticationInfoUserId();
-        User user = userService.getUserByIdOrThrow(userId);
+        User user = userService.getCurrentUser();
         Animal animal = animalMapper.mapDtoToEntity(animalResquestDto);
         animal.setUser(user);
         animalRepository.save(animal);
@@ -53,7 +52,7 @@ public class AnimalService {
             throw new IllegalArgumentException("적어도 userId 또는 species 중 하나를 제공해야 합니다.");
 
         if (animals == null)
-            throw new SearchResultNotExistException("검색 결과가 존재하지 않습니다.");
+            throw new SearchResultNotExistException();
         List<AnimalResponseDto> animalResponseDtos = animalMapper.mapEntityToDto(animals);
         return animalResponseDtos;
     }

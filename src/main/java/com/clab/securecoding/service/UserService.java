@@ -56,13 +56,12 @@ public class UserService {
             throw new IllegalArgumentException("적어도 userId 또는 name 중 하나를 제공해야 합니다.");
 
         if (user == null)
-            throw new SearchResultNotExistException("검색 결과가 존재하지 않습니다.");
+            throw new SearchResultNotExistException();
         return userMapper.mapEntityToDto(user);
     }
 
     public void updateUserInfoByUser(UserUpdateRequestDto userUpdateRequestDto) {
-        Long userId = AuthUtil.getAuthenticationInfoUserId();
-        User user = userRepository.findById(userId).get();
+        User user = getCurrentUser();
         user.setPassword(userUpdateRequestDto.getPassword());
         user.setNickname(userUpdateRequestDto.getNickname());
         user.setEmail(userUpdateRequestDto.getEmail());
@@ -83,12 +82,12 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public void checkUserAdminRole() throws PermissionDeniedException {
-        Long userId = AuthUtil.getAuthenticationInfoUserId();
-        User user = userRepository.findById(userId).get();
+    public boolean checkUserAdminRole() throws PermissionDeniedException {
+        User user = getCurrentUser();
         if (!user.getRole().equals(Role.ADMIN)) {
             throw new PermissionDeniedException("권한이 부족합니다.");
         }
+        return true;
     }
 
     public User getUserByIdOrThrow(Long userId) {
@@ -99,6 +98,12 @@ public class UserService {
     public User getUserByNicknameOrThrow(String nickname) {
         return userRepository.findByNickname(nickname)
                 .orElseThrow(() -> new NotFoundException("해당 유저가 없습니다."));
+    }
+
+    public User getCurrentUser() {
+        Long userId = AuthUtil.getAuthenticationInfoUserId();
+        User user = userRepository.findById(userId).get();
+        return user;
     }
 
 }
