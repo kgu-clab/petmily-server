@@ -82,14 +82,10 @@ public class TradeBoardService {
     public void deleteTradeBoard(Long tradeBoardId) throws PermissionDeniedException {
         User seller = userService.getCurrentUser();
         TradeBoard tradeBoard = getTradeBoardByIdOrThrow(tradeBoardId);
-        if (seller == tradeBoard.getSeller() || userService.checkUserAdminRole()) {
-            List<TradeComment> tradeComments = tradeCommentRepository.findByTradeBoard(tradeBoard);
-            tradeCommentRepository.deleteAll(tradeComments);
+        if (seller == tradeBoard.getSeller() || userService.checkUserAdminRole())
             tradeBoardRepository.delete(tradeBoard);
-        }
-        else {
+        else
             throw new PermissionDeniedException();
-        }
     }
 
     public TradeBoard getTradeBoardByIdOrThrow(Long tradeBoardId) {

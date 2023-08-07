@@ -20,7 +20,7 @@ public class TradeComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "TradeBoard")
     private TradeBoard tradeBoard;
 

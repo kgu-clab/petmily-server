@@ -26,6 +26,7 @@ public class UserMapper {
 
     public UserResponseDto mapEntityToDto(User user) {
         return UserResponseDto.builder()
+                .seq(user.getSeq())
                 .id(user.getId())
                 .nickname(user.getNickname())
                 .email(user.getEmail())

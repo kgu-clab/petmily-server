@@ -1,6 +1,5 @@
 package com.clab.securecoding.service;
 
-import com.clab.securecoding.auth.util.AuthUtil;
 import com.clab.securecoding.exception.NotFoundException;
 import com.clab.securecoding.exception.SearchResultNotExistException;
 import com.clab.securecoding.mapper.AnimalMapper;
@@ -40,16 +39,16 @@ public class AnimalService {
         return animalResponseDtos;
     }
 
-    public List<AnimalResponseDto> searchAnimal(Long userId, UserType userType, String species) {
+    public List<AnimalResponseDto> searchAnimal(Long seq, UserType userType, String species) {
         List<Animal> animals = null;
-        if (userId != null)
-            animals = animalRepository.findAllByUser_Id(userId);
+        if (seq != null)
+            animals = animalRepository.findAllByUser_Seq(seq);
         else if (userType != null)
             animals = animalRepository.findAllByUser_Type(userType);
         else if (species != null)
             animals = animalRepository.findAllBySpecies(species);
         else
-            throw new IllegalArgumentException("적어도 userId 또는 species 중 하나를 제공해야 합니다.");
+            throw new IllegalArgumentException("적어도 seq 또는 species 중 하나를 제공해야 합니다.");
 
         if (animals == null)
             throw new SearchResultNotExistException();

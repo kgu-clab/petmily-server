@@ -25,6 +25,11 @@ spring:
   profiles:
     active: dev
 
+  # Disable Compatibility Verifier
+  cloud:
+    compatibility-verifier:
+      enabled: false
+
 resource:
   file:
     url: /resources/files

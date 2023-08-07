@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface TradeCommentRepository extends JpaRepository<TradeComment, Long> {
 
-    List<TradeComment> findByTradeBoard(TradeBoard tradeBoard);
-
     List<TradeComment> findByTradeBoardOrderByCreatedAtAsc(TradeBoard tradeBoard);
 
 }

@@ -6,7 +6,7 @@ import com.clab.securecoding.exception.NotFoundException;
 import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.exception.SearchResultNotExistException;
 import com.clab.securecoding.mapper.UserMapper;
-import com.clab.securecoding.repository.UserRepository;
+import com.clab.securecoding.repository.*;
 import com.clab.securecoding.type.dto.UserUpdateRequestDto;
 import com.clab.securecoding.type.dto.UserRequestDto;
 import com.clab.securecoding.type.dto.UserResponseDto;
@@ -28,7 +28,7 @@ public class UserService {
 
     public void createUser(UserRequestDto userRequestDto) throws PermissionDeniedException {
         checkUserAdminRole();
-        if (userRepository.findById(userRequestDto.getId()).isPresent())
+        if (userRepository.findByUserId(userRequestDto.getId()).isPresent())
             throw new AssociatedAccountExistsException();
         User user = userMapper.mapDtoToEntity(userRequestDto);
         userRepository.save(user);
@@ -45,15 +45,15 @@ public class UserService {
         return userResponseDtos;
     }
 
-    public UserResponseDto searchUser(Long userId, String nickname) throws PermissionDeniedException {
+    public UserResponseDto searchUser(Long seq, String nickname) throws PermissionDeniedException {
         checkUserAdminRole();
         User user = null;
-        if (userId != null)
-            user = getUserByIdOrThrow(userId);
+        if (seq != null)
+            user = getUserByIdOrThrow(seq);
         else if (nickname != null)
             user = getUserByNicknameOrThrow(nickname);
         else
-            throw new IllegalArgumentException("적어도 userId 또는 name 중 하나를 제공해야 합니다.");
+            throw new IllegalArgumentException("적어도 seq 또는 name 중 하나를 제공해야 합니다.");
 
         if (user == null)
             throw new SearchResultNotExistException();
@@ -71,15 +71,15 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void deleteUserByAdmin(Long userId) throws PermissionDeniedException {
+    public void deleteUserByAdmin(Long seq) throws PermissionDeniedException {
         checkUserAdminRole();
-        getUserByIdOrThrow(userId);
-        userRepository.deleteById(userId);
+        getUserByIdOrThrow(seq);
+        userRepository.deleteById(seq);
     }
 
     public void deleteUserByUser() {
-        Long userId = AuthUtil.getAuthenticationInfoUserId();
-        userRepository.deleteById(userId);
+        User user = getCurrentUser();
+        userRepository.delete(user);
     }
 
     public boolean checkUserAdminRole() throws PermissionDeniedException {
@@ -90,8 +90,8 @@ public class UserService {
         return true;
     }
 
-    public User getUserByIdOrThrow(Long userId) {
-        return userRepository.findById(userId)
+    public User getUserByIdOrThrow(Long seq) {
+        return userRepository.findById(seq)
                 .orElseThrow(() -> new NotFoundException("해당 유저가 없습니다."));
     }
 
@@ -101,8 +101,8 @@ public class UserService {
     }
 
     public User getCurrentUser() {
-        Long userId = AuthUtil.getAuthenticationInfoUserId();
-        User user = userRepository.findById(userId).get();
+        String userId = AuthUtil.getAuthenticationInfoUserId();
+        User user = userRepository.findByUserId(userId).get();
         return user;
     }
 

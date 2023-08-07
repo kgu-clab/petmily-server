@@ -12,7 +12,7 @@ import lombok.Setter;
 @Builder
 public class UserRequestDto {
 
-    private Long id;
+    private String id;
 
     private String password;
 

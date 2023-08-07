@@ -40,7 +40,7 @@ public class Animal {
 
     private String dislikes;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "user")
     private User user;
 
