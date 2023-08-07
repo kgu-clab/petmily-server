@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/shelters")
+@RequestMapping("/animal-shelters")
 @RequiredArgsConstructor
 @Tag(name = "Animal Shelter")
 @Slf4j

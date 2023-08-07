@@ -28,7 +28,7 @@ public class TradeBoard {
 
     private String content;
 
-    private Double price;
+    private Long price;
 
     private String location;
 

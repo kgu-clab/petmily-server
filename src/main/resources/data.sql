@@ -65,3 +65,47 @@ insert into comment(board, writer, content)
 values (6, 1, 'comment13');
 insert into comment(board, writer, content)
 values (7, 1, 'comment14');
+
+-- TradeBoard
+insert into trade_board(seller, title, content, price, location)
+values (1, 'trade_board1', 'content1', 1000, '수원시');
+insert into trade_board(seller, title, content, price, location)
+values (1, 'trade_board2', 'content2', 2000, '서울시');
+insert into trade_board(seller, title, content, price, location)
+values (1, 'trade_board3', 'content3', 3000, '안양시');
+insert into trade_board(seller, title, content, price, location)
+values (2, 'trade_board4', 'content4', 4000, '군포시');
+insert into trade_board(seller, title, content, price, location)
+values (2, 'trade_board5', 'content5', 5000, '하남시');
+insert into trade_board(seller, title, content, price, location)
+values (3, 'trade_board6', 'content6', 6000, '용인시');
+insert into trade_board(seller, title, content, price, location)
+values (4, 'trade_board7', 'content7', 7000, '화성시');
+
+-- TradeComment
+insert into trade_comment(trade_board, writer, content)
+values (1, 1, 'comment1');
+insert into trade_comment(trade_board, writer, content)
+values (1, 2, 'comment2');
+insert into trade_comment(trade_board, writer, content)
+values (1, 3, 'comment3');
+insert into trade_comment(trade_board, writer, content)
+values (1, 4, 'comment4');
+insert into trade_comment(trade_board, writer, content)
+values (2, 1, 'comment5');
+insert into trade_comment(trade_board, writer, content)
+values (2, 2, 'comment6');
+insert into trade_comment(trade_board, writer, content)
+values (2, 3, 'comment7');
+insert into trade_comment(trade_board, writer, content)
+values (2, 4, 'comment8');
+insert into trade_comment(trade_board, writer, content)
+values (3, 3, 'comment9');
+insert into trade_comment(trade_board, writer, content)
+values (4, 2, 'comment10');
+insert into trade_comment(trade_board, writer, content)
+values (5, 5, 'comment11');
+insert into trade_comment(trade_board, writer, content)
+values (6, 1, 'comment12');
+insert into trade_comment(trade_board, writer, content)
+values (6, 2, 'comment13');
