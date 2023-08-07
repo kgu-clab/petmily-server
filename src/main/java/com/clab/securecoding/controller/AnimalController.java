@@ -49,14 +49,14 @@ public class AnimalController {
         return responseModel;
     }
 
-    @Operation(summary = "동물 검색", description = "유저의 ID, Type 또는 동물의 종류를 기반으로 검색")
+    @Operation(summary = "동물 검색", description = "유저의 Seq, Type 또는 동물의 종류를 기반으로 검색")
     @GetMapping("/search")
     public ResponseModel searchAnimal(
-            @RequestParam(required = false) Long userId,
+            @RequestParam(required = false) Long seq,
             @RequestParam(required = false) UserType userType,
             @RequestParam(required = false) String species
     ) {
-        List<AnimalResponseDto> animals = animalService.searchAnimal(userId, userType, species);
+        List<AnimalResponseDto> animals = animalService.searchAnimal(seq, userType, species);
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData(animals);
         return responseModel;

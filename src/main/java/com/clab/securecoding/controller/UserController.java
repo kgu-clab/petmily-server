@@ -24,7 +24,7 @@ public class UserController {
     private final UserService userService;
 
     @Operation(summary = "신규 유저 생성", description = "신규 유저 생성<br>" +
-            "Long id;<br>"+
+            "String id;<br>"+
             "String password;<br>" +
             "String nickname;<br>" +
             "String email;<br>" +
@@ -52,10 +52,10 @@ public class UserController {
     @Operation(summary = "유저 검색", description = "유저의 ID 또는 이름을 기반으로 검색")
     @GetMapping("/search")
     public ResponseModel searchUser(
-            @RequestParam(required = false) Long userId,
+            @RequestParam(required = false) Long seq,
             @RequestParam(required = false) String nickname
     ) throws PermissionDeniedException {
-        UserResponseDto user = userService.searchUser(userId, nickname);
+        UserResponseDto user = userService.searchUser(seq, nickname);
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData(user);
         return responseModel;
@@ -78,11 +78,11 @@ public class UserController {
     }
 
     @Operation(summary = "유저 삭제(관리자 전용)", description = "관리자에 의한 유저 삭제(모든 계정 삭제 가능)")
-    @DeleteMapping("/delete/{userId}")
+    @DeleteMapping("/delete/{seq}")
     public ResponseModel deleteUserByAdmin(
-            @PathVariable("userId") Long userId
+            @PathVariable Long seq
     ) throws PermissionDeniedException {
-        userService.deleteUserByAdmin(userId);
+        userService.deleteUserByAdmin(seq);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }

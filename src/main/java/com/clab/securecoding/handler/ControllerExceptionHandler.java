@@ -3,6 +3,7 @@ package com.clab.securecoding.handler;
 import com.clab.securecoding.exception.*;
 import com.clab.securecoding.type.dto.ResponseModel;
 import com.google.gson.stream.MalformedJsonException;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.SchedulerException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -40,7 +41,8 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler({
             AccessDeniedException.class,
-            PermissionDeniedException.class
+            PermissionDeniedException.class,
+            ExpiredJwtException.class
     })
     public ResponseModel unAuthorizeRequestError(HttpServletRequest request, HttpServletResponse response,
                                                  Exception e) {

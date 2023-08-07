@@ -16,7 +16,9 @@ import java.time.LocalDateTime;
 @Builder
 public class UserResponseDto {
 
-    private Long id;
+    private Long seq;
+
+    private String id;
 
     private String nickname;
 
