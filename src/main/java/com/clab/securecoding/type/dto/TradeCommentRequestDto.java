@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @Builder
-public class BoardUpdateRequestDto {
+public class TradeCommentRequestDto {
 
-    private String title;
+    private Long tradeBoard;
 
     private String content;
 

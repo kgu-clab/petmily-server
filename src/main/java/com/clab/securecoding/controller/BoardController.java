@@ -4,7 +4,6 @@ import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.service.BoardService;
 import com.clab.securecoding.type.dto.BoardRequestDto;
 import com.clab.securecoding.type.dto.BoardResponseDto;
-import com.clab.securecoding.type.dto.BoardUpdateRequestDto;
 import com.clab.securecoding.type.dto.ResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -62,9 +61,9 @@ public class BoardController {
     @PutMapping("/update/{boardId}")
     public ResponseModel updateBoard(
             @PathVariable Long boardId,
-            @RequestBody BoardUpdateRequestDto boardUpdateRequestDto
+            @RequestBody BoardRequestDto boardRequestDto
     ) throws PermissionDeniedException {
-        boardService.updateBoard(boardId, boardUpdateRequestDto);
+        boardService.updateBoard(boardId, boardRequestDto);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }
