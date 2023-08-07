@@ -37,7 +37,7 @@ public class CommentService {
 
     public List<CommentResponseDto> getCommentsByBoardId(Long boardId) {
         Board board = boardService.getBoardByIdOrThrow(boardId);
-        List<Comment> comments = commentRepository.findByBoardOrderByCreatedAtDesc(board);
+        List<Comment> comments = commentRepository.findByBoardOrderByCreatedAtAsc(board);
         List<CommentResponseDto> commentResponseDtos = new ArrayList<>();
         for (Comment comment : comments) {
             CommentResponseDto commentResponseDto = commentMapper.mapEntityToDto(comment);

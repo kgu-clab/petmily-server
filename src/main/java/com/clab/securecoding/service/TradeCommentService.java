@@ -34,7 +34,7 @@ public class TradeCommentService {
 
     public List<TradeCommentResponseDto> getCommentsByTradeBoardId(Long tradeBoardId) {
         TradeBoard tradeBoard = tradeBoardService.getTradeBoardByIdOrThrow(tradeBoardId);
-        List<TradeComment> tradeComments = tradeCommentRepository.findByTradeBoardOrderByCreatedAtDesc(tradeBoard);
+        List<TradeComment> tradeComments = tradeCommentRepository.findByTradeBoardOrderByCreatedAtAsc(tradeBoard);
         List<TradeCommentResponseDto> TradeCommentResponseDtos = new ArrayList<>();
         for (TradeComment tradeComment : tradeComments) {
             TradeCommentResponseDto tradeCommentResponseDto = tradeCommentMapper.mapEntityToDto(tradeComment);
