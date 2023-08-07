@@ -42,18 +42,18 @@ public class JwtTokenProvider {
 
         Date expiry = new Date();
         // Access Token 생성
-        expiry.setTime(expiry.getTime() + (ACCESS_TOKEN_DURATION));
+        Date accessTokenExpiry = new Date(expiry.getTime() + (ACCESS_TOKEN_DURATION));
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("role", authorities)
-                .setExpiration(expiry)
+                .setExpiration(accessTokenExpiry)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
         // Refresh Token 생성
-        expiry.setTime(expiry.getTime() - (ACCESS_TOKEN_DURATION) + (REFRESH_TOKEN_DURATION));
+        Date refreshTokenExpiry = new Date(expiry.getTime() + (REFRESH_TOKEN_DURATION));
         String refreshToken = Jwts.builder()
-                .setExpiration(expiry)
+                .setExpiration(refreshTokenExpiry)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
