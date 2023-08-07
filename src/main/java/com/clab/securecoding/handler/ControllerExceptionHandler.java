@@ -4,6 +4,8 @@ import com.clab.securecoding.exception.*;
 import com.clab.securecoding.type.dto.ResponseModel;
 import com.google.gson.stream.MalformedJsonException;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.SchedulerException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -29,7 +31,8 @@ public class ControllerExceptionHandler {
             HttpMessageNotReadableException.class,
             MethodArgumentTypeMismatchException.class,
             NullPointerException.class,
-            DataIntegrityViolationException.class
+            DataIntegrityViolationException.class,
+            IllegalArgumentException.class
     })
     public ResponseModel parameterError(HttpServletRequest request, HttpServletResponse response, Exception e) {
         ResponseModel responseModel = ResponseModel.builder()
@@ -42,7 +45,10 @@ public class ControllerExceptionHandler {
     @ExceptionHandler({
             AccessDeniedException.class,
             PermissionDeniedException.class,
-            ExpiredJwtException.class
+            ExpiredJwtException.class,
+            SecurityException.class,
+            MalformedJwtException.class,
+            UnsupportedJwtException.class
     })
     public ResponseModel unAuthorizeRequestError(HttpServletRequest request, HttpServletResponse response,
                                                  Exception e) {
