@@ -28,6 +28,7 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.10.1' // JSON 라이브러리
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1' // JSON 역직렬화
 	implementation 'org.springframework.boot:spring-boot-starter-quartz:2.7.5' // Quartz 스케줄러
+	implementation 'org.apache.httpcomponents:httpclient:4.5.13' // HttpClient
 
 	// Swagger
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.12'
@@ -51,6 +52,7 @@ dependencies {
 	// Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test' // Spring Boot Test
 	testImplementation 'org.springframework.security:spring-security-test' // Spring Security Test
+
 }
 
 tasks.named('test') {

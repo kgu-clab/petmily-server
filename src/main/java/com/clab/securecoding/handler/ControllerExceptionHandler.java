@@ -48,7 +48,8 @@ public class ControllerExceptionHandler {
             ExpiredJwtException.class,
             SecurityException.class,
             MalformedJwtException.class,
-            UnsupportedJwtException.class
+            UnsupportedJwtException.class,
+            VerificationFailedException.class
     })
     public ResponseModel unAuthorizeRequestError(HttpServletRequest request, HttpServletResponse response,
                                                  Exception e) {
