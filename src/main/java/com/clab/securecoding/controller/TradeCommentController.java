@@ -44,7 +44,7 @@ public class TradeCommentController {
 
     @Operation(summary = "댓글 수정", description = "댓글 수정<br>" +
             "String content;")
-    @PutMapping("/update/{tradeCommentId}")
+    @PatchMapping("/update/{tradeCommentId}")
     public ResponseModel updateComment(
             @PathVariable Long tradeCommentId,
             @RequestBody CommentUpdateRequestDto commentUpdateRequestDto

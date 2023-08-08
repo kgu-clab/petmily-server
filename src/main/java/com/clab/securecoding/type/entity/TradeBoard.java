@@ -1,5 +1,6 @@
 package com.clab.securecoding.type.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,6 +38,7 @@ public class TradeBoard {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tradeBoard", cascade = {CascadeType.REMOVE})
     private List<TradeComment> tradeComments;
 

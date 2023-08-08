@@ -1,5 +1,6 @@
 package com.clab.securecoding.type.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class Board {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "board", cascade = {CascadeType.REMOVE})
     private List<Comment> comments;
 

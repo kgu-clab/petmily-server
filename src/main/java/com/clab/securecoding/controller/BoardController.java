@@ -58,7 +58,7 @@ public class BoardController {
     @Operation(summary = "게시글 수정", description = "게시글 수정<br>" +
             "String title;<br>" +
             "String content;")
-    @PutMapping("/update/{boardId}")
+    @PatchMapping("/update/{boardId}")
     public ResponseModel updateBoard(
             @PathVariable Long boardId,
             @RequestBody BoardRequestDto boardRequestDto

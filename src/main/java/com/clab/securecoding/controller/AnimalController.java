@@ -73,7 +73,7 @@ public class AnimalController {
             "String previousHomeEnvironment;<br>" +
             "String likes;<br>" +
             "String dislikes;")
-    @PutMapping("/update")
+    @PatchMapping("/update")
     public ResponseModel updateAnimalInfoByUser(
             @RequestParam Long animalId,
             @RequestBody AnimalRequestDto animalRequestDto

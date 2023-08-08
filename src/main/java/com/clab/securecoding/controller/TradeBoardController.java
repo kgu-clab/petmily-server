@@ -61,7 +61,7 @@ public class TradeBoardController {
             "String content;<br>" +
             "Long price;<br>" +
             "String location;")
-    @PutMapping("/update/{tradeBoardId}")
+    @PatchMapping("/update/{tradeBoardId}")
     public ResponseModel updateTradeBoard(
             @PathVariable Long tradeBoardId,
             @RequestBody TradeBoardRequestDto tradeBoardRequestDto

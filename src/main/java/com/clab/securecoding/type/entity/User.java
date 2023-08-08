@@ -3,6 +3,7 @@ package com.clab.securecoding.type.entity;
 import com.clab.securecoding.type.etc.OAuthProvider;
 import com.clab.securecoding.type.etc.Role;
 import com.clab.securecoding.type.etc.UserType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -54,18 +55,23 @@ public class User implements UserDetails {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "writer", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
     private List<Board> boards;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "writer", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
     private List<Comment> comments;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "writer", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
     private List<TradeComment> tradeComments;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "seller", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
     private List<TradeBoard> tradeBoards;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
     private List<Animal> animals;
 

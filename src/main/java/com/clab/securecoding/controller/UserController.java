@@ -68,7 +68,7 @@ public class UserController {
             "String address;<br>" +
             "String contact;<br>" +
             "String type;")
-    @PutMapping("/update")
+    @PatchMapping("/update")
     public ResponseModel updateUserInfoByUser(
             @RequestBody UserUpdateRequestDto userUpdateRequestDto
     ) {
