@@ -1,40 +1,41 @@
 package com.clab.securecoding.controller;
 
 import com.clab.securecoding.service.SmsService;
-import com.clab.securecoding.type.entity.Request;
-import com.clab.securecoding.type.entity.SmsResponse;
+import com.clab.securecoding.type.dto.ResponseModel;
+import com.clab.securecoding.type.dto.Request;
+import com.clab.securecoding.type.dto.SmsResponse;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-@Slf4j
 @RestController
+@RequestMapping("/sms")
 @RequiredArgsConstructor
+@Tag(name = "SMS")
+@Slf4j
 public class SmsController {
 
     private final SmsService smsService;
 
-    @PostMapping("/user/sms")
-    public ResponseEntity<SmsResponse> test(@RequestBody Request request)
-            throws NoSuchAlgorithmException, URISyntaxException, UnsupportedEncodingException, InvalidKeyException, JsonProcessingException {
-        log.info("sms controller");
-        log.info("request.getRecipientPhoneNumber() = {}",request.getRecipientPhoneNumber());
-        log.info("request.getContent() = {}",request.getContent());
-
-        SmsResponse data = smsService.sendSms(request.getRecipientPhoneNumber(), request.getContent());
-        return ResponseEntity.ok().body(data);
+    @Operation(summary = "SMS 발송", description = "NCP SENS를 이용한 SMS 발송")
+    @PostMapping("/send")
+    public ResponseModel sendSms(
+            @RequestBody Request request
+    ) {
+        SmsResponse smsResponse = smsService.sendSms(request);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData(smsResponse);
+        return responseModel;
     }
+
 }

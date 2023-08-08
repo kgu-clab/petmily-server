@@ -1,4 +1,4 @@
-package com.clab.securecoding.type.entity;
+package com.clab.securecoding.type.dto;
 
 import com.clab.securecoding.type.dto.MessagesDto;
 import lombok.AllArgsConstructor;
@@ -13,10 +13,17 @@ import java.util.List;
 @Setter
 @Getter
 public class SmsRequest {
+
     private String type;
+
     private String contentType;
+
     private String countryCode;
+
     private String from;
+
     private String content;
+
     private List<MessagesDto> messages;
+
 }

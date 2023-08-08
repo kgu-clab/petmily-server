@@ -1,4 +1,4 @@
-package com.clab.securecoding.type.entity;
+package com.clab.securecoding.type.dto;
 
 import lombok.*;
 
@@ -8,8 +8,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 public class SmsResponse {
+
     private String requestId;
+
     private LocalDateTime requestTime;
+
     private String statusCode;
+
     private String statusName;
+
 }

@@ -1,4 +1,4 @@
-package com.clab.securecoding.type.entity;
+package com.clab.securecoding.type.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,8 +10,9 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Request {
+
     private String recipientPhoneNumber;
-    private String title;
+
     private String content;
 
 }
