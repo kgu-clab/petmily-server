@@ -1,6 +1,5 @@
 package com.clab.securecoding.type.dto;
 
-import com.clab.securecoding.type.dto.MessagesDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class SmsRequest {
+public class SmsRequestDto {
 
     private String type;
 

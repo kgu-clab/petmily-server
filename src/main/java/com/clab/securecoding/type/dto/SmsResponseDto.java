@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-public class SmsResponse {
+public class SmsResponseDto {
 
     private String requestId;
 
