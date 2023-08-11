@@ -98,8 +98,9 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler({
             NotFoundException.class,
-            Exception.class,
-            SchedulerException.class
+            SchedulerException.class,
+            ClassCastException.class,
+            Exception.class
     })
     public ResponseModel unExceptedError(HttpServletRequest request, HttpServletResponse response, Exception e) {
         ResponseModel responseModel = ResponseModel.builder()

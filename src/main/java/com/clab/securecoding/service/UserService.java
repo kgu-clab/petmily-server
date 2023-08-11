@@ -13,6 +13,7 @@ import com.clab.securecoding.type.dto.UserResponseDto;
 import com.clab.securecoding.type.entity.User;
 import com.clab.securecoding.type.etc.Role;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,11 +27,14 @@ public class UserService {
 
     private final UserMapper userMapper;
 
+    private final PasswordEncoder passwordEncoder;
+
     public void createUser(UserRequestDto userRequestDto) throws PermissionDeniedException {
         checkUserAdminRole();
         if (userRepository.findByUserId(userRequestDto.getId()).isPresent())
             throw new AssociatedAccountExistsException();
         User user = userMapper.mapDtoToEntity(userRequestDto);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 

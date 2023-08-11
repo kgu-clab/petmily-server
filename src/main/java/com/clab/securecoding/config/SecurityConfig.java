@@ -22,7 +22,6 @@ public class SecurityConfig {
 
     private static final String[] PERMIT_ALL = {
             "/login/**",
-            "/sms/**",
             "/v2/api-docs",
             "/swagger-resources",
             "/swagger-resources/**",
