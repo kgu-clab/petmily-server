@@ -1,5 +1,6 @@
 package com.clab.securecoding.config;
 
+import com.clab.securecoding.auth.filter.CrossSiteScriptingFilter;
 import com.clab.securecoding.auth.filter.JwtAuthenticationFilter;
 import com.clab.securecoding.auth.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,6 @@ public class SecurityConfig {
 
     private static final String[] PERMIT_ALL = {
             "/login/**",
-            "/sms/**",
             "/v2/api-docs",
             "/swagger-resources",
             "/swagger-resources/**",
@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .antMatchers(PERMIT_ALL).permitAll()
                 .anyRequest().authenticated()
                 .and()
+                .addFilterBefore(new CrossSiteScriptingFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
