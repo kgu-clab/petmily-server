@@ -10,9 +10,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/login")
 @RequiredArgsConstructor
 @Tag(name = "Login")
 @Slf4j
@@ -21,8 +23,10 @@ public class LoginController {
     private final LoginService loginService;
 
     @Operation(summary = "유저 로그인", description = "JWT 인증 로그인")
-    @PostMapping("/login")
-    public ResponseModel login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
+    @PostMapping()
+    public ResponseModel login(
+            @RequestBody UserLoginRequestDto userLoginRequestDto
+    ) {
         String id = userLoginRequestDto.getId();
         String password = userLoginRequestDto.getPassword();
         TokenInfo tokenInfo = loginService.login(id, password);
@@ -32,7 +36,7 @@ public class LoginController {
     }
 
     @Operation(summary = "유저 로그인 테스트", description = "유저 로그인 테스트")
-    @PostMapping("/login/test")
+    @PostMapping("/test")
     public ResponseModel test() {
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;

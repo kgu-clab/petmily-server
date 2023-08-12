@@ -10,11 +10,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.quartz.SchedulerException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.mail.MailSendException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.nio.file.AccessDeniedException;
@@ -100,6 +102,8 @@ public class ControllerExceptionHandler {
             NotFoundException.class,
             SchedulerException.class,
             ClassCastException.class,
+            MessagingException.class,
+            MailSendException.class,
             Exception.class
     })
     public ResponseModel unExceptedError(HttpServletRequest request, HttpServletResponse response, Exception e) {
