@@ -21,7 +21,12 @@ public class EmailController {
 
     private final EmailService emailService;
 
-    @Operation(summary = "이메일 발송", description = "이메일 발송")
+    @Operation(summary = "이메일 발송", description = "이메일 발송<br>" +
+            "attachment는 무시<br>" +
+            "String recipient;<br>" +
+            "String msgBody;<br>" +
+            "String subject;<br>" +
+            "String attachment;<br>")
     @PostMapping("/sendMail")
     public ResponseModel sendMail(
             @RequestBody EmailDetails details
