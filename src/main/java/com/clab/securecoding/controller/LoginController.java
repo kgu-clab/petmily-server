@@ -22,7 +22,9 @@ public class LoginController {
 
     private final LoginService loginService;
 
-    @Operation(summary = "유저 로그인", description = "JWT 인증 로그인")
+    @Operation(summary = "유저 로그인", description = "JWT 인증 로그인<br>" +
+            "String id;<br>" +
+            "String paasword;")
     @PostMapping()
     public ResponseModel login(
             @RequestBody UserLoginRequestDto userLoginRequestDto
