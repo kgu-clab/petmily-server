@@ -19,6 +19,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
 import java.nio.file.AccessDeniedException;
 import java.util.NoSuchElementException;
 
@@ -34,7 +35,8 @@ public class ControllerExceptionHandler {
             MethodArgumentTypeMismatchException.class,
             NullPointerException.class,
             DataIntegrityViolationException.class,
-            IllegalArgumentException.class
+            IllegalArgumentException.class,
+            FileUploadFailException.class
     })
     public ResponseModel parameterError(HttpServletRequest request, HttpServletResponse response, Exception e) {
         ResponseModel responseModel = ResponseModel.builder()
@@ -63,7 +65,8 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler({
-            SearchResultNotExistException.class
+            SearchResultNotExistException.class,
+            FileNotFoundException.class
     })
     public ResponseModel searchResultNotExistError(HttpServletRequest request, HttpServletResponse response,
                                                    Exception e) {
