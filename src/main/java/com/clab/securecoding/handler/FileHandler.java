@@ -22,7 +22,7 @@ public class FileHandler {
     @Value("${resource.file.allow-extension}")
     private String[] allowExtensions;
 
-    public String saveFile(MultipartFile multipartFile, String category) throws FileUploadFailException {
+    public String saveFile(MultipartFile multipartFile, String path) throws FileUploadFailException {
         String originalFilename = multipartFile.getOriginalFilename();
         if (!validateFilename(originalFilename)) {
             throw new FileUploadFailException("허용되지 않은 파일명 : " + originalFilename);
@@ -32,7 +32,7 @@ public class FileHandler {
             throw new FileUploadFailException("허용되지 않은 확장자 : " + originalFilename);
         }
         String newFilename = System.nanoTime() + "_" + UUID.randomUUID() + "." + extension;
-        String destPath = filePath + File.separator + category + File.separator + newFilename;
+        String destPath = filePath + File.separator + path + File.separator + newFilename;
         log.info("destPath : {}", destPath);
         File file = new File(destPath);
         if (!file.getParentFile().exists()) {
@@ -51,8 +51,8 @@ public class FileHandler {
         } catch (IOException e) {
             throw new FileUploadFailException("파일 저장 실패", e);
         }
-        log.info("file location : {}", category + "/" + newFilename);
-        return category + "/" + newFilename;
+        log.info("file location : {}", path + "/" + newFilename);
+        return path + "/" + newFilename;
     }
 
     private boolean validateExtension(String extension) {
