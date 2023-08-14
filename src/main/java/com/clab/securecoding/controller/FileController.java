@@ -20,22 +20,24 @@ public class FileController {
     private final FileUploadService fileUploadService;
 
     @Operation(summary = "동물 사진 업로드", description = "동물 사진 업로드")
-    @PostMapping("/animals")
+    @PostMapping("/animals/{path}")
     public ResponseModel animalsUpload(
+            @PathVariable String path,
             @RequestParam(value = "file", required = true) MultipartFile multipartFile
     ) throws FileUploadFailException {
-        String url = fileUploadService.saveFile(multipartFile, "animal");
+        String url = fileUploadService.saveFile(multipartFile, path);
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData(url);
         return responseModel;
     }
 
     @Operation(summary = "스토어 물건 사진 업로드", description = "스토어 물건 사진 업로드")
-    @PostMapping("/stores")
+    @PostMapping("/stores/{path}")
     public ResponseModel storesUpload(
+            @PathVariable String path,
             @RequestParam(value = "file", required = true) MultipartFile multipartFile
     ) throws FileUploadFailException {
-        String url = fileUploadService.saveFile(multipartFile, "store");
+        String url = fileUploadService.saveFile(multipartFile, path);
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData(url);
         return responseModel;

@@ -16,8 +16,8 @@ public class FileUploadService {
     @Value("${resource.file.url}")
     private String fileURL;
 
-    public String saveFile(MultipartFile multipartFile, String category) throws FileUploadFailException {
-        String realFilename = fileHandler.saveFile(multipartFile, category);
+    public String saveFile(MultipartFile multipartFile, String path) throws FileUploadFailException {
+        String realFilename = fileHandler.saveFile(multipartFile, path);
         return fileURL + "/" + realFilename;
     }
 
