@@ -1,5 +1,6 @@
 package com.clab.securecoding.type.entity;
 
+import com.clab.securecoding.type.etc.AnimalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,9 @@ public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private AnimalType animalType;
 
     private String species;
 
