@@ -8,6 +8,7 @@ import com.clab.securecoding.type.dto.AnimalRequestDto;
 import com.clab.securecoding.type.dto.AnimalResponseDto;
 import com.clab.securecoding.type.entity.Animal;
 import com.clab.securecoding.type.entity.User;
+import com.clab.securecoding.type.etc.AnimalType;
 import com.clab.securecoding.type.etc.UserType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,16 +40,16 @@ public class AnimalService {
         return animalResponseDtos;
     }
 
-    public List<AnimalResponseDto> searchAnimal(Long seq, UserType userType, String species) {
+    public List<AnimalResponseDto> searchAnimal(UserType userType, AnimalType animalType) {
         List<Animal> animals = null;
-        if (seq != null)
-            animals = animalRepository.findAllByUser_Seq(seq);
+        if (userType != null && animalType != null)
+            animals = animalRepository.findAllByUser_TypeAndAnimalType(userType, animalType);
         else if (userType != null)
             animals = animalRepository.findAllByUser_Type(userType);
-        else if (species != null)
-            animals = animalRepository.findAllBySpecies(species);
+        else if (animalType != null)
+            animals = animalRepository.findAllByAnimalType(animalType);
         else
-            throw new IllegalArgumentException("적어도 seq 또는 species 중 하나를 제공해야 합니다.");
+            throw new IllegalArgumentException("적어도 userType, animalType 중 하나를 제공해야 합니다.");
 
         if (animals == null)
             throw new SearchResultNotExistException();

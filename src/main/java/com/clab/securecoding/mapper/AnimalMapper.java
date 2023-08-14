@@ -13,6 +13,7 @@ public class AnimalMapper {
 
     public Animal mapDtoToEntity(AnimalRequestDto animalRequestDto) {
         Animal animal = Animal.builder()
+                .animalType(animalRequestDto.getAnimalType())
                 .species(animalRequestDto.getSpecies())
                 .age(animalRequestDto.getAge())
                 .gender(animalRequestDto.getGender())
@@ -30,6 +31,7 @@ public class AnimalMapper {
     public AnimalResponseDto mapEntityToDto(Animal animal) {
         AnimalResponseDto animalResponseDto = AnimalResponseDto.builder()
                 .id(animal.getId())
+                .animalType(animal.getAnimalType())
                 .species(animal.getSpecies())
                 .age(animal.getAge())
                 .gender(animal.getGender())
