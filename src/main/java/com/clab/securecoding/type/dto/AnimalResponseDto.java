@@ -1,6 +1,7 @@
 package com.clab.securecoding.type.dto;
 
 import com.clab.securecoding.type.entity.User;
+import com.clab.securecoding.type.etc.AnimalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +14,8 @@ import lombok.Setter;
 public class AnimalResponseDto {
 
     private Long id;
+
+    private AnimalType animalType;
 
     private String species;
 

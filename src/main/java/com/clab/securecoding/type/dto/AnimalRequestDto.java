@@ -1,5 +1,6 @@
 package com.clab.securecoding.type.dto;
 
+import com.clab.securecoding.type.etc.AnimalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class AnimalRequestDto {
+
+    private AnimalType animalType;
 
     private String species;
 
