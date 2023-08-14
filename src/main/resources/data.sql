@@ -1,23 +1,32 @@
 -- User
 insert into user(id, password, nickname, email, address, contact, type, role, provider)
-values ('admin', '{bcrypt}$2a$10$ri5DhfHYNcqjN3HGP4oCYuZ7d8sxULvUOl4gE3OONygd4QUE.1AG2', 'admin', 'admin@gmail.com', '수원시', '010-1234-5678', 'INDIVIDUAL', 'ADMIN', 'LOCAL');
+values ('admin', '{bcrypt}$2a$10$ri5DhfHYNcqjN3HGP4oCYuZ7d8sxULvUOl4gE3OONygd4QUE.1AG2', 'admin', 'admin@gmail.com',
+        '수원시', '010-1234-5678', 'INDIVIDUAL', 'ADMIN', 'LOCAL');
 insert into user(id, password, nickname, email, address, contact, type, role, provider)
-values ('tester1', '{bcrypt}$2a$10$TA0btCubK9nayV8yJHmNo.kKTG30ECMVWQT8ed6LRl1yzZY1oZTsG', 'tester1', 'tester1@gmail.com', '수원시', '010-1234-5678', 'INDIVIDUAL', 'USER', 'LOCAL');
+values ('tester1', '{bcrypt}$2a$10$TA0btCubK9nayV8yJHmNo.kKTG30ECMVWQT8ed6LRl1yzZY1oZTsG', 'tester1',
+        'tester1@gmail.com', '수원시', '010-1234-5678', 'INDIVIDUAL', 'USER', 'LOCAL');
 insert into user(id, password, nickname, email, address, contact, type, role, provider)
-values ('tester2', '{bcrypt}$2a$10$owcdmT6My36VUzlJQin6.ujxwDPJtk32hHQWIdqiU74vSZewFgD1u', 'tester2', 'tester2@gmail.com', '수원시', '010-1234-5678', 'INDIVIDUAL', 'USER', 'LOCAL');
+values ('tester2', '{bcrypt}$2a$10$owcdmT6My36VUzlJQin6.ujxwDPJtk32hHQWIdqiU74vSZewFgD1u', 'tester2',
+        'tester2@gmail.com', '수원시', '010-1234-5678', 'INDIVIDUAL', 'USER', 'LOCAL');
 insert into user(id, password, nickname, email, address, contact, type, role, provider)
-values ('tester3', '{bcrypt}$2a$10$H1olmR5kIM6Z8MrB7EtjXeO.YrhvE4OaWcujVrnAUsS2IgBKjSEDa', 'tester3', 'tester3@gmail.com', '수원시', '010-1234-5678', 'SHELTER', 'USER', 'LOCAL');
+values ('tester3', '{bcrypt}$2a$10$H1olmR5kIM6Z8MrB7EtjXeO.YrhvE4OaWcujVrnAUsS2IgBKjSEDa', 'tester3',
+        'tester3@gmail.com', '수원시', '010-1234-5678', 'SHELTER', 'USER', 'LOCAL');
 insert into user(id, password, nickname, email, address, contact, type, role, provider)
-values ('tester4', '{bcrypt}$2a$10$UlsA3WbfmBNa99hrn4/9oejidNpvqCmm0c43GOkWcXJQanmR3CklG', 'tester4', 'tester4@gmail.com', '수원시', '010-1234-5678', 'SHELTER', 'USER', 'LOCAL');
+values ('tester4', '{bcrypt}$2a$10$UlsA3WbfmBNa99hrn4/9oejidNpvqCmm0c43GOkWcXJQanmR3CklG', 'tester4',
+        'tester4@gmail.com', '수원시', '010-1234-5678', 'SHELTER', 'USER', 'LOCAL');
 
 -- Animal
-insert into animal(animal_type, species, age, gender, special_notes, vaccine, is_neutered, reason_for_adoption, previous_home_environment, likes, dislikes, user)
+insert into animal(animal_type, species, age, gender, special_notes, vaccine, is_neutered, reason_for_adoption,
+                   previous_home_environment, likes, dislikes, user)
 values ('DOG', 'animal1', 1, 'male', null, 'yes', true, 'reason1', 'home', 'person', 'person', 1);
-insert into animal(animal_type, species, age, gender, special_notes, vaccine, is_neutered, reason_for_adoption, previous_home_environment, likes, dislikes, user)
+insert into animal(animal_type, species, age, gender, special_notes, vaccine, is_neutered, reason_for_adoption,
+                   previous_home_environment, likes, dislikes, user)
 values ('CAT', 'animal2', 2, 'male', null, 'yes', false, 'reason2', 'company', 'hotdog', 'person', 1);
-insert into animal(animal_type, species, age, gender, special_notes, vaccine, is_neutered, reason_for_adoption, previous_home_environment, likes, dislikes, user)
+insert into animal(animal_type, species, age, gender, special_notes, vaccine, is_neutered, reason_for_adoption,
+                   previous_home_environment, likes, dislikes, user)
 values ('DOG', 'animal3', 3, 'female', null, 'no', true, 'reason3', 'home', 'fox', 'person', 2);
-insert into animal(animal_type, species, age, gender, special_notes, vaccine, is_neutered, reason_for_adoption, previous_home_environment, likes, dislikes, user)
+insert into animal(animal_type, species, age, gender, special_notes, vaccine, is_neutered, reason_for_adoption,
+                   previous_home_environment, likes, dislikes, user)
 values ('BIRD', 'animal4', 4, 'female', null, 'no', false, 'reason4', 'toilet', 'tiger', 'person', 4);
 
 -- Board
@@ -109,3 +118,25 @@ insert into trade_comment(trade_board, writer, content)
 values (6, 1, 'comment12');
 insert into trade_comment(trade_board, writer, content)
 values (6, 2, 'comment13');
+
+-- Report
+insert into report(writer, board, report_type, title, content)
+values (1, 1, "SPAM", "test1", "spam report");
+insert into report(writer, board, report_type, title, content)
+values (2, 1, "ILLEGALITY", "test2", "illegality report");
+insert into report(writer, board, report_type, title, content)
+values (3, 1, "DISREGARD_FOR_LIFE", "test3", "disregard report");
+insert into report(writer, board, report_type, title, content)
+values (4, 1, "PERSONAL_INFORMATION_DISCLOSURE", "test4", "disclosure report");
+insert into report(writer, board, report_type, title, content)
+values (5, 1, "DISPLEASURE", "test5", "displeasure report");
+insert into report(writer, board, report_type, title, content)
+values (1, 1, "ETC", "test6", "etc report");
+insert into report(writer, board, report_type, title, content)
+values (1, 2, "ILLEGALITY", "test7", "illegality report");
+insert into report(writer, board, report_type, title, content)
+values (2, 2, "DISREGARD_FOR_LIFE", "test8", "disregard report");
+insert into report(writer, board, report_type, title, content)
+values (3, 3, "DISPLEASURE", "test9", "displeasure report");
+insert into report(writer, board, report_type, title, content)
+values (4, 4, "DISPLEASURE", "test10", "displeasure report");
