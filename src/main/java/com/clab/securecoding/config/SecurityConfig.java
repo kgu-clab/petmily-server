@@ -23,6 +23,7 @@ public class SecurityConfig {
 
     private static final String[] PERMIT_ALL = {
             "/login/**",
+            "/resources/files/**",
             "/v2/api-docs",
             "/swagger-resources",
             "/swagger-resources/**",
@@ -32,7 +33,7 @@ public class SecurityConfig {
             "/webjars/**",
             "/v3/api-docs/**",
             "/swagger-ui/**",
-            "/",
+            "/"
     };
 
     @Bean
