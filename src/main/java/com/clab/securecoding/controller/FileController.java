@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/files")
 @RequiredArgsConstructor
@@ -23,11 +25,11 @@ public class FileController {
     @PostMapping("/animals/{path}")
     public ResponseModel animalsUpload(
             @PathVariable String path,
-            @RequestParam(value = "file", required = true) MultipartFile multipartFile
+            @RequestParam(value = "files", required = true) MultipartFile[] multipartFiles
     ) throws FileUploadFailException {
-        String url = fileUploadService.saveFile(multipartFile, path);
+        List<String> urls = fileUploadService.saveFiles(multipartFiles, "animals/" + path);
         ResponseModel responseModel = ResponseModel.builder().build();
-        responseModel.addData(url);
+        responseModel.addData(urls);
         return responseModel;
     }
 
@@ -35,11 +37,11 @@ public class FileController {
     @PostMapping("/stores/{path}")
     public ResponseModel storesUpload(
             @PathVariable String path,
-            @RequestParam(value = "file", required = true) MultipartFile multipartFile
+            @RequestParam(value = "files", required = true) MultipartFile[] multipartFiles
     ) throws FileUploadFailException {
-        String url = fileUploadService.saveFile(multipartFile, path);
+        List<String> urls = fileUploadService.saveFiles(multipartFiles, "stores/" + path);
         ResponseModel responseModel = ResponseModel.builder().build();
-        responseModel.addData(url);
+        responseModel.addData(urls);
         return responseModel;
     }
 
