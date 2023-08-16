@@ -76,6 +76,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
     private List<Animal> animals;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserDetailInfo userDetailInfo;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(getRole().getKey()));
