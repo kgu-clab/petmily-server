@@ -40,24 +40,46 @@ public class AnimalAdoptionBoardService {
         return animalAdoptionBoardResponseDtos;
     }
 
+    public AnimalAdoptionBoardResponseDto getAnimalAdoptionBoard(Long boardId) {
+        AnimalAdoptionBoard animalAdoptionBoard = getAnimalAdoptionBoardByIdOrThrow(boardId);
+        AnimalAdoptionBoardResponseDto animalAdoptionBoardResponseDto = animalAdoptionBoardMapper.mapEntityToDto(animalAdoptionBoard);
+        return animalAdoptionBoardResponseDto;
+    }
+
     public List<AnimalAdoptionBoardResponseDto> searchAnimalAdoptionBoard(
-            UserType userType, AnimalType animalType, String species, String gender, Long age, String nickname
+            UserType userType, AnimalType animalType, String species, String nickname
     ) {
         List<AnimalAdoptionBoard> animalAdoptionBoards = new ArrayList<>();
 
         if (userType != null) {
             animalAdoptionBoards = animalAdoptionBoardRepository.findByWriter_Type(userType);
-        } else if (animalType != null) {
-            animalAdoptionBoards = animalAdoptionBoardRepository.findByAnimalType(animalType);
-        } else if (species != null) {
-            animalAdoptionBoards = animalAdoptionBoardRepository.findBySpecies(species);
-        } else if (gender != null) {
-            animalAdoptionBoards = animalAdoptionBoardRepository.findByGender(gender);
-        } else if ( age != null ) {
-            animalAdoptionBoards = animalAdoptionBoardRepository.findByAge(age);
-        } else if ( nickname != null ) {
-            animalAdoptionBoards = animalAdoptionBoardRepository.findByWriter_Nickname(nickname);
-        } else {
+        }
+
+        if (animalType != null) {
+            if (!animalAdoptionBoards.isEmpty()) {
+                animalAdoptionBoards.retainAll(animalAdoptionBoardRepository.findByAnimalType(animalType));
+            } else {
+                animalAdoptionBoards = animalAdoptionBoardRepository.findByAnimalType(animalType);
+            }
+        }
+
+        if (species != null) {
+            if (!animalAdoptionBoards.isEmpty()) {
+                animalAdoptionBoards.retainAll(animalAdoptionBoardRepository.findBySpecies(species));
+            } else {
+                animalAdoptionBoards = animalAdoptionBoardRepository.findBySpecies(species);
+            }
+        }
+
+        if (nickname != null) {
+            if (!animalAdoptionBoards.isEmpty()) {
+                animalAdoptionBoards.retainAll(animalAdoptionBoardRepository.findByWriter_Nickname(nickname));
+            } else {
+                animalAdoptionBoards = animalAdoptionBoardRepository.findByWriter_Nickname(nickname);
+            }
+        }
+
+        if (userType == null && animalType == null && species == null && nickname == null) {
             throw new IllegalArgumentException("검색을 위해 값을 입력해주세요.");
         }
 

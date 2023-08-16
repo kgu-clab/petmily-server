@@ -30,4 +30,4 @@ resource:
   file:
     url: /resources/files
     path: ${user.dir}/cloud
-    allow-extension: bmp,jpg,jpeg,png,gif
+    allow-extension: bmp,jpg,jpeg,png,gif,webp

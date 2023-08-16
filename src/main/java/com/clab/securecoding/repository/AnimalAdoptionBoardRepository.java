@@ -3,6 +3,9 @@ package com.clab.securecoding.repository;
 import com.clab.securecoding.type.entity.AnimalAdoptionBoard;
 import com.clab.securecoding.type.etc.AnimalType;
 import com.clab.securecoding.type.etc.UserType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -22,4 +25,5 @@ public interface AnimalAdoptionBoardRepository extends JpaRepository<AnimalAdopt
     List<AnimalAdoptionBoard> findByWriter_Type(UserType userType);
 
     List<AnimalAdoptionBoard> findByWriter_Nickname(String nickname);
+
 }

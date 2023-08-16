@@ -65,17 +65,26 @@ public class AnimalAdoptionBoardController {
         return responseModel;
     }
 
-    @Operation(summary = "동물 분양 게시글 검색", description = "동물 타입, 종, 성별, 나이로 검색 가능")
+    @Operation(summary = "동물 분양 게시글 상세 정보", description = "동물 분양 게시글 상세 정보 조회")
+    @GetMapping("/info")
+    public ResponseModel getAnimalAdoptionBoard(
+            @RequestParam Long boardId
+    ) {
+        AnimalAdoptionBoardResponseDto animalAdoptionBoards = animalAdoptionBoardService.getAnimalAdoptionBoard(boardId);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData(animalAdoptionBoards);
+        return responseModel;
+    }
+
+    @Operation(summary = "동물 분양 게시글 검색", description = "유저 타입, 동물 타입, 종, 유저 이름으로 검색 가능")
     @GetMapping("/search")
     public ResponseModel searchAnimalAdoptionBoards(
             @RequestParam(required = false) UserType userType,
             @RequestParam(required = false) AnimalType animalType,
             @RequestParam(required = false) String species,
-            @RequestParam(required = false) String gender,
-            @RequestParam(required = false) Long age,
             @RequestParam(required = false) String nickname
     ) {
-        List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = animalAdoptionBoardService.searchAnimalAdoptionBoard(userType, animalType, species, gender, age, nickname);
+        List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = animalAdoptionBoardService.searchAnimalAdoptionBoard(userType, animalType, species, nickname);
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData(animalAdoptionBoardResponseDtos);
         return responseModel;

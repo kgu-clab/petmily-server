@@ -46,6 +46,10 @@ insert into animal(animal_type, species, age, gender, special_notes, vaccine, is
                    previous_home_environment, likes, dislikes, user)
 values ('BIRD', 'animal4', 4, 'female', null, 'no', false, 'reason4', 'toilet', 'tiger', 'person', 4);
 
+-- AnimalAdoptionBoard
+INSERT INTO `animal_adoption_board` VALUES
+    (5,10,3,'DOG','수원','3월 23일','갈색','2023-08-16 19:13:04.805947','고구마','여자','[\"/resources/files/animals/pro/318412576840004_318c2efa-798e-4b25-b5cc-b97cf2d69d31.png\",\"/resources/files/animals/pro/318412683656463_28660f03-4416-4152-9047-b3ee1aaf367d.jpg\"]',8.8,8.9,'무',5,'누렁이',6.7,100000,'<p><strong>참고사항은 없습니다.</strong></p>','마당이 있는 집','시고르자브종','산책을 자주 못해주는 분','2차 완료',23.5,6);
+
 -- Board
 insert into board(writer, title, content)
 values (1, 'title1', 'content1');
