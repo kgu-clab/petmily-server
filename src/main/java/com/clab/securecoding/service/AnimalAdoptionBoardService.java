@@ -36,11 +36,7 @@ public class AnimalAdoptionBoardService {
 
     public List<AnimalAdoptionBoardResponseDto> getAnimalAdoptionBoards() {
         List<AnimalAdoptionBoard> animalAdoptionBoards = animalAdoptionBoardRepository.findAll();
-        List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = new ArrayList<>();
-        for (AnimalAdoptionBoard animalAdoptionBoard : animalAdoptionBoards) {
-            AnimalAdoptionBoardResponseDto responseDto = animalAdoptionBoardMapper.mapEntityToDto(animalAdoptionBoard);
-            animalAdoptionBoardResponseDtos.add(responseDto);
-        }
+        List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = animalAdoptionBoardMapper.mapEntityToDto(animalAdoptionBoards);
         return animalAdoptionBoardResponseDtos;
     }
 
@@ -48,7 +44,6 @@ public class AnimalAdoptionBoardService {
             UserType userType, AnimalType animalType, String species, String gender, Long age, String nickname
     ) {
         List<AnimalAdoptionBoard> animalAdoptionBoards = new ArrayList<>();
-        List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = new ArrayList<>();
 
         if (userType != null) {
             animalAdoptionBoards = animalAdoptionBoardRepository.findByWriter_Type(userType);
@@ -70,29 +65,23 @@ public class AnimalAdoptionBoardService {
             throw new SearchResultNotExistException();
         }
 
-        for (AnimalAdoptionBoard animalAdoptionBoard : animalAdoptionBoards) {
-            AnimalAdoptionBoardResponseDto responseDto = animalAdoptionBoardMapper.mapEntityToDto(animalAdoptionBoard);
-            animalAdoptionBoardResponseDtos.add(responseDto);
-        }
+        List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = animalAdoptionBoardMapper.mapEntityToDto(animalAdoptionBoards);
         return animalAdoptionBoardResponseDtos;
     }
 
     public void updateAnimalAdoptionBoard(Long animalAdoptionBoardId, AnimalAdoptionBoardRequestDto requestDto) throws PermissionDeniedException {
-        User writer = userService.getCurrentUser();
         AnimalAdoptionBoard animalAdoptionBoard = getAnimalAdoptionBoardByIdOrThrow(animalAdoptionBoardId);
 
-        if (writer != animalAdoptionBoard.getWriter()) {
-            throw new PermissionDeniedException();
-        }
+        checkWriterPermission(animalAdoptionBoard.getWriter());
 
-        setAnimalAdoptionBoard(animalAdoptionBoard, requestDto);
+        animalAdoptionBoard = animalAdoptionBoardMapper.mapDtoToEntity(requestDto);
         animalAdoptionBoardRepository.save(animalAdoptionBoard);
     }
 
     public void deleteAnimalAdoptionBoard(Long animalAdoptionBoardId) throws PermissionDeniedException {
         User writer = userService.getCurrentUser();
         AnimalAdoptionBoard animalAdoptionBoard = getAnimalAdoptionBoardByIdOrThrow(animalAdoptionBoardId);
-        if (writer == animalAdoptionBoard.getWriter() || userService.checkUserAdminRole()) {
+        if (checkWriterPermission(animalAdoptionBoard.getWriter()) || userService.checkUserAdminRole()) {
             animalAdoptionBoardRepository.delete(animalAdoptionBoard);
         } else {
             throw new PermissionDeniedException();
@@ -104,26 +93,12 @@ public class AnimalAdoptionBoardService {
                 .orElseThrow(() -> new NotFoundException("해당하는 동물 분양 게시글이 없습니다."));
     }
 
-    public void setAnimalAdoptionBoard(AnimalAdoptionBoard animalAdoptionBoard, AnimalAdoptionBoardRequestDto requestDto) {
-        animalAdoptionBoard.setAnimalType(requestDto.getAnimalType());
-        animalAdoptionBoard.setSpecies(requestDto.getSpecies());
-        animalAdoptionBoard.setName(requestDto.getName());
-        animalAdoptionBoard.setColor(requestDto.getColor());
-        animalAdoptionBoard.setGender(requestDto.getGender());
-        animalAdoptionBoard.setAge(requestDto.getAge());
-        animalAdoptionBoard.setWeight(requestDto.getWeight());
-        animalAdoptionBoard.setVaccine(requestDto.getVaccine());
-        animalAdoptionBoard.setIsNeutered(requestDto.getIsNeutered());
-        animalAdoptionBoard.setReasonForAdoption(requestDto.getReasonForAdoption());
-        animalAdoptionBoard.setPrice(requestDto.getPrice());
-        animalAdoptionBoard.setLeadership(requestDto.getLeadership());
-        animalAdoptionBoard.setIndependence(requestDto.getIndependence());
-        animalAdoptionBoard.setInitiative(requestDto.getInitiative());
-        animalAdoptionBoard.setPositivity(requestDto.getPositivity());
-        animalAdoptionBoard.setAdaptability(requestDto.getAdaptability());
-        animalAdoptionBoard.setAreasAvailable(requestDto.getAreasAvailable());
-        animalAdoptionBoard.setRecommendation(requestDto.getRecommendation());
-        animalAdoptionBoard.setThink(requestDto.getThink());
+    private boolean checkWriterPermission(User boardWriter) throws PermissionDeniedException {
+        User writer = userService.getCurrentUser();
+        if (!writer.equals(boardWriter)) {
+            throw new PermissionDeniedException();
+        }
+        return true;
     }
 
 }

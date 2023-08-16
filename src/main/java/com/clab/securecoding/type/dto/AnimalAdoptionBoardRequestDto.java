@@ -24,7 +24,7 @@ public class AnimalAdoptionBoardRequestDto {
 
     private Long age;
 
-    private Long weight;
+    private Double weight;
 
     private String vaccine;
 

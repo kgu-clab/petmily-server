@@ -6,6 +6,9 @@ import com.clab.securecoding.type.entity.AnimalAdoptionBoard;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class AnimalAdoptionBoardMapper {
@@ -65,6 +68,15 @@ public class AnimalAdoptionBoardMapper {
                 .writer(animalAdoptionBoard.getWriter())
                 .createdAt(animalAdoptionBoard.getCreatedAt())
                 .build();
+    }
+
+    public List<AnimalAdoptionBoardResponseDto> mapEntityToDto(List<AnimalAdoptionBoard> animalAdoptionBoards) {
+        List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = new ArrayList<>();
+        for (AnimalAdoptionBoard animalAdoptionBoard : animalAdoptionBoards) {
+            AnimalAdoptionBoardResponseDto animalAdoptionBoardResponseDto = mapEntityToDto(animalAdoptionBoard);
+            animalAdoptionBoardResponseDtos.add(animalAdoptionBoardResponseDto);
+        }
+        return animalAdoptionBoardResponseDtos;
     }
 
 }
