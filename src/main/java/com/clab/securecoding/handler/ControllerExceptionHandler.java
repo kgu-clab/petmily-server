@@ -93,14 +93,15 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler({
-            AssociatedAccountExistsException.class
+            AssociatedAccountExistsException.class,
+            DuplicateContactException.class
     })
     public ResponseModel AssociatedAccountExistsExceptionError(HttpServletRequest request, HttpServletResponse response,
                                                    Exception e) {
         ResponseModel responseModel = ResponseModel.builder()
                 .success(false)
                 .build();
-        response.setStatus(404);
+        response.setStatus(200);
         return responseModel;
     }
 

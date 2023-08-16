@@ -31,18 +31,19 @@ public class UserController {
             "String email;<br>" +
             "String address;<br>" +
             "String contact;<br>" +
+            "String businessNumber;<br>" +
             "UserType type;")
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseModel createUser(
             @RequestBody UserRequestDto userRequestDto
-    ) throws PermissionDeniedException {
+    ) {
         userService.createUser(userRequestDto);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }
 
     @Operation(summary = "유저 정보", description = "프로필 정보 조회")
-    @GetMapping("/list")
+    @GetMapping()
     public ResponseModel getUsers() throws PermissionDeniedException {
         List<UserResponseDto> users = userService.getUsers();
         ResponseModel responseModel = ResponseModel.builder().build();
@@ -70,7 +71,7 @@ public class UserController {
             "String address;<br>" +
             "String contact;<br>" +
             "UserType type;")
-    @PatchMapping("/update")
+    @PatchMapping()
     public ResponseModel updateUserInfoByUser(
             @RequestBody UserUpdateRequestDto userUpdateRequestDto
     ) {
@@ -80,7 +81,7 @@ public class UserController {
     }
 
     @Operation(summary = "유저 삭제(관리자 전용)", description = "관리자에 의한 유저 삭제(모든 계정 삭제 가능)")
-    @DeleteMapping("/delete/{seq}")
+    @DeleteMapping("/{seq}")
     public ResponseModel deleteUserByAdmin(
             @PathVariable Long seq
     ) throws PermissionDeniedException {
@@ -90,10 +91,22 @@ public class UserController {
     }
 
     @Operation(summary = "유저 삭제(일반 유저 전용)", description = "본인 계정 삭제")
-    @DeleteMapping("/delete")
+    @DeleteMapping()
     public ResponseModel deleteUserByUser() {
         userService.deleteUserByUser();
         ResponseModel responseModel = ResponseModel.builder().build();
+        return responseModel;
+    }
+
+    @Operation(summary = "유저 정보 중복 확인", description = "유저 정보 중복 확인")
+    @GetMapping("/dup")
+    public ResponseModel checkExistAccount(
+            @RequestParam(required = false) String userId,
+            @RequestParam(required = false) String contact
+    ) {
+        boolean isDuplicate = userService.isExistUserInfo(userId, contact);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData(isDuplicate);
         return responseModel;
     }
 

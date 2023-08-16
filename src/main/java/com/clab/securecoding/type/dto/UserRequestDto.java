@@ -24,6 +24,8 @@ public class UserRequestDto {
 
     private String contact;
 
+    private String businessNumber;
+
     private UserType type;
 
 }

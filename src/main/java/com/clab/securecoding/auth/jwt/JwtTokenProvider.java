@@ -27,7 +27,7 @@ public class JwtTokenProvider {
     private final Key key;
 
     private static final long ACCESS_TOKEN_DURATION = 30L * 60L * 1000L; // 30분
-    private static final long REFRESH_TOKEN_DURATION = 60L * 60L * 24L * 7L * 1000L; // 7일
+    private static final long REFRESH_TOKEN_DURATION = 40L * 60L * 1000L; // 40분
 
     public JwtTokenProvider(@Value("${jwt.secret-key}") String secretKey) {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
@@ -58,7 +58,6 @@ public class JwtTokenProvider {
                 .compact();
 
         return TokenInfo.builder()
-                .grantType("Bearer")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();

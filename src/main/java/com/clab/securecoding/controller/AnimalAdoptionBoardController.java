@@ -17,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/adoption-board")
+@RequestMapping("/adoption-boards")
 @RequiredArgsConstructor
 @Tag(name = "AnimalAdoptionBoard")
 public class AnimalAdoptionBoardController {

@@ -7,6 +7,7 @@ import com.clab.securecoding.repository.BlacklistIpRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -31,6 +32,8 @@ public class SecurityConfig {
 
     private static final String[] PERMIT_ALL = {
             "/login/**",
+            "/sms/send-verification-code",
+            "/sms/verify",
             "/resources/files/**",
             "/v2/api-docs",
             "/swagger-resources",
@@ -55,6 +58,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers(PERMIT_ALL).permitAll()
+                .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new CrossSiteScriptingFilter(), UsernamePasswordAuthenticationFilter.class)

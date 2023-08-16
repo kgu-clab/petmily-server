@@ -4,16 +4,16 @@ values ('admin', '{bcrypt}$2a$10$ri5DhfHYNcqjN3HGP4oCYuZ7d8sxULvUOl4gE3OONygd4QU
         '수원시', '010-1234-5678', 'INDIVIDUAL', 'ADMIN', 'LOCAL');
 insert into user(id, password, nickname, email, address, contact, type, role, provider)
 values ('tester1', '{bcrypt}$2a$10$TA0btCubK9nayV8yJHmNo.kKTG30ECMVWQT8ed6LRl1yzZY1oZTsG', 'tester1',
-        'tester1@gmail.com', '수원시', '010-1234-5678', 'INDIVIDUAL', 'USER', 'LOCAL');
+        'tester1@gmail.com', '수원시', '01012345678', 'INDIVIDUAL', 'USER', 'LOCAL');
 insert into user(id, password, nickname, email, address, contact, type, role, provider)
 values ('tester2', '{bcrypt}$2a$10$owcdmT6My36VUzlJQin6.ujxwDPJtk32hHQWIdqiU74vSZewFgD1u', 'tester2',
-        'tester2@gmail.com', '수원시', '010-1234-5678', 'INDIVIDUAL', 'USER', 'LOCAL');
+        'tester2@gmail.com', '수원시', '01012345678', 'INDIVIDUAL', 'USER', 'LOCAL');
 insert into user(id, password, nickname, email, address, contact, type, role, provider)
 values ('tester3', '{bcrypt}$2a$10$H1olmR5kIM6Z8MrB7EtjXeO.YrhvE4OaWcujVrnAUsS2IgBKjSEDa', 'tester3',
-        'tester3@gmail.com', '수원시', '010-1234-5678', 'SHELTER', 'USER', 'LOCAL');
+        'tester3@gmail.com', '수원시', '01012345678', 'SHELTER', 'USER', 'LOCAL');
 insert into user(id, password, nickname, email, address, contact, type, role, provider)
 values ('tester4', '{bcrypt}$2a$10$UlsA3WbfmBNa99hrn4/9oejidNpvqCmm0c43GOkWcXJQanmR3CklG', 'tester4',
-        'tester4@gmail.com', '수원시', '010-1234-5678', 'SHELTER', 'USER', 'LOCAL');
+        'tester4@gmail.com', '수원시', '01012345678', 'SHELTER', 'USER', 'LOCAL');
 
 -- LoginFailInfo
 insert into login_fail_info(user, login_fail_count, is_lock)

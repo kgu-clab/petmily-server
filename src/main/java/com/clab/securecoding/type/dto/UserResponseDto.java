@@ -28,6 +28,8 @@ public class UserResponseDto {
 
     private String contact;
 
+    private String businessNumber;
+
     private UserType type;
 
     private Role role;
