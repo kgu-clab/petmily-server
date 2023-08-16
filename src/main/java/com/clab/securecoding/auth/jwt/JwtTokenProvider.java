@@ -68,8 +68,8 @@ public class JwtTokenProvider {
     public Authentication getAuthentication(String accessToken) {
         // 토큰 복호화
         Claims claims = parseClaims(accessToken);
-        log.info("claims : {}", claims);
-        log.info("accessToken : {}", accessToken);
+        log.debug("claims : {}", claims);
+        log.debug("accessToken : {}", accessToken);
 
         if (claims.get("role") == null) {
             throw new TokenValidateException("권한 정보가 없는 토큰입니다.");
