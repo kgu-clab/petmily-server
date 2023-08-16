@@ -2,6 +2,7 @@ package com.clab.securecoding.controller;
 
 import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.service.LoginService;
+import com.clab.securecoding.type.dto.RefreshTokenDto;
 import com.clab.securecoding.type.dto.ResponseModel;
 import com.clab.securecoding.type.dto.TokenInfo;
 import com.clab.securecoding.type.dto.UserLoginRequestDto;
@@ -37,6 +38,17 @@ public class LoginController {
             log.info("login : {}", e.getMessage());
             responseModel.setSuccess(false);
         }
+        return responseModel;
+    }
+
+    @Operation(summary = "유저 토큰 재발급", description = "유저 토큰 재발급")
+    @PostMapping("/reissue")
+    public ResponseModel reissue(
+            @RequestBody RefreshTokenDto refreshTokenDto
+    ) {
+        TokenInfo tokenInfo = loginService.reissue(refreshTokenDto);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData(tokenInfo);
         return responseModel;
     }
 
