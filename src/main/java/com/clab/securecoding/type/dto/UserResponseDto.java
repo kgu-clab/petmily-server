@@ -26,6 +26,8 @@ public class UserResponseDto {
 
     private String address;
 
+    private String contact;
+
     private String businessNumber;
 
     private UserType type;

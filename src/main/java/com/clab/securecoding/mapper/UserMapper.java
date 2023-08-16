@@ -32,6 +32,7 @@ public class UserMapper {
                 .nickname(user.getNickname())
                 .email(user.getEmail())
                 .address(user.getAddress())
+                .contact(user.getContact())
                 .businessNumber(user.getBusinessNumber())
                 .type(user.getType())
                 .createdAt(user.getCreatedAt())
