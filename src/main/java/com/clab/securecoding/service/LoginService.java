@@ -2,6 +2,8 @@ package com.clab.securecoding.service;
 
 import com.clab.securecoding.auth.jwt.JwtTokenProvider;
 import com.clab.securecoding.exception.LoginFaliedException;
+import com.clab.securecoding.exception.NotFoundException;
+import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.exception.UserLockedException;
 import com.clab.securecoding.repository.LoginFailInfoRepository;
 import com.clab.securecoding.type.dto.TokenInfo;
@@ -23,10 +25,15 @@ import java.time.LocalDateTime;
 public class LoginService {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+
     private final JwtTokenProvider jwtTokenProvider;
+
     private final LoginFailInfoRepository loginFailInfoRepository;
 
+    private final UserService userService;
+
     private static final int MAX_LOGIN_FAILURES = 5;
+
     private static final int LOCK_DURATION_MINUTES = 5;
 
     @Transactional
@@ -36,7 +43,7 @@ public class LoginService {
         try {
             Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-            LoginFailInfo loginFailInfo = loginFailInfoRepository.findByUser_Id(authentication.getName());
+            LoginFailInfo loginFailInfo = getLoginFailInfoByUserIdOrThrow(authentication.getName());
             checkUserLocked(loginFailInfo);
             resetLoginFailInfo(loginFailInfo);
 
@@ -47,6 +54,25 @@ public class LoginService {
         }
 
         return null;
+    }
+
+    public void banUserById(String userId) throws PermissionDeniedException {
+        userService.checkUserAdminRole();
+        LoginFailInfo loginFailInfo = getLoginFailInfoByUserIdOrThrow(userId);
+        if (loginFailInfo != null) {
+            loginFailInfo.setIsLock(true);
+            loginFailInfo.setLatestTryLoginDate(LocalDateTime.now().plusYears(100));
+            loginFailInfoRepository.save(loginFailInfo);
+        }
+    }
+
+    public void unbanUserById(String userId) throws PermissionDeniedException {
+        userService.checkUserAdminRole();
+        LoginFailInfo loginFailInfo = getLoginFailInfoByUserIdOrThrow(userId);
+        if (loginFailInfo != null) {
+            loginFailInfo.setIsLock(false);
+            loginFailInfoRepository.save(loginFailInfo);
+        }
     }
 
     private void checkUserLocked(LoginFailInfo loginFailInfo) throws UserLockedException {
@@ -68,8 +94,8 @@ public class LoginService {
         }
     }
 
-    private void updateLoginFailInfo(String id) throws LoginFaliedException {
-        LoginFailInfo loginFailInfo = loginFailInfoRepository.findByUser_Id(id);
+    private void updateLoginFailInfo(String userId) throws LoginFaliedException {
+        LoginFailInfo loginFailInfo = getLoginFailInfoByUserIdOrThrow(userId);
         if (loginFailInfo != null) {
             incrementFailCountAndLock(loginFailInfo);
         }
@@ -86,4 +112,10 @@ public class LoginService {
         }
         loginFailInfoRepository.save(loginFailInfo);
     }
+
+    public LoginFailInfo getLoginFailInfoByUserIdOrThrow(String userId) {
+        return loginFailInfoRepository.findByUser_Id(userId)
+                .orElseThrow(() -> new NotFoundException("해당 유저가 없습니다."));
+    }
+
 }
