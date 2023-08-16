@@ -3,6 +3,7 @@ package com.clab.securecoding.config;
 import com.clab.securecoding.auth.filter.CrossSiteScriptingFilter;
 import com.clab.securecoding.auth.filter.JwtAuthenticationFilter;
 import com.clab.securecoding.auth.jwt.JwtTokenProvider;
+import com.clab.securecoding.repository.BlacklistIpRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,8 @@ import java.util.List;
 public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
+
+    private final BlacklistIpRepository blacklistIpRepository;
 
     private static final String[] PERMIT_ALL = {
             "/login/**",
@@ -55,7 +58,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new CrossSiteScriptingFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, blacklistIpRepository), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
