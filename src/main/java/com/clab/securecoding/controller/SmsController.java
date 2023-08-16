@@ -1,12 +1,9 @@
 package com.clab.securecoding.controller;
 
 import com.clab.securecoding.service.SmsService;
-import com.clab.securecoding.type.dto.ResponseModel;
-import com.clab.securecoding.type.dto.RequestDto;
-import com.clab.securecoding.type.dto.SmsResponseDto;
+import com.clab.securecoding.type.dto.*;
 
 
-import com.clab.securecoding.type.dto.VerificationRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -36,11 +33,11 @@ public class SmsController {
     }
 
     @Operation(summary = "인증 코드 발송", description = "인증 코드를 발송하여 사용자를 인증합니다.")
-    @PostMapping("/send-verification-code/{recipientPhoneNumber}")
+    @PostMapping("/send-verification-code")
     public ResponseModel sendVerificationCode(
-            @PathVariable String recipientPhoneNumber
+            @RequestBody SmsPhoneNumberDto smsPhoneNumberDto
     ) {
-        SmsResponseDto smsResponseDto = smsService.sendVerificationCode(recipientPhoneNumber);
+        SmsResponseDto smsResponseDto = smsService.sendVerificationCode(smsPhoneNumberDto);
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData(smsResponseDto);
         return responseModel;

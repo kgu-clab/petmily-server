@@ -43,6 +43,8 @@ public class User implements UserDetails {
 
     private String contact;
 
+    private String businessNumber;
+
     @Enumerated(EnumType.STRING)
     private UserType type;
 
@@ -55,6 +57,10 @@ public class User implements UserDetails {
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
+    private LoginFailInfo loginFailInfo;
 
     @JsonIgnore
     @OneToMany(mappedBy = "writer", cascade = {CascadeType.DETACH, CascadeType.REMOVE})

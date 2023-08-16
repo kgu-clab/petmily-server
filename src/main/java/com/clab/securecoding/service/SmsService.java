@@ -46,10 +46,12 @@ public class SmsService {
 
     private final VerificationCodeRepository verificationCodeRepository;
 
+    private final UserService userService;
+
     public SmsResponseDto sendSms(RequestDto requestDto) {
         try {
             String recipientPhoneNumber = requestDto.getRecipientPhoneNumber();
-            String content = requestDto.getContent();
+            String content = userService.removeHyphensFromContact(requestDto.getContent());
             SmsResponseDto smsResponseDto = sendSmsInternal(recipientPhoneNumber, content);
             return smsResponseDto;
         } catch (Exception e) {
@@ -57,8 +59,9 @@ public class SmsService {
         }
     }
 
-    public SmsResponseDto sendVerificationCode(String recipientPhoneNumber) {
+    public SmsResponseDto sendVerificationCode(SmsPhoneNumberDto smsPhoneNumberDto) {
         try {
+            String recipientPhoneNumber = userService.removeHyphensFromContact(smsPhoneNumberDto.getRecipientPhoneNumber());
             String verificationCode = generateVerificationCode();
             storeVerificationCode(recipientPhoneNumber, verificationCode);
             String contentWithCode = "Your verification code: " + verificationCode;
@@ -70,7 +73,7 @@ public class SmsService {
     }
 
     public void verifyVerificationCode(VerificationRequestDto verificationRequestDto) {
-        String recipientPhoneNumber = verificationRequestDto.getRecipientPhoneNumber();
+        String recipientPhoneNumber = userService.removeHyphensFromContact(verificationRequestDto.getRecipientPhoneNumber());
         String inputCode = verificationRequestDto.getVerificationCode();
         VerificationCode storedCode = verificationCodeRepository.findByRecipientPhoneNumber(recipientPhoneNumber);
         if (storedCode == null || !isVerificationCodeValid(storedCode, inputCode))
@@ -145,7 +148,7 @@ public class SmsService {
 
     public String generateVerificationCode() {
         SecureRandom secureRandom = new SecureRandom();
-        byte[] codeBytes = new byte[8]; // 8바이트 (16자리)의 난수 생성
+        byte[] codeBytes = new byte[6]; // 6바이트 (12자리)의 난수 생성
         secureRandom.nextBytes(codeBytes);
         return Base64.encodeBase64URLSafeString(codeBytes); // URL-safe한 Base64 인코딩
     }

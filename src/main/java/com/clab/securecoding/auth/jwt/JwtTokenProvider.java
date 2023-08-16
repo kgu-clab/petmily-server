@@ -27,7 +27,7 @@ public class JwtTokenProvider {
     private final Key key;
 
     private static final long ACCESS_TOKEN_DURATION = 30L * 60L * 1000L; // 30분
-    private static final long REFRESH_TOKEN_DURATION = 60L * 60L * 24L * 7L * 1000L; // 7일
+    private static final long REFRESH_TOKEN_DURATION = 40L * 60L * 1000L; // 40분
 
     public JwtTokenProvider(@Value("${jwt.secret-key}") String secretKey) {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
@@ -58,7 +58,6 @@ public class JwtTokenProvider {
                 .compact();
 
         return TokenInfo.builder()
-                .grantType("Bearer")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
@@ -68,8 +67,8 @@ public class JwtTokenProvider {
     public Authentication getAuthentication(String accessToken) {
         // 토큰 복호화
         Claims claims = parseClaims(accessToken);
-        log.info("claims : {}", claims);
-        log.info("accessToken : {}", accessToken);
+        log.debug("claims : {}", claims);
+        log.debug("accessToken : {}", accessToken);
 
         if (claims.get("role") == null) {
             throw new TokenValidateException("권한 정보가 없는 토큰입니다.");

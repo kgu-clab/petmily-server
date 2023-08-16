@@ -18,6 +18,7 @@ public class UserMapper {
                 .email(userRequestDto.getEmail())
                 .address(userRequestDto.getAddress())
                 .contact(userRequestDto.getContact())
+                .businessNumber(userRequestDto.getBusinessNumber())
                 .type(userRequestDto.getType())
                 .role(Role.USER)
                 .provider(OAuthProvider.LOCAL)
@@ -32,9 +33,8 @@ public class UserMapper {
                 .email(user.getEmail())
                 .address(user.getAddress())
                 .contact(user.getContact())
+                .businessNumber(user.getBusinessNumber())
                 .type(user.getType())
-                .role(user.getRole())
-                .provider(user.getProvider())
                 .createdAt(user.getCreatedAt())
                 .build();
     }

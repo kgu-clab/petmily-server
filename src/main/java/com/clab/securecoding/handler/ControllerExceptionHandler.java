@@ -11,6 +11,7 @@ import org.quartz.SchedulerException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.mail.MailSendException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -53,7 +54,7 @@ public class ControllerExceptionHandler {
             SecurityException.class,
             MalformedJwtException.class,
             UnsupportedJwtException.class,
-            VerificationFailedException.class
+            VerificationFailedException.class,
     })
     public ResponseModel unAuthorizeRequestError(HttpServletRequest request, HttpServletResponse response,
                                                  Exception e) {
@@ -61,6 +62,20 @@ public class ControllerExceptionHandler {
                 .success(false)
                 .build();
         response.setStatus(401);
+        return responseModel;
+    }
+
+    @ExceptionHandler({
+            LoginFaliedException.class,
+            UserLockedException.class,
+            BadCredentialsException.class
+    })
+    public ResponseModel LoginFailedError(HttpServletRequest request, HttpServletResponse response,
+                                                 Exception e) {
+        ResponseModel responseModel = ResponseModel.builder()
+                .success(false)
+                .build();
+        response.setStatus(403);
         return responseModel;
     }
 
@@ -78,14 +93,15 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler({
-            AssociatedAccountExistsException.class
+            AssociatedAccountExistsException.class,
+            DuplicateContactException.class
     })
     public ResponseModel AssociatedAccountExistsExceptionError(HttpServletRequest request, HttpServletResponse response,
                                                    Exception e) {
         ResponseModel responseModel = ResponseModel.builder()
                 .success(false)
                 .build();
-        response.setStatus(404);
+        response.setStatus(200);
         return responseModel;
     }
 

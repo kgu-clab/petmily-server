@@ -17,14 +17,35 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/adoption-board")
+@RequestMapping("/adoption-boards")
 @RequiredArgsConstructor
 @Tag(name = "AnimalAdoptionBoard")
 public class AnimalAdoptionBoardController {
 
     private final AnimalAdoptionBoardService animalAdoptionBoardService;
 
-    @Operation(summary = "동물 분양 게시글 생성", description = "동물 분양 게시글 생성")
+    @Operation(summary = "동물 분양 게시글 생성", description = "동물 분양 게시글 생성<br>" +
+            "AnimalType: DOG | CAT | BIRD | FISH | SMALL_ANIMAL | REPTILE<br>" +
+            "String species;<br>" +
+            "String name;<br>" +
+            "String color;<br>" +
+            "String gender;<br>" +
+            "Long age;<br>" +
+            "Long weight;<br>" +
+            "String vaccine;<br>" +
+            "Boolean isNeutered;<br>" +
+            "String birthDay;<br>" +
+            "String favoriteSnack;<br>" +
+            "String reasonForAdoption;<br>" +
+            "String areasAvailable;<br>" +
+            "Integer price;<br>" +
+            "Double leadership;<br>" +
+            "Double independence;<br>" +
+            "Double initiative;<br>" +
+            "Double positivity;<br>" +
+            "Double adaptability;<br>" +
+            "String recommendation;<br>" +
+            "String think;")
     @PostMapping("/create")
     public ResponseModel createAnimalAdoptionBoard(
             @RequestBody AnimalAdoptionBoardRequestDto requestDto
