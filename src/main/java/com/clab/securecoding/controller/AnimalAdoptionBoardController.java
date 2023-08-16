@@ -31,7 +31,7 @@ public class AnimalAdoptionBoardController {
             "String color;<br>" +
             "String gender;<br>" +
             "Long age;<br>" +
-            "Long weight;<br>" +
+            "Double weight;<br>" +
             "String vaccine;<br>" +
             "Boolean isNeutered;<br>" +
             "String birthDay;<br>" +
@@ -46,7 +46,7 @@ public class AnimalAdoptionBoardController {
             "Double adaptability;<br>" +
             "String recommendation;<br>" +
             "String think;")
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseModel createAnimalAdoptionBoard(
             @RequestBody AnimalAdoptionBoardRequestDto requestDto
     ) {
@@ -56,7 +56,7 @@ public class AnimalAdoptionBoardController {
     }
 
     @Operation(summary = "동물 분양 게시글 정보", description = "동물 분양 게시글 정보 조회")
-    @GetMapping("/list")
+    @GetMapping()
     public ResponseModel getAnimalAdoptionBoards() {
         List<AnimalAdoptionBoardResponseDto> animalAdoptionBoards = animalAdoptionBoardService.getAnimalAdoptionBoards();
         ResponseModel responseModel = ResponseModel.builder().build();
@@ -81,7 +81,7 @@ public class AnimalAdoptionBoardController {
     }
 
     @Operation(summary = "동물 분양 게시글 수정", description = "동물 분양 게시글 수정")
-    @PatchMapping("/update/{animalAdoptionBoardId}")
+    @PatchMapping("/{animalAdoptionBoardId}")
     public ResponseModel updateAnimalAdoptionBoard(
             @PathVariable Long animalAdoptionBoardId,
             @RequestBody AnimalAdoptionBoardRequestDto requestDto
@@ -92,7 +92,7 @@ public class AnimalAdoptionBoardController {
     }
 
     @Operation(summary = "동물 분양 게시글 삭제", description = "동물 분양 게시글 삭제(본인 또는 관리자만 가능)")
-    @DeleteMapping("/delete/{animalAdoptionBoardId}")
+    @DeleteMapping("/{animalAdoptionBoardId}")
     public ResponseModel deleteAnimalAdoptionBoard(
             @PathVariable Long animalAdoptionBoardId
     ) throws PermissionDeniedException {
