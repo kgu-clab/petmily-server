@@ -37,6 +37,7 @@ public class AnimalAdoptionBoardMapper {
                 .adaptability(animalAdoptionBoardReqDto.getAdaptability())
                 .recommendation(animalAdoptionBoardReqDto.getRecommendation())
                 .think(animalAdoptionBoardReqDto.getThink())
+                .imgUrl(animalAdoptionBoardReqDto.getImgUrl())
                 .build();
     }
 
@@ -65,6 +66,7 @@ public class AnimalAdoptionBoardMapper {
                 .adaptability(animalAdoptionBoard.getAdaptability())
                 .recommendation(animalAdoptionBoard.getRecommendation())
                 .think(animalAdoptionBoard.getThink())
+                .imgUrl(animalAdoptionBoard.getImgUrl())
                 .writer(animalAdoptionBoard.getWriter())
                 .createdAt(animalAdoptionBoard.getCreatedAt())
                 .build();

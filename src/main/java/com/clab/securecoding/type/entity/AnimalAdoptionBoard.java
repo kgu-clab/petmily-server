@@ -38,12 +38,13 @@ public class AnimalAdoptionBoard {
 
     private String vaccine;
 
-    private Boolean isNeutered;
+    private String isNeutered;
 
     private String birthDay;
 
     private String favoriteSnack;
 
+    @Lob
     private String reasonForAdoption;
 
     private String areasAvailable;
@@ -63,6 +64,9 @@ public class AnimalAdoptionBoard {
     private String recommendation;
 
     private String think;
+
+    @Column(columnDefinition = "TEXT")
+    private String imgUrl;
 
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "user")

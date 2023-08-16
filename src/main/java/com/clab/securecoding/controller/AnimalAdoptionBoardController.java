@@ -33,7 +33,7 @@ public class AnimalAdoptionBoardController {
             "Long age;<br>" +
             "Double weight;<br>" +
             "String vaccine;<br>" +
-            "Boolean isNeutered;<br>" +
+            "String isNeutered;<br>" +
             "String birthDay;<br>" +
             "String favoriteSnack;<br>" +
             "String reasonForAdoption;<br>" +
@@ -45,7 +45,8 @@ public class AnimalAdoptionBoardController {
             "Double positivity;<br>" +
             "Double adaptability;<br>" +
             "String recommendation;<br>" +
-            "String think;")
+            "String think;<br> +" +
+            "String imgUrl;")
     @PostMapping()
     public ResponseModel createAnimalAdoptionBoard(
             @RequestBody AnimalAdoptionBoardRequestDto requestDto

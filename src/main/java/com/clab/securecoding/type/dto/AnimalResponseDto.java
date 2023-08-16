@@ -27,7 +27,7 @@ public class AnimalResponseDto {
 
     private String vaccine;
 
-    private Boolean isNeutered;
+    private String isNeutered;
 
     private String reasonForAdoption;
 
