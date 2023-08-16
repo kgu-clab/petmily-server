@@ -29,11 +29,16 @@ public class LoginController {
     public ResponseModel login(
             @RequestBody UserLoginRequestDto userLoginRequestDto
     ) {
-        String id = userLoginRequestDto.getId();
-        String password = userLoginRequestDto.getPassword();
-        TokenInfo tokenInfo = loginService.login(id, password);
         ResponseModel responseModel = ResponseModel.builder().build();
-        responseModel.addData(tokenInfo);
+        try {
+            String id = userLoginRequestDto.getId();
+            String password = userLoginRequestDto.getPassword();
+            TokenInfo tokenInfo = loginService.login(id, password);
+            responseModel.addData(tokenInfo);
+        } catch (Exception e) {
+            log.info("login : {}", e.getMessage());
+            responseModel.setSuccess(false);
+        }
         return responseModel;
     }
 

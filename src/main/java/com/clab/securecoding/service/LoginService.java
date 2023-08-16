@@ -1,15 +1,21 @@
 package com.clab.securecoding.service;
 
 import com.clab.securecoding.auth.jwt.JwtTokenProvider;
+import com.clab.securecoding.exception.LoginFaliedException;
+import com.clab.securecoding.exception.UserLockedException;
+import com.clab.securecoding.repository.LoginFailInfoRepository;
 import com.clab.securecoding.type.dto.TokenInfo;
+import com.clab.securecoding.type.entity.LoginFailInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -17,23 +23,67 @@ import javax.transaction.Transactional;
 public class LoginService {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-
     private final JwtTokenProvider jwtTokenProvider;
+    private final LoginFailInfoRepository loginFailInfoRepository;
+
+    private static final int MAX_LOGIN_FAILURES = 5;
+    private static final int LOCK_DURATION_MINUTES = 5;
 
     @Transactional
-    public TokenInfo login(String id, String password) {
-        // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
-        // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
+    public TokenInfo login(String id, String password) throws LoginFaliedException, UserLockedException {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, password);
 
-        // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
-        // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        try {
+            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-        // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+            LoginFailInfo loginFailInfo = loginFailInfoRepository.findByUser_Id(authentication.getName());
+            checkUserLocked(loginFailInfo);
+            resetLoginFailInfo(loginFailInfo);
 
-        return tokenInfo;
+            TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+            return tokenInfo;
+        } catch (BadCredentialsException e) {
+            updateLoginFailInfo(id);
+        }
+
+        return null;
     }
 
+    private void checkUserLocked(LoginFailInfo loginFailInfo) throws UserLockedException {
+        if (loginFailInfo != null && loginFailInfo.getIsLock() && isLockedForDuration(loginFailInfo)) {
+            throw new UserLockedException();
+        }
+    }
+
+    private boolean isLockedForDuration(LoginFailInfo loginFailInfo) {
+        LocalDateTime unlockTime = loginFailInfo.getLatestTryLoginDate().plusMinutes(LOCK_DURATION_MINUTES);
+        return LocalDateTime.now().isBefore(unlockTime);
+    }
+
+    private void resetLoginFailInfo(LoginFailInfo loginFailInfo) {
+        if (loginFailInfo != null) {
+            loginFailInfo.setLoginFailCount(0L);
+            loginFailInfo.setIsLock(false);
+            loginFailInfoRepository.save(loginFailInfo);
+        }
+    }
+
+    private void updateLoginFailInfo(String id) throws LoginFaliedException {
+        LoginFailInfo loginFailInfo = loginFailInfoRepository.findByUser_Id(id);
+        if (loginFailInfo != null) {
+            incrementFailCountAndLock(loginFailInfo);
+        }
+        throw new LoginFaliedException();
+    }
+
+    private void incrementFailCountAndLock(LoginFailInfo loginFailInfo) {
+        loginFailInfo.setLoginFailCount(loginFailInfo.getLoginFailCount() + 1);
+        if (loginFailInfo.getLoginFailCount() >= MAX_LOGIN_FAILURES) {
+            if (loginFailInfo.getIsLock().equals(false)) {
+                loginFailInfo.setLatestTryLoginDate(LocalDateTime.now());
+                loginFailInfo.setIsLock(true);
+            }
+        }
+        loginFailInfoRepository.save(loginFailInfo);
+    }
 }

@@ -10,6 +10,7 @@ import com.clab.securecoding.repository.*;
 import com.clab.securecoding.type.dto.UserUpdateRequestDto;
 import com.clab.securecoding.type.dto.UserRequestDto;
 import com.clab.securecoding.type.dto.UserResponseDto;
+import com.clab.securecoding.type.entity.LoginFailInfo;
 import com.clab.securecoding.type.entity.User;
 import com.clab.securecoding.type.etc.Role;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,12 @@ public class UserService {
             throw new AssociatedAccountExistsException();
         User user = userMapper.mapDtoToEntity(userRequestDto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        LoginFailInfo loginFailInfo = LoginFailInfo.builder()
+                .user(user)
+                .loginFailCount(0L)
+                .isLock(false)
+                .build();
+        user.setLoginFailInfo(loginFailInfo);
         userRepository.save(user);
     }
 
