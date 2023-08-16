@@ -42,12 +42,21 @@ public class UserController {
         return responseModel;
     }
 
-    @Operation(summary = "유저 정보", description = "프로필 정보 조회")
+    @Operation(summary = "모든 유저 정보", description = "모든 유저 정보 조회")
     @GetMapping()
     public ResponseModel getUsers() throws PermissionDeniedException {
         List<UserResponseDto> users = userService.getUsers();
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData(users);
+        return responseModel;
+    }
+
+    @Operation(summary = "내 프로필 정보", description = "내 프로필 정보 조회")
+    @GetMapping("/my-info")
+    public ResponseModel getMyInfo() throws PermissionDeniedException {
+        UserResponseDto user = userService.getMyInfo();
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData(user);
         return responseModel;
     }
 

@@ -38,7 +38,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
             // 블랙리스트 IP 검사
             String clientIpAddress = request.getRemoteAddr();
-            log.info("clientIpAddress : {}", clientIpAddress);
+            log.debug("clientIpAddress : {}", clientIpAddress);
             if (blacklistIpRepository.existsByIpAddress(clientIpAddress)) {
                 throw new SecurityException("Blacklisted IP address");
             }

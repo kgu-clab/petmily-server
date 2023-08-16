@@ -35,7 +35,7 @@ public class LoginController {
             responseModel.addData(tokenInfo);
         } catch (Exception e) {
             log.info("login : {}", e.getMessage());
-            responseModel.addData(false);
+            responseModel.setSuccess(false);
         }
         return responseModel;
     }

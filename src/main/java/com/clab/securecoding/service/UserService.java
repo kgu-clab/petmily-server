@@ -60,6 +60,12 @@ public class UserService {
         return userResponseDtos;
     }
 
+    public UserResponseDto getMyInfo() {
+        User user = getCurrentUser();
+        UserResponseDto userResponseDto = userMapper.mapEntityToDto(user);
+        return userResponseDto;
+    }
+
     public UserResponseDto searchUser(Long seq, String nickname) throws PermissionDeniedException {
         checkUserAdminRole();
         User user = null;
