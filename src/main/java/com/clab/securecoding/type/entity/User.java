@@ -57,6 +57,10 @@ public class User implements UserDetails {
     private LocalDateTime createdAt;
 
     @JsonIgnore
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
+    private LoginFailInfo loginFailInfo;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "writer", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
     private List<Board> boards;
 

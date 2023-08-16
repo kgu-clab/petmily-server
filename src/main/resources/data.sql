@@ -15,6 +15,18 @@ insert into user(id, password, nickname, email, address, contact, type, role, pr
 values ('tester4', '{bcrypt}$2a$10$UlsA3WbfmBNa99hrn4/9oejidNpvqCmm0c43GOkWcXJQanmR3CklG', 'tester4',
         'tester4@gmail.com', '수원시', '010-1234-5678', 'SHELTER', 'USER', 'LOCAL');
 
+-- LoginFailInfo
+insert into login_fail_info(user, login_fail_count, is_lock)
+values (1, 0, false);
+insert into login_fail_info(user, login_fail_count, is_lock)
+values (2, 0, false);
+insert into login_fail_info(user, login_fail_count, is_lock)
+values (3, 0, false);
+insert into login_fail_info(user, login_fail_count, is_lock)
+values (4, 0, false);
+insert into login_fail_info(user, login_fail_count, is_lock)
+values (5, 0, false);
+
 -- Animal
 insert into animal(animal_type, species, age, gender, special_notes, vaccine, is_neutered, reason_for_adoption,
                    previous_home_environment, likes, dislikes, user)

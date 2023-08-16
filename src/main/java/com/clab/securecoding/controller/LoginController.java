@@ -1,5 +1,6 @@
 package com.clab.securecoding.controller;
 
+import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.service.LoginService;
 import com.clab.securecoding.type.dto.ResponseModel;
 import com.clab.securecoding.type.dto.TokenInfo;
@@ -8,10 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/login")
@@ -29,17 +27,35 @@ public class LoginController {
     public ResponseModel login(
             @RequestBody UserLoginRequestDto userLoginRequestDto
     ) {
-        String id = userLoginRequestDto.getId();
-        String password = userLoginRequestDto.getPassword();
-        TokenInfo tokenInfo = loginService.login(id, password);
         ResponseModel responseModel = ResponseModel.builder().build();
-        responseModel.addData(tokenInfo);
+        try {
+            String id = userLoginRequestDto.getId();
+            String password = userLoginRequestDto.getPassword();
+            TokenInfo tokenInfo = loginService.login(id, password);
+            responseModel.addData(tokenInfo);
+        } catch (Exception e) {
+            log.info("login : {}", e.getMessage());
+            responseModel.setSuccess(false);
+        }
         return responseModel;
     }
 
-    @Operation(summary = "유저 로그인 테스트", description = "유저 로그인 테스트")
-    @PostMapping("/test")
-    public ResponseModel test() {
+    @Operation(summary = "유저 밴 처리", description = "유저 밴 처리")
+    @PostMapping("/ban/{userId}")
+    public ResponseModel banUser(
+            @PathVariable String userId
+    ) throws PermissionDeniedException {
+        loginService.banUserById(userId);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        return responseModel;
+    }
+
+    @Operation(summary = "유저 밴 해제", description = "유저 밴 해제")
+    @PostMapping("/unban/{userId}")
+    public ResponseModel unbanUser(
+            @PathVariable String userId
+    ) throws PermissionDeniedException {
+        loginService.unbanUserById(userId);
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;
     }
