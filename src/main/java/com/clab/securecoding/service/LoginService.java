@@ -7,6 +7,7 @@ import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.exception.UserLockedException;
 import com.clab.securecoding.repository.LoginFailInfoRepository;
 import com.clab.securecoding.type.dto.LogInfoRequestDto;
+import com.clab.securecoding.type.dto.RefreshTokenDto;
 import com.clab.securecoding.type.dto.TokenInfo;
 import com.clab.securecoding.type.entity.LoginFailInfo;
 import com.clab.securecoding.type.etc.LogType;
