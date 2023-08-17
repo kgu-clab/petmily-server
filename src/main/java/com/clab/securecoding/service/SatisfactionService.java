@@ -48,12 +48,15 @@ public class SatisfactionService {
         if (userId != null) {
             User user = userService.getUserByIdOrThrow(userId);
             satisfactions = satisfactionRepository.findByWriter(user);
-        } else {
+        }
+        else {
             throw new IllegalArgumentException("검색을 위해 값을 입력해주세요.");
         }
 
         if (satisfactions.isEmpty()) {
             throw new SearchResultNotExistException();
+        }
+        else {
         }
 
         for (Satisfaction satisfaction : satisfactions) {
@@ -69,7 +72,8 @@ public class SatisfactionService {
 
         if (writer == satisfaction.getWriter() || userService.checkUserAdminRole()) {
             satisfactionRepository.delete(satisfaction);
-        } else {
+        }
+        else {
             throw new PermissionDeniedException();
         }
     }

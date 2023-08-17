@@ -37,6 +37,10 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             if (blacklistIpRepository.existsByIpAddress(clientIpAddress)) {
                 throw new SecurityException("Blacklisted IP address");
             }
+            else {
+            }
+        }
+        else {
         }
         chain.doFilter(request, response);
     }
@@ -45,6 +49,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
             return bearerToken.substring(7);
+        } else {
         }
         return null;
     }

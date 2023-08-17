@@ -59,6 +59,8 @@ public class TradeBoardService {
         if (tradeBoards.isEmpty()) {
             throw new SearchResultNotExistException();
         }
+        else {
+        }
 
         List<TradeBoardResponseDto> tradeBoardResponseDtos = new ArrayList<>();
         for (TradeBoard tradeBoard : tradeBoards) {
@@ -73,6 +75,8 @@ public class TradeBoardService {
         TradeBoard tradeBoard = getTradeBoardByIdOrThrow(tradeBoardId);
         if (seller != tradeBoard.getSeller()) {
             throw new PermissionDeniedException();
+        }
+        else {
         }
         tradeBoard.setTitle(tradeBoardRequestDto.getTitle());
         tradeBoard.setContent(tradeBoardRequestDto.getContent());

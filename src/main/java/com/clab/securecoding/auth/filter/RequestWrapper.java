@@ -18,6 +18,8 @@ public final class RequestWrapper extends HttpServletRequestWrapper {
         if (values == null) {
             return null;
         }
+        else {
+        }
 
         int count = values.length;
         String[] encodedValues = new String[count];
@@ -33,6 +35,8 @@ public final class RequestWrapper extends HttpServletRequestWrapper {
         if (value == null) {
             return null;
         }
+        else {
+        }
         return cleanXSS(value);
     }
 
@@ -41,6 +45,8 @@ public final class RequestWrapper extends HttpServletRequestWrapper {
         String value = super.getHeader(name);
         if (value == null) {
             return null;
+        }
+        else {
         }
         return cleanXSS(value);
     }

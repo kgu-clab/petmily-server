@@ -49,12 +49,15 @@ public class UserDetailInfoService {
         UserDetailInfo userDetailInfo;
         if ( user != null) {
             userDetailInfo = userDetailInfoRepository.findByUser(user);
-        } else {
+        }
+        else {
             throw new IllegalArgumentException("검색을 위해 값을 입력해주세요.");
         }
 
         if (userDetailInfo == null) {
             throw new SearchResultNotExistException();
+        }
+        else {
         }
 
         UserDetailInfoResponseDto userDetailInfoResponseDto = userDetailInfoMapper.mapEntityToDto(userDetailInfo);
@@ -67,6 +70,8 @@ public class UserDetailInfoService {
 
         if ( user != userDetailInfo.getUser()){
             throw new PermissionDeniedException();
+        }
+        else {
         }
 
         setUserDetailInfo(userDetailInfoRequestDto, userDetailInfo);

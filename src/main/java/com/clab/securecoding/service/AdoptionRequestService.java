@@ -53,6 +53,8 @@ public class AdoptionRequestService {
             animalAdoptionBoard.setAdoptionRequests(adoptionRequests);
             animalAdoptionBoardRepository.save(animalAdoptionBoard);
         }
+        else {
+        }
     }
 
     public List<AdoptionRequest> getAdoptionRequest() {

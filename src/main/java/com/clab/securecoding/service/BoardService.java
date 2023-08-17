@@ -56,6 +56,8 @@ public class BoardService {
         if (boards.isEmpty()) {
             throw new SearchResultNotExistException();
         }
+        else {
+        }
 
         List<BoardResponseDto> boardResponseDtos = new ArrayList<>();
         for (Board board : boards) {
@@ -70,6 +72,8 @@ public class BoardService {
         Board board = getBoardByIdOrThrow(boardId);
         if (writer != board.getWriter()) {
             throw new PermissionDeniedException();
+        }
+        else {
         }
         board.setTitle(boardRequestDto.getTitle());
         board.setContent(boardRequestDto.getContent());

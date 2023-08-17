@@ -53,17 +53,22 @@ public class AdoptionReportService {
         if (nickname != null) {
             User writer = userService.getUserByNicknameOrThrow(nickname);
             adoptionReports = adoptionReportRepository.findByWriter(writer);
-        } else if (adoptionBoardId != null) {
+        }
+        else if (adoptionBoardId != null) {
             AnimalAdoptionBoard animalAdoptionBoard = animalAdoptionBoardService.getAnimalAdoptionBoardByIdOrThrow(adoptionBoardId);
             adoptionReports = adoptionReportRepository.findByAnimalAdoptionBoard(animalAdoptionBoard);
-        } else if (reportType != null) {
+        }
+        else if (reportType != null) {
             adoptionReports = adoptionReportRepository.findByReportType(reportType);
-        } else {
+        }
+        else {
             throw new IllegalArgumentException("검색을 위해 값을 입력해주세요.");
         }
 
         if (adoptionReports.isEmpty()) {
             throw new SearchResultNotExistException();
+        }
+        else {
         }
 
         for (AdoptionReport adoptionReport : adoptionReports) {
@@ -79,7 +84,8 @@ public class AdoptionReportService {
 
         if (userService.checkUserAdminRole()) {
             adoptionReportRepository.delete(adoptionReport);
-        } else {
+        }
+        else {
             throw new PermissionDeniedException();
         }
     }

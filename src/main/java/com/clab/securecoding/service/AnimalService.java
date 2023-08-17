@@ -58,6 +58,8 @@ public class AnimalService {
         if (animals == null) {
             throw new SearchResultNotExistException();
         }
+        else {
+        }
 
         List<AnimalResponseDto> animalResponseDtos = animalMapper.mapEntityToDto(animals);
         return animalResponseDtos;

@@ -59,13 +59,17 @@ public class SmsService {
             String content = userService.removeHyphensFromContact(requestDto.getContent());
             SmsResponseDto smsResponseDto = sendSmsInternal(recipientPhoneNumber, content);
             return smsResponseDto;
-        } catch (VerificationFailedException vfEx) {
+        }
+        catch (VerificationFailedException vfEx) {
             throw new ApiRequestFailedException();
-        } catch (ApiRequestFailedException apiEx) {
+        }
+        catch (ApiRequestFailedException apiEx) {
             throw new ApiRequestFailedException();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new ApiRequestFailedException();
-        } finally {
+        }
+        finally {
         }
     }
 
@@ -77,13 +81,17 @@ public class SmsService {
             String contentWithCode = "Your verification code: " + verificationCode;
             SmsResponseDto smsResponseDto = sendSmsInternal(recipientPhoneNumber, contentWithCode);
             return smsResponseDto;
-        } catch (VerificationFailedException vfEx) {
+        }
+        catch (VerificationFailedException vfEx) {
             throw new ApiRequestFailedException();
-        } catch (ApiRequestFailedException apiEx) {
+        }
+        catch (ApiRequestFailedException apiEx) {
             throw new ApiRequestFailedException();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new ApiRequestFailedException();
-        } finally {
+        }
+        finally {
         }
     }
 
@@ -158,13 +166,17 @@ public class SmsService {
             restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
             SmsResponseDto smsResponseDto = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/" + this.serviceId + "/messages"), body, SmsResponseDto.class);
             return smsResponseDto;
-        } catch (VerificationFailedException vfEx) {
+        }
+        catch (VerificationFailedException vfEx) {
             throw new ApiRequestFailedException();
-        } catch (ApiRequestFailedException apiEx) {
+        }
+        catch (ApiRequestFailedException apiEx) {
             throw new ApiRequestFailedException();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new ApiRequestFailedException();
-        } finally {
+        }
+        finally {
         }
     }
 

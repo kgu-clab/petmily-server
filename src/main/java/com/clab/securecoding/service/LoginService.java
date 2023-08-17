@@ -61,6 +61,8 @@ public class LoginService {
                         .build();
                 loginFailInfoRepository.save(loginFailInfo);
             }
+            else {
+            }
             checkUserLocked(loginFailInfo);
             resetLoginFailInfo(loginFailInfo);
 
@@ -86,6 +88,8 @@ public class LoginService {
             TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
             return tokenInfo;
         }
+        else {
+        }
         return null;
     }
 
@@ -97,6 +101,8 @@ public class LoginService {
             loginFailInfo.setLatestTryLoginDate(LocalDateTime.now().plusYears(100));
             loginFailInfoRepository.save(loginFailInfo);
         }
+        else {
+        }
     }
 
     public void unbanUserById(String userId) throws PermissionDeniedException {
@@ -105,6 +111,8 @@ public class LoginService {
         if (loginFailInfo != null) {
             loginFailInfo.setIsLock(false);
             loginFailInfoRepository.save(loginFailInfo);
+        }
+        else {
         }
     }
 
@@ -115,6 +123,10 @@ public class LoginService {
             if (claims.get("role").toString().equals("ROLE_ADMIN")) {
                 return true;
             }
+            else {
+            }
+        }
+        else {
         }
         return false;
     }
@@ -122,6 +134,8 @@ public class LoginService {
     private void checkUserLocked(LoginFailInfo loginFailInfo) throws UserLockedException {
         if (loginFailInfo != null && loginFailInfo.getIsLock() && isLockedForDuration(loginFailInfo)) {
             throw new UserLockedException();
+        }
+        else {
         }
     }
 
@@ -136,12 +150,16 @@ public class LoginService {
             loginFailInfo.setIsLock(false);
             loginFailInfoRepository.save(loginFailInfo);
         }
+        else {
+        }
     }
 
     private void updateLoginFailInfo(String userId) throws LoginFaliedException {
         LoginFailInfo loginFailInfo = getLoginFailInfoByUserIdOrThrow(userId);
         if (loginFailInfo != null) {
             incrementFailCountAndLock(loginFailInfo);
+        }
+        else {
         }
         throw new LoginFaliedException();
     }
@@ -153,6 +171,10 @@ public class LoginService {
                 loginFailInfo.setLatestTryLoginDate(LocalDateTime.now());
                 loginFailInfo.setIsLock(true);
             }
+            else {
+            }
+        }
+        else {
         }
         loginFailInfoRepository.save(loginFailInfo);
     }

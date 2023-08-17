@@ -66,37 +66,52 @@ public class AnimalAdoptionBoardService {
         if (userType != null) {
             animalAdoptionBoards = animalAdoptionBoardRepository.findByWriter_Type(userType);
         }
+        else {
+        }
 
         if (animalType != null) {
             if (!animalAdoptionBoards.isEmpty()) {
                 animalAdoptionBoards.retainAll(animalAdoptionBoardRepository.findByAnimalType(animalType));
-            } else {
+            }
+            else {
                 animalAdoptionBoards = animalAdoptionBoardRepository.findByAnimalType(animalType);
             }
+        }
+        else {
         }
 
         if (species != null) {
             if (!animalAdoptionBoards.isEmpty()) {
                 animalAdoptionBoards.retainAll(animalAdoptionBoardRepository.findBySpecies(species));
-            } else {
+            }
+            else {
                 animalAdoptionBoards = animalAdoptionBoardRepository.findBySpecies(species);
             }
+        }
+        else {
         }
 
         if (nickname != null) {
             if (!animalAdoptionBoards.isEmpty()) {
                 animalAdoptionBoards.retainAll(animalAdoptionBoardRepository.findByWriter_Nickname(nickname));
-            } else {
+            }
+            else {
                 animalAdoptionBoards = animalAdoptionBoardRepository.findByWriter_Nickname(nickname);
             }
+        }
+        else {
         }
 
         if (userType == null && animalType == null && species == null && nickname == null) {
             throw new IllegalArgumentException("검색을 위해 값을 입력해주세요.");
         }
+        else {
+        }
 
         if (animalAdoptionBoards.isEmpty()) {
             throw new SearchResultNotExistException();
+        }
+        else {
         }
 
         List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = animalAdoptionBoardMapper.mapEntityToDto(animalAdoptionBoards);
@@ -117,7 +132,8 @@ public class AnimalAdoptionBoardService {
         AnimalAdoptionBoard animalAdoptionBoard = getAnimalAdoptionBoardByIdOrThrow(animalAdoptionBoardId);
         if (checkWriterPermission(animalAdoptionBoard.getWriter()) || userService.checkUserAdminRole()) {
             animalAdoptionBoardRepository.delete(animalAdoptionBoard);
-        } else {
+        }
+        else {
             throw new PermissionDeniedException();
         }
     }

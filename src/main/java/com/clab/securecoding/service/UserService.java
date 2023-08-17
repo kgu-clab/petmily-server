@@ -40,9 +40,13 @@ public class UserService {
         if (isExistUserId(userRequestDto.getId())) {
             throw new AssociatedAccountExistsException();
         }
+        else {
+        }
 
         if (isExistContact(userRequestDto.getContact())) {
             throw new DuplicateContactException();
+        }
+        else {
         }
 
         User user = userMapper.mapDtoToEntity(userRequestDto);
@@ -91,6 +95,8 @@ public class UserService {
         if (user == null) {
             throw new SearchResultNotExistException();
         }
+        else {
+        }
 
         return userMapper.mapEntityToDto(user);
     }
@@ -122,6 +128,8 @@ public class UserService {
         if (!user.getRole().equals(Role.ADMIN)) {
             throw new PermissionDeniedException("권한이 부족합니다.");
         }
+        else {
+        }
         return true;
     }
 
@@ -152,6 +160,8 @@ public class UserService {
         }
         else if (contact != null) {
             return isExistContact(contact);
+        }
+        else {
         }
         return false;
     }

@@ -49,6 +49,8 @@ public class TradeCommentService {
         if (!writer.equals(comment.getWriter())) {
             throw new PermissionDeniedException();
         }
+        else {
+        }
         comment.setContent(commentUpdateRequestDto.getContent());
         tradeCommentRepository.save(comment);
     }

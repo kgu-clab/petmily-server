@@ -40,6 +40,8 @@ public class ContractService {
         if (contracts.size() > 0) {
             return contracts.get(0);
         }
+        else {
+        }
         return null;
     }
 

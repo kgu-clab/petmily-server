@@ -52,6 +52,8 @@ public class CommentService {
         if (writer != comment.getWriter()) {
             throw new PermissionDeniedException();
         }
+        else {
+        }
         comment.setContent(commentUpdateRequestDto.getContent());
         commentRepository.save(comment);
     }

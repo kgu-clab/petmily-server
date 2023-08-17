@@ -53,17 +53,22 @@ public class ReportService {
         if (nickname != null) {
             User writer = userService.getUserByNicknameOrThrow(nickname);
             reports = reportRepository.findByWriter(writer);
-        } else if (boardId != null) {
+        }
+        else if (boardId != null) {
             Board board = boardService.getBoardByIdOrThrow(boardId);
             reports = reportRepository.findByBoard(board);
-        } else if (reportType != null) {
+        }
+        else if (reportType != null) {
             reports = reportRepository.findByReportType(reportType);
-        } else {
+        }
+        else {
             throw new IllegalArgumentException("검색을 위해 값을 입력해주세요.");
         }
 
         if (reports.isEmpty()) {
             throw new SearchResultNotExistException();
+        }
+        else {
         }
 
         for (Report report : reports) {
@@ -77,7 +82,8 @@ public class ReportService {
         Report report = getReportByIdOrThrow(reportId);
         if (userService.checkUserAdminRole()) {
             reportRepository.delete(report);
-        } else {
+        }
+        else {
             throw new PermissionDeniedException();
         }
     }

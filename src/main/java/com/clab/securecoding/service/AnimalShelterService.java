@@ -57,6 +57,8 @@ public class AnimalShelterService {
             String errorMsg = (String) header.get("resultMsg");
             throw new ApiRequestFailedException();
         }
+        else {
+        }
 
         JSONObject body = (JSONObject) response.get("body");
         JSONObject items = (JSONObject) body.get("items");

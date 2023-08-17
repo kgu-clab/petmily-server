@@ -11,6 +11,8 @@ public class AuthUtil {
         if (authentication == null || authentication.getName() == null) {
             throw new RuntimeException("No authentication information.");
         }
+        else {
+        }
         return (User) authentication.getPrincipal();
     }
 

@@ -5,7 +5,6 @@ import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.exception.SearchResultNotExistException;
 import com.clab.securecoding.mapper.LogInfoMapper;
 import com.clab.securecoding.repository.LogInfoRepository;
-import com.clab.securecoding.repository.UserRepository;
 import com.clab.securecoding.type.dto.LogInfoRequestDto;
 import com.clab.securecoding.type.dto.LogInfoResponseDto;
 import com.clab.securecoding.type.entity.LogInfo;
@@ -26,8 +25,6 @@ import java.util.List;
 public class LogInfoService {
 
     private final LogInfoRepository logInfoRepository;
-
-    private final UserRepository userRepository;
 
     private final LogInfoMapper logInfoMapper;
 
@@ -68,20 +65,27 @@ public class LogInfoService {
 
         if (logType != null) {
             logInfos = logInfoRepository.findLogInfoByLogType(logType);
-        } else if (id != null) {
+        }
+        else if (id != null) {
             logInfos = logInfoRepository.findLogInfoById(id);
-        } else if (userType != null) {
+        }
+        else if (userType != null) {
             logInfos = logInfoRepository.findLogInfoByUserType(userType);
-        } else if (ip != null) {
+        }
+        else if (ip != null) {
             logInfos = logInfoRepository.findLogInfoByIp(ip);
-        } else if (danger != null) {
+        }
+        else if (danger != null) {
             logInfos = logInfoRepository.findLogInfoByDanger(danger);
-        } else {
+        }
+        else {
             throw new IllegalArgumentException("검색을 위해 값을 입력해주세요.");
         }
 
         if (logInfos.isEmpty()) {
             throw new SearchResultNotExistException();
+        }
+        else {
         }
 
         for (LogInfo logInfo : logInfos) {
@@ -95,7 +99,8 @@ public class LogInfoService {
         LogInfo logInfo = getLogInfoByIdOrThrow(logInfoId);
         if (userService.checkUserAdminRole()) {
             logInfoRepository.delete(logInfo);
-        } else {
+        }
+        else {
             throw new PermissionDeniedException();
         }
     }

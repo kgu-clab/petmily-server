@@ -27,9 +27,13 @@ public class FileHandler {
         if (!validateFilename(originalFilename)) {
             throw new FileUploadFailException("허용되지 않은 파일명 : " + originalFilename);
         }
+        else {
+        }
         String extension = FilenameUtils.getExtension(originalFilename);
         if (!validateExtension(extension)) {
             throw new FileUploadFailException("허용되지 않은 확장자 : " + originalFilename);
+        }
+        else {
         }
         String newFilename = System.nanoTime() + "_" + UUID.randomUUID() + "." + extension;
         String destPath = filePath + File.separator + path + File.separator + newFilename;
@@ -40,7 +44,13 @@ public class FileHandler {
                 if (!parentFile.exists()) {
                     parentFile.mkdirs();
                 }
+                else {
+                }
             }
+            else {
+            }
+        }
+        else {
         }
         try {
             String os = System.getProperty("os.name").toLowerCase();
@@ -49,7 +59,8 @@ public class FileHandler {
                 file.setReadable(true);
                 file.setWritable(false);
                 file.setExecutable(false);
-            } else {
+            }
+            else {
                 Runtime.getRuntime().exec("chmod 400 " + destPath);
             }
         }
@@ -65,6 +76,8 @@ public class FileHandler {
         for (String allowExtension : allowExtensions) {
             if (allowExtension.equals(extension)) {
                 return true;
+            }
+            else {
             }
         }
         return false;
