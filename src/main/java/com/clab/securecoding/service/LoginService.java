@@ -69,8 +69,11 @@ public class LoginService {
             LogInfoRequestDto logInfoRequestDto = new LogInfoRequestDto(LogType.LOGIN, id, null, request.getRemoteAddr(),"LOW");
             logInfoService.createLogInfo(logInfoRequestDto, request);
             return tokenInfo;
-        } catch (BadCredentialsException e) {
+        }
+        catch (BadCredentialsException e) {
             updateLoginFailInfo(id);
+        }
+        finally {
         }
 
         return null;

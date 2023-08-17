@@ -52,8 +52,11 @@ public class FileHandler {
             } else {
                 Runtime.getRuntime().exec("chmod 400 " + destPath);
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new FileUploadFailException("파일 저장 실패", e);
+        }
+        finally {
         }
         return path + "/" + newFilename;
     }

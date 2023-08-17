@@ -21,12 +21,17 @@ public class ShelterJob implements Job {
     public void execute(JobExecutionContext context) {
         try {
             animalShelterService.retrieveShelters();
-        } catch (UnsupportedEncodingException e) {
+        }
+        catch (UnsupportedEncodingException e) {
             throw new ApiRequestFailedException();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new ApiRequestFailedException();
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
             throw new ApiRequestFailedException();
+        }
+        finally {
         }
     }
 

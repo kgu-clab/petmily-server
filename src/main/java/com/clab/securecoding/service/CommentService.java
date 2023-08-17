@@ -49,8 +49,9 @@ public class CommentService {
     public void updateComment(Long commentId, CommentUpdateRequestDto commentUpdateRequestDto) throws PermissionDeniedException {
         User writer = userService.getCurrentUser();
         Comment comment = getCommentByIdOrThrow(commentId);
-        if (writer != comment.getWriter())
+        if (writer != comment.getWriter()) {
             throw new PermissionDeniedException();
+        }
         comment.setContent(commentUpdateRequestDto.getContent());
         commentRepository.save(comment);
     }
@@ -58,10 +59,12 @@ public class CommentService {
     public void deleteComment(Long commentId) throws PermissionDeniedException {
         User writer = userService.getCurrentUser();
         Comment comment = getCommentByIdOrThrow(commentId);
-        if (writer == comment.getWriter() || userService.checkUserAdminRole())
+        if (writer == comment.getWriter() || userService.checkUserAdminRole()) {
             commentRepository.delete(comment);
-        else
+        }
+        else {
             throw new PermissionDeniedException();
+        }
     }
 
     private Comment getCommentByIdOrThrow(Long commentId) {

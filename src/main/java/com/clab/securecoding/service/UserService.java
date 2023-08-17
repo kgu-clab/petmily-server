@@ -37,10 +37,14 @@ public class UserService {
 
     @Transactional
     public void createUser(UserRequestDto userRequestDto) {
-        if (isExistUserId(userRequestDto.getId()))
+        if (isExistUserId(userRequestDto.getId())) {
             throw new AssociatedAccountExistsException();
-        if (isExistContact(userRequestDto.getContact()))
+        }
+
+        if (isExistContact(userRequestDto.getContact())) {
             throw new DuplicateContactException();
+        }
+
         User user = userMapper.mapDtoToEntity(userRequestDto);
         user.setContact(removeHyphensFromContact(user.getContact()));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -74,15 +78,20 @@ public class UserService {
     public UserResponseDto searchUser(Long seq, String nickname) throws PermissionDeniedException {
         checkUserAdminRole();
         User user = null;
-        if (seq != null)
+        if (seq != null) {
             user = getUserByIdOrThrow(seq);
-        else if (nickname != null)
+        }
+        else if (nickname != null) {
             user = getUserByNicknameOrThrow(nickname);
-        else
+        }
+        else {
             throw new IllegalArgumentException("적어도 seq 또는 name 중 하나를 제공해야 합니다.");
+        }
 
-        if (user == null)
+        if (user == null) {
             throw new SearchResultNotExistException();
+        }
+
         return userMapper.mapEntityToDto(user);
     }
 
@@ -138,8 +147,12 @@ public class UserService {
     }
 
     public boolean isExistUserInfo(String userId, String contact) {
-        if (userId != null) return isExistUserId(userId);
-        else if (contact != null) return isExistContact(contact);
+        if (userId != null) {
+            return isExistUserId(userId);
+        }
+        else if (contact != null) {
+            return isExistContact(contact);
+        }
         return false;
     }
 

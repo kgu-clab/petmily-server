@@ -42,17 +42,23 @@ public class AnimalService {
 
     public List<AnimalResponseDto> searchAnimal(UserType userType, AnimalType animalType) {
         List<Animal> animals = null;
-        if (userType != null && animalType != null)
+        if (userType != null && animalType != null) {
             animals = animalRepository.findAllByUser_TypeAndAnimalType(userType, animalType);
-        else if (userType != null)
+        }
+        else if (userType != null) {
             animals = animalRepository.findAllByUser_Type(userType);
-        else if (animalType != null)
+        }
+        else if (animalType != null) {
             animals = animalRepository.findAllByAnimalType(animalType);
-        else
+        }
+        else {
             throw new IllegalArgumentException("적어도 userType, animalType 중 하나를 제공해야 합니다.");
+        }
 
-        if (animals == null)
+        if (animals == null) {
             throw new SearchResultNotExistException();
+        }
+
         List<AnimalResponseDto> animalResponseDtos = animalMapper.mapEntityToDto(animals);
         return animalResponseDtos;
     }

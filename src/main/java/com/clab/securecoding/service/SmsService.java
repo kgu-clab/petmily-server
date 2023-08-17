@@ -65,6 +65,7 @@ public class SmsService {
             throw new ApiRequestFailedException();
         } catch (Exception e) {
             throw new ApiRequestFailedException();
+        } finally {
         }
     }
 
@@ -82,6 +83,7 @@ public class SmsService {
             throw new ApiRequestFailedException();
         } catch (Exception e) {
             throw new ApiRequestFailedException();
+        } finally {
         }
     }
 
@@ -89,10 +91,12 @@ public class SmsService {
         String recipientPhoneNumber = userService.removeHyphensFromContact(verificationRequestDto.getRecipientPhoneNumber());
         String inputCode = verificationRequestDto.getVerificationCode();
         VerificationCode storedCode = verificationCodeRepository.findByRecipientPhoneNumber(recipientPhoneNumber);
-        if (storedCode == null || !isVerificationCodeValid(storedCode, inputCode))
+        if (storedCode == null || !isVerificationCodeValid(storedCode, inputCode)) {
             throw new VerificationFailedException("인증번호 확인에 실패하였습니다.");
-        else
+        }
+        else {
             verificationCodeRepository.deleteByRecipientPhoneNumber(recipientPhoneNumber);
+        }
     }
 
     private boolean isVerificationCodeValid(VerificationCode storedCode, String inputCode) {
@@ -160,6 +164,7 @@ public class SmsService {
             throw new ApiRequestFailedException();
         } catch (Exception e) {
             throw new ApiRequestFailedException();
+        } finally {
         }
     }
 

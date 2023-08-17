@@ -41,7 +41,7 @@ public class LoginFailInfo {
     public String toString() {
         return "LoginFailInfo{" +
                 "id=" + id +
-                ", user=" + (user != null ? user.getId() : null) +
+                ", user=" + ((user != null) ? user.getId() : null) +
                 ", loginFailCount=" + loginFailCount +
                 ", isLock=" + isLock +
                 ", latestTryLoginDate=" + latestTryLoginDate +

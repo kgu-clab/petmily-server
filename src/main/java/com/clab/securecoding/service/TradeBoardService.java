@@ -71,8 +71,9 @@ public class TradeBoardService {
     public void updateTradeBoard(Long tradeBoardId, TradeBoardRequestDto tradeBoardRequestDto) throws PermissionDeniedException {
         User seller = userService.getCurrentUser();
         TradeBoard tradeBoard = getTradeBoardByIdOrThrow(tradeBoardId);
-        if (seller != tradeBoard.getSeller())
+        if (seller != tradeBoard.getSeller()) {
             throw new PermissionDeniedException();
+        }
         tradeBoard.setTitle(tradeBoardRequestDto.getTitle());
         tradeBoard.setContent(tradeBoardRequestDto.getContent());
         tradeBoard.setPrice(tradeBoardRequestDto.getPrice());
@@ -83,10 +84,12 @@ public class TradeBoardService {
     public void deleteTradeBoard(Long tradeBoardId) throws PermissionDeniedException {
         User seller = userService.getCurrentUser();
         TradeBoard tradeBoard = getTradeBoardByIdOrThrow(tradeBoardId);
-        if (seller == tradeBoard.getSeller() || userService.checkUserAdminRole())
+        if (seller == tradeBoard.getSeller() || userService.checkUserAdminRole()) {
             tradeBoardRepository.delete(tradeBoard);
-        else
+        }
+        else {
             throw new PermissionDeniedException();
+        }
     }
 
     public TradeBoard getTradeBoardByIdOrThrow(Long tradeBoardId) {

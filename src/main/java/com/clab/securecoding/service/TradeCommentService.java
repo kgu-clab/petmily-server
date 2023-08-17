@@ -46,8 +46,9 @@ public class TradeCommentService {
     public void updateComment(Long tradeCommentId, CommentUpdateRequestDto commentUpdateRequestDto) throws PermissionDeniedException {
         User writer = userService.getCurrentUser();
         TradeComment comment = getTradeCommentByIdOrThrow(tradeCommentId);
-        if (!writer.equals(comment.getWriter()))
+        if (!writer.equals(comment.getWriter())) {
             throw new PermissionDeniedException();
+        }
         comment.setContent(commentUpdateRequestDto.getContent());
         tradeCommentRepository.save(comment);
     }
@@ -55,10 +56,12 @@ public class TradeCommentService {
     public void deleteComment(Long tradeCommentId) throws PermissionDeniedException {
         User writer = userService.getCurrentUser();
         TradeComment tradeComment = getTradeCommentByIdOrThrow(tradeCommentId);
-        if (writer.equals(tradeComment.getWriter()) || userService.checkUserAdminRole())
+        if (writer.equals(tradeComment.getWriter()) || userService.checkUserAdminRole()) {
             tradeCommentRepository.delete(tradeComment);
-        else
+        }
+        else {
             throw new PermissionDeniedException();
+        }
     }
 
     private TradeComment getTradeCommentByIdOrThrow(Long tradeCommentId) {

@@ -68,8 +68,9 @@ public class BoardService {
     public void updateBoard(Long boardId, BoardRequestDto boardRequestDto) throws PermissionDeniedException {
         User writer = userService.getCurrentUser();
         Board board = getBoardByIdOrThrow(boardId);
-        if (writer != board.getWriter())
+        if (writer != board.getWriter()) {
             throw new PermissionDeniedException();
+        }
         board.setTitle(boardRequestDto.getTitle());
         board.setContent(boardRequestDto.getContent());
         boardRepository.save(board);
@@ -78,10 +79,12 @@ public class BoardService {
     public void deleteBoard(Long boardId) throws PermissionDeniedException {
         User writer = userService.getCurrentUser();
         Board board = getBoardByIdOrThrow(boardId);
-        if (writer == board.getWriter() || userService.checkUserAdminRole())
+        if (writer == board.getWriter() || userService.checkUserAdminRole()) {
             boardRepository.delete(board);
-        else
+        }
+        else {
             throw new PermissionDeniedException();
+        }
     }
 
     public Board getBoardByIdOrThrow(Long boardId) {
