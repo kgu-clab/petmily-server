@@ -25,7 +25,7 @@ public class CommentController {
     @Operation(summary = "댓글 생성", description = "댓글 생성<br>" +
             "Long board;<br>" +
             "String content;")
-    @PostMapping("/create/{boardId}")
+    @PostMapping("/{boardId}")
     public ResponseModel createComment(
             @RequestBody CommentRequestDto commentRequestDto
     ) {
@@ -47,7 +47,7 @@ public class CommentController {
 
     @Operation(summary = "댓글 수정", description = "댓글 수정<br>" +
             "String content;")
-    @PatchMapping("/update/{commentId}")
+    @PatchMapping("/{commentId}")
     public ResponseModel updateComment(
             @PathVariable Long commentId,
             @RequestBody CommentUpdateRequestDto commentUpdateRequestDto
@@ -58,7 +58,7 @@ public class CommentController {
     }
 
     @Operation(summary = "댓글 삭제", description = "댓글 삭제(본인 또는 관리자만 가능)")
-    @DeleteMapping("/delete/{commentId}")
+    @DeleteMapping("/{commentId}")
     public ResponseModel deleteComment(
             @PathVariable Long commentId
     ) throws PermissionDeniedException {

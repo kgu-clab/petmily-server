@@ -34,7 +34,7 @@ public class AnimalController {
             "String previousHomeEnvironment;<br>" +
             "String likes;<br>" +
             "String dislikes;")
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseModel createAnimal(
             @RequestBody AnimalRequestDto animalResquestDto
     ) {
@@ -44,7 +44,7 @@ public class AnimalController {
     }
 
     @Operation(summary = "동물 정보", description = "동물 정보 조회")
-    @GetMapping("/list")
+    @GetMapping()
     public ResponseModel getAnimals() {
         List<AnimalResponseDto> animals = animalService.getAnimals();
         ResponseModel responseModel = ResponseModel.builder().build();
@@ -77,7 +77,7 @@ public class AnimalController {
             "String previousHomeEnvironment;<br>" +
             "String likes;<br>" +
             "String dislikes;")
-    @PatchMapping("/update")
+    @PatchMapping()
     public ResponseModel updateAnimalInfoByUser(
             @RequestParam Long animalId,
             @RequestBody AnimalRequestDto animalRequestDto
@@ -88,7 +88,7 @@ public class AnimalController {
     }
 
     @Operation(summary = "동물 삭제", description = "동물 삭제")
-    @DeleteMapping("/delete/{animalId}")
+    @DeleteMapping("/{animalId}")
     public ResponseModel deleteAnimal(
             @PathVariable("animalId") Long animalId
     ) {

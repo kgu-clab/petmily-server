@@ -28,7 +28,7 @@ public class ReportController {
             "ReportType reportType;<br>" +
             "String title;<br>" +
             "String content;")
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseModel createReport(
             @RequestBody ReportRequestDto reportRequestDto
     ) {
@@ -38,7 +38,7 @@ public class ReportController {
     }
 
     @Operation(summary = "신고 정보", description = "모든 신고 정보 조회")
-    @PostMapping("/list")
+    @PostMapping()
     public ResponseModel getReports() {
         List<ReportResponseDto> reports = reportService.getReports();
         ResponseModel responseModel = ResponseModel.builder().build();
@@ -60,7 +60,7 @@ public class ReportController {
     }
 
     @Operation(summary = "신고 삭제", description = "신고 삭제(관리자만 가능)")
-    @DeleteMapping("/delete/{reportId}")
+    @DeleteMapping("/{reportId}")
     public ResponseModel deleteReport(
             @PathVariable Long reportId
     ) throws PermissionDeniedException {

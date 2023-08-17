@@ -23,7 +23,7 @@ public class UserDetailInfoController {
 
     private final UserService userService;
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseModel createUserDetailInfo(
             @RequestBody UserDetailInfoRequestDto requestDto
             ){
@@ -32,7 +32,7 @@ public class UserDetailInfoController {
         return responseModel;
     }
 
-    @GetMapping("/list")
+    @GetMapping()
     public ResponseModel getUserDetailInfos(){
         List<UserDetailInfoResponseDto> userDetailInfoResponseDtos = userDetailInfoService.getUserDetailInfos();
         ResponseModel responseModel = ResponseModel.builder().build();
@@ -51,7 +51,7 @@ public class UserDetailInfoController {
         return responseModel;
     }
 
-    @PatchMapping("/update/{userDetailInfoId}")
+    @PatchMapping("/{userDetailInfoId}")
     public ResponseModel updateUserDetailInfo(
             @PathVariable Long userDetailInfoId,
             @RequestBody UserDetailInfoRequestDto requestDto

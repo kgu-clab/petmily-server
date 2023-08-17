@@ -21,7 +21,7 @@ public class SatisfactionController {
 
     private final SatisfactionService satisfactionService;
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseModel createSatisfaction(
             @RequestBody SatisfactionRequestDto requestDto
     ) {
@@ -30,7 +30,7 @@ public class SatisfactionController {
         return responseModel;
     }
 
-    @GetMapping("/list")
+    @GetMapping()
     public ResponseModel getSatisfactions() {
         List<SatisfactionResponseDto> satisfactionResponseDtos = satisfactionService.getSatisfactions();
         ResponseModel responseModel = ResponseModel.builder().build();
@@ -49,7 +49,7 @@ public class SatisfactionController {
         return responseModel;
     }
 
-    @DeleteMapping("/delete/{satisfactionId}")
+    @DeleteMapping("/{satisfactionId}")
     public ResponseModel deleteSatisfaction(
             @PathVariable Long satisfactionId
     ) throws PermissionDeniedException {

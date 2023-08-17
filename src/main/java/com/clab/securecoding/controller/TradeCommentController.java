@@ -22,7 +22,7 @@ public class TradeCommentController {
     @Operation(summary = "댓글 생성", description = "댓글 생성<br>" +
             "Long tradeBoard;<br>" +
             "String content;")
-    @PostMapping("/create/{tradeBoardId}")
+    @PostMapping("/{tradeBoardId}")
     public ResponseModel createComment(
             @RequestBody TradeCommentRequestDto tradeCommentRequestDto
     ) {
@@ -44,7 +44,7 @@ public class TradeCommentController {
 
     @Operation(summary = "댓글 수정", description = "댓글 수정<br>" +
             "String content;")
-    @PatchMapping("/update/{tradeCommentId}")
+    @PatchMapping("/{tradeCommentId}")
     public ResponseModel updateComment(
             @PathVariable Long tradeCommentId,
             @RequestBody CommentUpdateRequestDto commentUpdateRequestDto
@@ -55,7 +55,7 @@ public class TradeCommentController {
     }
 
     @Operation(summary = "댓글 삭제", description = "댓글 삭제(본인 또는 관리자만 가능)")
-    @DeleteMapping("/delete/{tradeCommentId}")
+    @DeleteMapping("/{tradeCommentId}")
     public ResponseModel deleteTradeComment(
             @PathVariable Long tradeCommentId
     ) throws PermissionDeniedException {
