@@ -42,7 +42,7 @@ public class UserController {
         return responseModel;
     }
 
-    @Operation(summary = "모든 유저 정보", description = "모든 유저 정보 조회")
+    @Operation(summary = "모든 유저 정보", description = "관리자를 제외한 모든 유저 정보 조회")
     @GetMapping()
     public ResponseModel getUsers() throws PermissionDeniedException {
         List<UserResponseDto> users = userService.getUsers();
