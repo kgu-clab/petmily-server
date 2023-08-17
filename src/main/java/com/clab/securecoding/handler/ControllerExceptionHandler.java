@@ -64,7 +64,7 @@ public class ControllerExceptionHandler {
                 .build();
         response.setStatus(400);
 
-        createLogInfoInExceptionHandler(request, LogType.PARAMETER_ERROR, "mid");
+        createLogInfoInExceptionHandler(request, LogType.PARAMETER_ERROR, "MID");
         return responseModel;
     }
 
@@ -85,7 +85,7 @@ public class ControllerExceptionHandler {
                 .build();
         response.setStatus(401);
 
-        createLogInfoInExceptionHandler(request, LogType.UN_AUTHORIZE_REQUEST_ERROR, "mid");
+        createLogInfoInExceptionHandler(request, LogType.UN_AUTHORIZE_REQUEST_ERROR, "HIGH");
         return responseModel;
     }
 
@@ -102,7 +102,7 @@ public class ControllerExceptionHandler {
                 .build();
         response.setStatus(403);
 
-        createLogInfoInExceptionHandler(request, LogType.LOGIN_FAILED_ERROR, "mid");
+        createLogInfoInExceptionHandler(request, LogType.LOGIN_FAILED_ERROR, "MID");
         return responseModel;
     }
 
@@ -118,7 +118,7 @@ public class ControllerExceptionHandler {
                 .build();
         response.setStatus(404);
 
-        createLogInfoInExceptionHandler(request, LogType.SEARCH_RESULT_NOT_EXIST_ERROR, "mid");
+        createLogInfoInExceptionHandler(request, LogType.SEARCH_RESULT_NOT_EXIST_ERROR, "LOW");
         return responseModel;
     }
 
@@ -134,7 +134,7 @@ public class ControllerExceptionHandler {
                 .build();
         response.setStatus(200);
 
-        createLogInfoInExceptionHandler(request, LogType.ASSOCIATED_ACCOUNT_EXISTS_EXCEPTION_ERROR, "mid");
+        createLogInfoInExceptionHandler(request, LogType.ASSOCIATED_ACCOUNT_EXISTS_EXCEPTION_ERROR, "LOW");
         return responseModel;
     }
 
@@ -149,7 +149,7 @@ public class ControllerExceptionHandler {
                 .build();
         response.setStatus(404);
 
-        createLogInfoInExceptionHandler(request, LogType.API_REQUEST_FAILED_EXCEPTION_ERROR, "mid");
+        createLogInfoInExceptionHandler(request, LogType.API_REQUEST_FAILED_EXCEPTION_ERROR, "MID");
         return responseModel;
     }
 
@@ -170,7 +170,7 @@ public class ControllerExceptionHandler {
                 .build();
         response.setStatus(500);
 
-        createLogInfoInExceptionHandler(request, LogType.NOT_FOUND_EXCEPTION, "mid");
+        createLogInfoInExceptionHandler(request, LogType.NOT_FOUND_EXCEPTION, "HIGH");
         return responseModel;
     }
 
