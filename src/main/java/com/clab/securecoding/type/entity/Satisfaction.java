@@ -39,6 +39,7 @@ public class Satisfaction {
     private String q7;
 
     @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
 }
