@@ -65,6 +65,15 @@ public class AnimalAdoptionBoardController {
         return responseModel;
     }
 
+    @Operation(summary = "나의 동물 분양 게시글 조회", description = "나의 동물 분양 게시글 조회")
+    @GetMapping("/my-board")
+    public ResponseModel getMyAnimalAdoptionBoard() {
+        List<AnimalAdoptionBoardResponseDto> animalAdoptionBoards = animalAdoptionBoardService.getMyAnimalAdoptionBoard();
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData(animalAdoptionBoards);
+        return responseModel;
+    }
+
     @Operation(summary = "동물 분양 게시글 상세 정보", description = "동물 분양 게시글 상세 정보 조회")
     @GetMapping("/info")
     public ResponseModel getAnimalAdoptionBoard(

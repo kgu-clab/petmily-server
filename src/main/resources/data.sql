@@ -162,10 +162,10 @@ values (3, 3, "DISPLEASURE", "test9", "displeasure report");
 insert into report(writer, board, report_type, title, content)
 values (4, 4, "DISPLEASURE", "test10", "displeasure report");
 
--- -- AdoptionRequest
--- insert into adoption_request(user, animal_adoption_board, request_state)
--- values (1, 1, "WAIT");
--- insert into adoption_request(user, animal_adoption_board, request_state)
--- values (2, 1, "APPROVE");
--- insert into adoption_request(user, animal_adoption_board, request_state)
--- values (3, 1, "CANCEL");
+-- AdoptionRequest
+insert into adoption_request(user_seq, animal_adoption_board_id, request_state)
+values (1, 5, "WAIT");
+insert into adoption_request(user_seq, animal_adoption_board_id, request_state)
+values (2, 5, "APPROVE");
+insert into adoption_request(user_seq, animal_adoption_board_id, request_state)
+values (3, 5, "CANCEL");

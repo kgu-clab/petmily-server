@@ -4,6 +4,7 @@ import com.clab.securecoding.exception.NotFoundException;
 import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.exception.SearchResultNotExistException;
 import com.clab.securecoding.mapper.AnimalAdoptionBoardMapper;
+import com.clab.securecoding.repository.AdoptionRequestRepository;
 import com.clab.securecoding.repository.AnimalAdoptionBoardRepository;
 import com.clab.securecoding.type.dto.AnimalAdoptionBoardRequestDto;
 import com.clab.securecoding.type.dto.AnimalAdoptionBoardResponseDto;
@@ -26,6 +27,8 @@ public class AnimalAdoptionBoardService {
 
     private final UserService userService;
 
+    private final AdoptionRequestRepository adoptionRequestRepository;
+
     public void createAnimalAdoptionBoard(AnimalAdoptionBoardRequestDto requestDto) {
         User writer = userService.getCurrentUser();
         AnimalAdoptionBoard animalAdoptionBoard = animalAdoptionBoardMapper.mapDtoToEntity(requestDto);
@@ -37,12 +40,22 @@ public class AnimalAdoptionBoardService {
     public List<AnimalAdoptionBoardResponseDto> getAnimalAdoptionBoards() {
         List<AnimalAdoptionBoard> animalAdoptionBoards = animalAdoptionBoardRepository.findAll();
         List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = animalAdoptionBoardMapper.mapEntityToDto(animalAdoptionBoards);
+        setAdoptionRequestUser(animalAdoptionBoardResponseDtos);
+        return animalAdoptionBoardResponseDtos;
+    }
+
+    public List<AnimalAdoptionBoardResponseDto> getMyAnimalAdoptionBoard() {
+        User user = userService.getCurrentUser();
+        List<AnimalAdoptionBoard> animalAdoptionBoards = animalAdoptionBoardRepository.findByWriter(user);
+        List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = animalAdoptionBoardMapper.mapEntityToDto(animalAdoptionBoards);
+        setAdoptionRequestUser(animalAdoptionBoardResponseDtos);
         return animalAdoptionBoardResponseDtos;
     }
 
     public AnimalAdoptionBoardResponseDto getAnimalAdoptionBoard(Long boardId) {
         AnimalAdoptionBoard animalAdoptionBoard = getAnimalAdoptionBoardByIdOrThrow(boardId);
         AnimalAdoptionBoardResponseDto animalAdoptionBoardResponseDto = animalAdoptionBoardMapper.mapEntityToDto(animalAdoptionBoard);
+        animalAdoptionBoardResponseDto.setRequestUser(getAdoptionRequestUser(animalAdoptionBoardResponseDto.getId()));
         return animalAdoptionBoardResponseDto;
     }
 
@@ -113,6 +126,21 @@ public class AnimalAdoptionBoardService {
     public AnimalAdoptionBoard getAnimalAdoptionBoardByIdOrThrow(Long animalAdoptionBoardId) {
         return animalAdoptionBoardRepository.findById(animalAdoptionBoardId)
                 .orElseThrow(() -> new NotFoundException("해당하는 동물 분양 게시글이 없습니다."));
+    }
+
+    public List<User> getAdoptionRequestUser(Long boardId) {
+        List<AdoptionRequest> adoptionRequests = adoptionRequestRepository.findAllByAnimalAdoptionBoard_Id(boardId);
+        List<User> requestUser = new ArrayList<>();
+        for (AdoptionRequest adoptionRequest : adoptionRequests) {
+            requestUser.add(adoptionRequest.getUser());
+        }
+        return requestUser;
+    }
+
+    public void setAdoptionRequestUser(List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos) {
+        for (AnimalAdoptionBoardResponseDto responseDto : animalAdoptionBoardResponseDtos) {
+            responseDto.setRequestUser(getAdoptionRequestUser(responseDto.getId()));
+        }
     }
 
     private boolean checkWriterPermission(User boardWriter) throws PermissionDeniedException {

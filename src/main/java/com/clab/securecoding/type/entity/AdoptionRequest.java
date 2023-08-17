@@ -25,6 +25,7 @@ public class AdoptionRequest {
     @OneToOne
     private AnimalAdoptionBoard animalAdoptionBoard;
 
+    @Enumerated(EnumType.STRING)
     private RequestState requestState;
 
 }
