@@ -16,6 +16,7 @@ public class AdoptionRequestMapper {
         return AdoptionRequestResponseDto.builder()
                 .animalAdoptionBoard(adoptionRequest.getAnimalAdoptionBoard())
                 .requestState(adoptionRequest.getRequestState())
+                .contracts(adoptionRequest.getContracts())
                 .build();
     }
 

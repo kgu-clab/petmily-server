@@ -1,12 +1,14 @@
 package com.clab.securecoding.type.entity;
 
 import com.clab.securecoding.type.etc.RequestState;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,8 +24,12 @@ public class AdoptionRequest {
     @OneToOne
     private User user;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.DETACH)
     private AnimalAdoptionBoard animalAdoptionBoard;
+
+    @JsonIgnore
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REMOVE})
+    private List<Contract> contracts;
 
     @Enumerated(EnumType.STRING)
     private RequestState requestState;

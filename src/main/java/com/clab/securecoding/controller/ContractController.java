@@ -25,7 +25,9 @@ public class ContractController {
             "String vaccine;<br>" +
             "String isNeutered;<br>" +
             "String additionalProvisions;<br>" +
-            "String signature;")
+            "String signature;<br>" +
+            "Long AdoptionRequestId;"
+    )
     @PostMapping()
     public ResponseModel createContract(
             @RequestBody ContractRequestDto contractRequestDto

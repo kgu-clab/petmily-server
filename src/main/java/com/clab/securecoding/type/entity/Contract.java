@@ -38,6 +38,9 @@ public class Contract {
 
     private String signature;
 
+    @ManyToOne(cascade = CascadeType.DETACH)
+    private AdoptionRequest adoptionRequest;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 

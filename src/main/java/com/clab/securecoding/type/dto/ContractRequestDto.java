@@ -23,4 +23,6 @@ public class ContractRequestDto {
 
     private String signature;
 
+    private Long AdoptionRequestId;
+
 }

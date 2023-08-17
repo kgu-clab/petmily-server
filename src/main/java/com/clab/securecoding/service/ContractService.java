@@ -21,11 +21,16 @@ public class ContractService {
 
     private final UserService userService;
 
+    private final AdoptionRequestService adoptionRequestService;
+
     @Transactional
     public void createContract(ContractRequestDto contractRequestDto) {
         Contract contract = contractMapper.mapDtoToEntity(contractRequestDto);
+        Long adoptionRequestId = contractRequestDto.getAdoptionRequestId();
+
         contract.setContent(getDefaultContent());
         contract.setUser(userService.getCurrentUser());
+        contract.setAdoptionRequest(adoptionRequestService.getAdoptionRequestByRequestIdOrThrow(adoptionRequestId));
         contractRepository.save(contract);
     }
 
