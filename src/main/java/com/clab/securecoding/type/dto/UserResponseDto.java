@@ -1,7 +1,5 @@
 package com.clab.securecoding.type.dto;
 
-import com.clab.securecoding.type.etc.OAuthProvider;
-import com.clab.securecoding.type.etc.Role;
 import com.clab.securecoding.type.etc.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

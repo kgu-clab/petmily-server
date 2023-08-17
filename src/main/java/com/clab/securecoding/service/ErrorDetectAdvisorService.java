@@ -34,6 +34,7 @@ public class ErrorDetectAdvisorService {
     private TaskExecutor taskExecutor;
 
     public void handleException(HttpServletRequest request, Exception e) {
+        Date date = new Date();
         slackAttachment.setTitle("Error: " + e.getClass().getSimpleName());
         slackAttachment.setTitleLink(request.getContextPath());
         slackAttachment.setText("[Exception Stack Trace]\n" + Arrays.toString(e.getStackTrace()));
@@ -41,7 +42,7 @@ public class ErrorDetectAdvisorService {
                 List.of(
                         new SlackField().setTitle("Request URL").setValue(String.valueOf(request.getRequestURL())),
                         new SlackField().setTitle("Request Method").setValue(request.getMethod()),
-                        new SlackField().setTitle("Request Time").setValue(new Date().toString()),
+                        new SlackField().setTitle("Request Time").setValue(date.toString()),
                         new SlackField().setTitle("Request IP").setValue(request.getRemoteAddr()),
                         new SlackField().setTitle("Request User-Agent").setValue(request.getHeader("User-Agent"))
                 )

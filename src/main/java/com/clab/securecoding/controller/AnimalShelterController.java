@@ -7,10 +7,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -24,7 +27,7 @@ public class AnimalShelterController {
 
     @Operation(summary = "동물보호소 정보 가져오기", description = "공공데이터에 API 요청을 보내 동물보호소 정보를 가져옴")
     @GetMapping()
-    public ResponseModel retrieveShelters() {
+    public ResponseModel retrieveShelters() throws IOException, ParseException {
         animalShelterService.retrieveShelters();
         ResponseModel responseModel = ResponseModel.builder().build();
         return responseModel;

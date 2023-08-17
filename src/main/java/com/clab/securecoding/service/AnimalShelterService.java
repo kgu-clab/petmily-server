@@ -10,11 +10,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,43 +34,41 @@ public class AnimalShelterService {
     @Value("${data.api.key}")
     private String apiKey;
 
-    public void retrieveShelters() {
+    private static final String SUCCESS_CODE = "00";
+
+    public void retrieveShelters() throws IOException, ParseException {
         String apiUrl = "http://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo";
         RestTemplate restTemplate = new RestTemplate();
 
-        try {
-            StringBuilder urlBuilder = new StringBuilder(apiUrl);
-            urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + URLEncoder.encode(apiKey, "UTF-8"));
-            urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("100", "UTF-8"));
-            urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
-            urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
+        StringBuilder urlBuilder = new StringBuilder(apiUrl);
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + URLEncoder.encode(apiKey, "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("100", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
 
-            String responseBody = restTemplate.getForObject(urlBuilder.toString(), String.class);
+        String responseBody = restTemplate.getForObject(urlBuilder.toString(), String.class);
 
-            JSONParser parser = new JSONParser();
-            JSONObject jsonResponse = (JSONObject) parser.parse(new StringReader(responseBody));
-            JSONObject response = (JSONObject) jsonResponse.get("response");
+        JSONParser parser = new JSONParser();
+        JSONObject jsonResponse = (JSONObject) parser.parse(new StringReader(responseBody));
+        JSONObject response = (JSONObject) jsonResponse.get("response");
 
-            JSONObject header = (JSONObject) response.get("header");
-            String resultCode = (String) header.get("resultCode");
-            if (!"00".equals(resultCode)) {
-                String errorMsg = (String) header.get("resultMsg");
-                log.info("resultMsg : {}", errorMsg);
-                throw new ApiRequestFailedException();
-            }
-
-            JSONObject body = (JSONObject) response.get("body");
-            JSONObject items = (JSONObject) body.get("items");
-            JSONArray itemList = (JSONArray) items.get("item");
-
-            for (Object item : itemList) {
-                JSONObject itemObject = (JSONObject) item;
-                AnimalShelterDto dto = animalShelterMapper.mapJsonToDto(itemObject);
-                AnimalShelter shelter = animalShelterMapper.mapDtoToEntity(dto);
-                animalShelterRepository.save(shelter);
-            }
-        } catch (Exception e) {
+        JSONObject header = (JSONObject) response.get("header");
+        String resultCode = (String) header.get("resultCode");
+        if (!SUCCESS_CODE.equals(resultCode)) {
+            String errorMsg = (String) header.get("resultMsg");
+            log.info("resultMsg : {}", errorMsg);
             throw new ApiRequestFailedException();
+        }
+
+        JSONObject body = (JSONObject) response.get("body");
+        JSONObject items = (JSONObject) body.get("items");
+        JSONArray itemList = (JSONArray) items.get("item");
+
+        for (Object item : itemList) {
+            JSONObject itemObject = (JSONObject) item;
+            AnimalShelterDto dto = animalShelterMapper.mapJsonToDto(itemObject);
+            AnimalShelter shelter = animalShelterMapper.mapDtoToEntity(dto);
+            animalShelterRepository.save(shelter);
         }
     }
 

@@ -35,8 +35,10 @@ public class FileHandler {
         String destPath = filePath + File.separator + path + File.separator + newFilename;
         log.info("destPath : {}", destPath);
         File file = new File(destPath);
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdirs();
+        if (file != null) {
+            if (file.getParentFile().exists() == false) {
+                file.getParentFile().mkdirs();
+            }
         }
         try {
             String os = System.getProperty("os.name").toLowerCase();

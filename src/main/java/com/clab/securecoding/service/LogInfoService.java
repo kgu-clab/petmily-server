@@ -35,40 +35,16 @@ public class LogInfoService {
     private final UserService userService;
 
     public LogInfo createLogInfo(LogInfoRequestDto logInfoRequestDto, HttpServletRequest request) {
-        try {
-            User user = userService.getCurrentUser();
-
-
-            LogInfo logInfo = LogInfo.builder()
-                    .logType(logInfoRequestDto.getLogType())
-                    .id(user.getId())
-                    .userType(user.getType())
-                    .ip(request.getRemoteAddr())
-                    .danger(logInfoRequestDto.getDanger())
-                    .build();
-            logInfoRepository.save(logInfo);
-            return logInfo;
-        } catch ( Exception e ) {
-
-            Optional<User> user = userRepository.findByUserId(logInfoRequestDto.getId());
-            UserType type = null;
-            if (user.isPresent()) {
-                type = user.get().getType();
-            }
-            LogInfo logInfo = LogInfo.builder()
-                    .logType(logInfoRequestDto.getLogType())
-                    .id(logInfoRequestDto.getId())
-                    .userType(type)
-                    .ip(request.getRemoteAddr())
-                    .danger(logInfoRequestDto.getDanger())
-                    .build();
-
-
-
-
-            logInfoRepository.save(logInfo);
-            return logInfo;
-        }
+        User user = userService.getCurrentUser();
+        LogInfo logInfo = LogInfo.builder()
+                .logType(logInfoRequestDto.getLogType())
+                .id(user.getId())
+                .userType(user.getType())
+                .ip(request.getRemoteAddr())
+                .danger(logInfoRequestDto.getDanger())
+                .build();
+        logInfoRepository.save(logInfo);
+        return logInfo;
     }
 
     public List<LogInfoResponseDto> getLogInfos() {

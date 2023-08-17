@@ -54,6 +54,10 @@ public class SmsService {
             String content = userService.removeHyphensFromContact(requestDto.getContent());
             SmsResponseDto smsResponseDto = sendSmsInternal(recipientPhoneNumber, content);
             return smsResponseDto;
+        } catch (VerificationFailedException vfEx) {
+            throw new ApiRequestFailedException();
+        } catch (ApiRequestFailedException apiEx) {
+            throw new ApiRequestFailedException();
         } catch (Exception e) {
             throw new ApiRequestFailedException();
         }
@@ -67,6 +71,10 @@ public class SmsService {
             String contentWithCode = "Your verification code: " + verificationCode;
             SmsResponseDto smsResponseDto = sendSmsInternal(recipientPhoneNumber, contentWithCode);
             return smsResponseDto;
+        } catch (VerificationFailedException vfEx) {
+            throw new ApiRequestFailedException();
+        } catch (ApiRequestFailedException apiEx) {
+            throw new ApiRequestFailedException();
         } catch (Exception e) {
             throw new ApiRequestFailedException();
         }
@@ -98,15 +106,15 @@ public class SmsService {
         String accessKey = this.accessKey;
         String secretKey = this.secretKey;
 
-        String message = new StringBuilder()
-                .append(method)
+        StringBuilder messageBuilder = new StringBuilder();
+        messageBuilder.append(method)
                 .append(space)
                 .append(url)
                 .append(newLine)
                 .append(timestamp)
                 .append(newLine)
-                .append(accessKey)
-                .toString();
+                .append(accessKey);
+        String message = messageBuilder.toString();
 
         SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
         Mac mac = Mac.getInstance("HmacSHA256");
@@ -141,6 +149,10 @@ public class SmsService {
             restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
             SmsResponseDto smsResponseDto = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/" + this.serviceId + "/messages"), body, SmsResponseDto.class);
             return smsResponseDto;
+        } catch (VerificationFailedException vfEx) {
+            throw new ApiRequestFailedException();
+        } catch (ApiRequestFailedException apiEx) {
+            throw new ApiRequestFailedException();
         } catch (Exception e) {
             throw new ApiRequestFailedException();
         }
