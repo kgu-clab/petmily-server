@@ -2,6 +2,7 @@ package com.clab.securecoding.service;
 
 import com.clab.securecoding.exception.NotFoundException;
 import com.clab.securecoding.mapper.AdoptionRequestMapper;
+import com.clab.securecoding.repository.AdoptionRequestRepository;
 import com.clab.securecoding.repository.AnimalAdoptionBoardRepository;
 import com.clab.securecoding.repository.ContractRepository;
 import com.clab.securecoding.type.dto.AdoptionRequestResponseDto;
@@ -13,7 +14,6 @@ import com.clab.securecoding.type.entity.Contract;
 import com.clab.securecoding.type.entity.User;
 import com.clab.securecoding.type.etc.AnimalState;
 import com.clab.securecoding.type.etc.RequestState;
-import com.clab.securecoding.repository.AdoptionRequestRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -20,20 +20,20 @@ public class SlackConfig {
 
     @Bean
     public SlackAttachment slackAttachment() {
-        SlackAttachment slackAttachment = new SlackAttachment();
-        slackAttachment.setFallback("Error");
-        slackAttachment.setColor("danger");
-        slackAttachment.setTitle("Error Directory");
-        return slackAttachment;
+        SlackAttachment attachment = new SlackAttachment();
+        attachment.setFallback("Error");
+        attachment.setColor("danger");
+        attachment.setTitle("Error Directory");
+        return attachment;
     }
 
     @Bean
     public SlackMessage slackMessage() {
-        SlackMessage slackMessage = new SlackMessage();
-        slackMessage.setIcon(":ghost:");
-        slackMessage.setText("Error Detected");
-        slackMessage.setUsername("TODA Error Catcher");
-        return slackMessage;
+        SlackMessage message = new SlackMessage();
+        message.setIcon(":ghost:");
+        message.setText("Error Detected");
+        message.setUsername("TODA Error Catcher");
+        return message;
     }
 
 }

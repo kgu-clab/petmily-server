@@ -1,14 +1,19 @@
 package com.clab.securecoding.controller;
 
 import com.clab.securecoding.service.SmsService;
-import com.clab.securecoding.type.dto.*;
-
-
+import com.clab.securecoding.type.dto.RequestDto;
+import com.clab.securecoding.type.dto.ResponseModel;
+import com.clab.securecoding.type.dto.SmsPhoneNumberDto;
+import com.clab.securecoding.type.dto.SmsResponseDto;
+import com.clab.securecoding.type.dto.VerificationRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/sms")

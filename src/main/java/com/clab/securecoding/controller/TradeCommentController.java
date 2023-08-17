@@ -2,12 +2,23 @@ package com.clab.securecoding.controller;
 
 import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.service.TradeCommentService;
-import com.clab.securecoding.type.dto.*;
+import com.clab.securecoding.type.dto.CommentUpdateRequestDto;
+import com.clab.securecoding.type.dto.ResponseModel;
+import com.clab.securecoding.type.dto.TradeCommentRequestDto;
+import com.clab.securecoding.type.dto.TradeCommentResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 @RestController

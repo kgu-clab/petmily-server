@@ -1,6 +1,7 @@
 package com.clab.securecoding.type.dto;
 
-import com.clab.securecoding.type.entity.*;
+import com.clab.securecoding.type.entity.AdoptionRequest;
+import com.clab.securecoding.type.entity.User;
 import com.clab.securecoding.type.etc.AnimalState;
 import com.clab.securecoding.type.etc.AnimalType;
 import lombok.AllArgsConstructor;

@@ -8,7 +8,8 @@ import com.clab.securecoding.repository.TradeBoardRepository;
 import com.clab.securecoding.repository.TradeCommentRepository;
 import com.clab.securecoding.type.dto.TradeBoardRequestDto;
 import com.clab.securecoding.type.dto.TradeBoardResponseDto;
-import com.clab.securecoding.type.entity.*;
+import com.clab.securecoding.type.entity.TradeBoard;
+import com.clab.securecoding.type.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

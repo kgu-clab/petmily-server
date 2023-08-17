@@ -2,7 +2,13 @@ package com.clab.securecoding.config;
 
 import com.clab.securecoding.schedule.ShelterJob;
 import lombok.extern.slf4j.Slf4j;
-import org.quartz.*;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.SimpleScheduleBuilder;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,10 +41,10 @@ public class QuartzConfig {
     @Bean
     public Scheduler scheduler() throws SchedulerException {
         StdSchedulerFactory factory = new StdSchedulerFactory();
-        Scheduler scheduler = factory.getScheduler();
-        scheduler.start();
-        scheduler.scheduleJob(shelterJobDetail(), shelterTrigger());
-        return scheduler;
+        Scheduler factoryScheduler = factory.getScheduler();
+        factoryScheduler.start();
+        factoryScheduler.scheduleJob(shelterJobDetail(), shelterTrigger());
+        return factoryScheduler;
     }
 
 }

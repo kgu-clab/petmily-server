@@ -36,8 +36,11 @@ public class FileHandler {
         log.info("destPath : {}", destPath);
         File file = new File(destPath);
         if (file != null) {
-            if (file.getParentFile().exists() == false) {
-                file.getParentFile().mkdirs();
+            File parentFile = file.getParentFile();
+            if (parentFile != null) {
+                if (!parentFile.exists()) {
+                    parentFile.mkdirs();
+                }
             }
         }
         try {

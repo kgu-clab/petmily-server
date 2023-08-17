@@ -2,7 +2,10 @@ package com.clab.securecoding.type.dto;
 
 import com.clab.securecoding.type.etc.LogType;
 import com.clab.securecoding.type.etc.UserType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
