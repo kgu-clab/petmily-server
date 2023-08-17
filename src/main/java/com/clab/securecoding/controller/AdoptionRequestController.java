@@ -1,6 +1,8 @@
 package com.clab.securecoding.controller;
 
+import com.clab.securecoding.mapper.AdoptionRequestMapper;
 import com.clab.securecoding.service.AdoptionRequestService;
+import com.clab.securecoding.type.dto.AdoptionRequestResponseDto;
 import com.clab.securecoding.type.dto.AdoptionReserveRequestDto;
 import com.clab.securecoding.type.dto.ResponseModel;
 import com.clab.securecoding.type.entity.AdoptionRequest;
@@ -20,6 +22,8 @@ import java.util.List;
 public class AdoptionRequestController {
 
     private final AdoptionRequestService adoptionRequestService;
+
+    private final AdoptionRequestMapper adoptionRequestMapper;
 
     @Operation(summary = "동물 분양 요청", description = "동물 분양 요청<br>" +
             "Long animalAdoptionBoardId;")
@@ -44,9 +48,9 @@ public class AdoptionRequestController {
     @Operation(summary = "나의 동물 분양 요청 리스트", description = "내가 보낸 동물 분양 요청 리스트 조회")
     @GetMapping("/my-request")
     public ResponseModel getMyAdoptionRequest() {
-        List<AdoptionRequest> adoptionRequests = adoptionRequestService.getMyAdoptionRequest();
+        List<AdoptionRequestResponseDto> adoptionRequestResponseDtos = adoptionRequestService.getMyAdoptionRequest();
         ResponseModel responseModel = ResponseModel.builder().build();
-        responseModel.addData(adoptionRequests);
+        responseModel.addData(adoptionRequestResponseDtos);
         return responseModel;
     }
 

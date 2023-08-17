@@ -1,7 +1,9 @@
 package com.clab.securecoding.service;
 
 import com.clab.securecoding.exception.NotFoundException;
+import com.clab.securecoding.mapper.AdoptionRequestMapper;
 import com.clab.securecoding.repository.AnimalAdoptionBoardRepository;
+import com.clab.securecoding.type.dto.AdoptionRequestResponseDto;
 import com.clab.securecoding.type.dto.AdoptionReserveRequestDto;
 import com.clab.securecoding.type.dto.RequestDto;
 import com.clab.securecoding.type.entity.AdoptionRequest;
@@ -30,6 +32,8 @@ public class AdoptionRequestService {
 
     private final AnimalAdoptionBoardRepository animalAdoptionBoardRepository;
 
+    private final AdoptionRequestMapper adoptionRequestMapper;
+
     public void sendAdoptionRequest(AdoptionReserveRequestDto requestDto) {
         User user = userService.getCurrentUser();
         Long boardId = requestDto.getAnimalAdoptionBoardId();
@@ -42,14 +46,14 @@ public class AdoptionRequestService {
 
     public List<AdoptionRequest> getAdoptionRequest() {
         User user = userService.getCurrentUser();
-        List<AdoptionRequest> adoptionRequest = getAdoptionRequestByAnimalAdoptionBoard_Writer(user);
-        return adoptionRequest;
+        List<AdoptionRequest> adoptionRequests = getAdoptionRequestByAnimalAdoptionBoard_Writer(user);
+        return adoptionRequests;
     }
 
-    public List<AdoptionRequest> getMyAdoptionRequest() {
+    public List<AdoptionRequestResponseDto> getMyAdoptionRequest() {
         User user = userService.getCurrentUser();
-        List<AdoptionRequest> adoptionRequest = getAdoptionRequestByUser(user);
-        return adoptionRequest;
+        List<AdoptionRequest> adoptionRequests = getAdoptionRequestByUser(user);
+        return adoptionRequestMapper.mapDtoToEntity(adoptionRequests);
     }
 
     @Transactional
