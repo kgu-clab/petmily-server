@@ -23,9 +23,12 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        StringBuilder resourceLocation = new StringBuilder("file://").append(filePath).append("/");
+        StringBuilder resourcePattern = new StringBuilder(fileURL).append("/**");
+
         registry
-                .addResourceHandler(fileURL + "/**")
-                .addResourceLocations("file://" + filePath + "/")
+                .addResourceHandler(resourcePattern.toString())
+                .addResourceLocations(resourceLocation.toString())
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver() {
                     @Override
@@ -33,10 +36,10 @@ public class WebConfig implements WebMvcConfigurer {
                         Resource resource = location.createRelative(resourcePath);
                         if (resource.exists() && resource.isReadable()) {
                             return resource;
+                        } else {
+                            // Handle the resource not found case
+                            throw new FileNotFoundException("Resource not found: " + resourcePath);
                         }
-                        else {
-                        }
-                        throw new FileNotFoundException("Resource not found: " + resourcePath);
                     }
                 });
     }

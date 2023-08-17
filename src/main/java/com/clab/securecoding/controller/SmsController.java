@@ -24,9 +24,7 @@ public class SmsController {
 
     private final SmsService smsService;
 
-    @Operation(summary = "SMS 발송", description = "NCP SENS를 이용한 SMS 발송<br>" +
-            "String recipientPhoneNumber;<br>" +
-            "String content;")
+    @Operation(summary = "SMS 발송", description = "NCP SENS를 이용한 SMS 발송")
     @PostMapping("/send")
     public ResponseModel sendSms(
             @RequestBody RequestDto requestDto
@@ -48,9 +46,7 @@ public class SmsController {
         return responseModel;
     }
 
-    @Operation(summary = "인증번호 확인", description = "입력한 전화번호와 인증번호가 일치하고 유효한지 확인<br>" +
-            "String recipientPhoneNumber;<br>" +
-            "String verificationCode;")
+    @Operation(summary = "인증번호 확인", description = "입력한 전화번호와 인증번호가 일치하고 유효한지 확인")
     @PostMapping("/verify")
     public ResponseModel verifyCode(
             @RequestBody VerificationRequestDto verificationRequestDto

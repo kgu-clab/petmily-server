@@ -30,11 +30,7 @@ public class AdoptionReportController {
 
     private final AdoptionReportService adoptionReportService;
 
-    @Operation(summary = "분양 게시글 신고 생성", description = "신고 생성<br>" +
-            "Long animalAdoptionBoardId;<br>" +
-            "ReportType reportType;<br>" +
-            "String title;<br>" +
-            "String content;")
+    @Operation(summary = "분양 게시글 신고 생성", description = "신고 생성")
     @PostMapping()
     public ResponseModel createAdoptionReport(
             @RequestBody AdoptionReportRequestDto requestDto

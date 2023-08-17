@@ -31,16 +31,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @Operation(summary = "신규 유저 생성", description = "신규 유저 생성<br>" +
-            "UserType: PROFESSIONAL | SHELTER | INDIVIDUAL<br>" +
-            "String id;<br>"+
-            "String password;<br>" +
-            "String nickname;<br>" +
-            "String email;<br>" +
-            "String address;<br>" +
-            "String contact;<br>" +
-            "String businessNumber;<br>" +
-            "UserType type;")
+    @Operation(summary = "신규 유저 생성", description = "신규 유저 생성")
     @PostMapping()
     public ResponseModel createUser(
             @RequestBody UserRequestDto userRequestDto
@@ -80,14 +71,7 @@ public class UserController {
         return responseModel;
     }
 
-    @Operation(summary = "유저 정보 수정", description = "본인 정보 수정<br>" +
-            "UserType: PROFESSIONAL | SHELTER | INDIVIDUAL<br>" +
-            "String password;<br>" +
-            "String nickname;<br>" +
-            "String email;<br>" +
-            "String address;<br>" +
-            "String contact;<br>" +
-            "UserType type;")
+    @Operation(summary = "유저 정보 수정", description = "본인 정보 수정")
     @PatchMapping()
     public ResponseModel updateUserInfoByUser(
             @RequestBody UserUpdateRequestDto userUpdateRequestDto

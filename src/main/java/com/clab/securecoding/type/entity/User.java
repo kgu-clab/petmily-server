@@ -143,7 +143,7 @@ public class User implements UserDetails {
                 ", nickname='" + nickname + '\'' +
                 ", email='" + email + '\'' +
                 ", role=" + role +
-                '}';
+                "}";
     }
 
 }

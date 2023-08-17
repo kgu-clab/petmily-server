@@ -30,11 +30,7 @@ public class TradeBoardController {
 
     private final TradeBoardService tradeBoardService;
 
-    @Operation(summary = "거래 게시글 생성", description = "거래 게시글 생성<br>" +
-            "String title;<br>" +
-            "String content;<br>" +
-            "Long price;<br>" +
-            "String location;")
+    @Operation(summary = "거래 게시글 생성", description = "거래 게시글 생성")
     @PostMapping()
     public ResponseModel createTradeBoard(
             @RequestBody TradeBoardRequestDto tradeBoardRequestDto
@@ -65,11 +61,7 @@ public class TradeBoardController {
         return responseModel;
     }
 
-    @Operation(summary = "거래 게시글 수정", description = "거래 게시글 수정<br>" +
-            "String title;<br>" +
-            "String content;<br>" +
-            "Long price;<br>" +
-            "String location;")
+    @Operation(summary = "거래 게시글 수정", description = "거래 게시글 수정")
     @PatchMapping("/{tradeBoardId}")
     public ResponseModel updateTradeBoard(
             @PathVariable Long tradeBoardId,

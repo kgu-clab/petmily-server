@@ -30,9 +30,7 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @Operation(summary = "댓글 생성", description = "댓글 생성<br>" +
-            "Long board;<br>" +
-            "String content;")
+    @Operation(summary = "댓글 생성", description = "댓글 생성")
     @PostMapping("/{boardId}")
     public ResponseModel createComment(
             @RequestBody CommentRequestDto commentRequestDto
@@ -53,8 +51,7 @@ public class CommentController {
         return responseModel;
     }
 
-    @Operation(summary = "댓글 수정", description = "댓글 수정<br>" +
-            "String content;")
+    @Operation(summary = "댓글 수정", description = "댓글 수정")
     @PatchMapping("/{commentId}")
     public ResponseModel updateComment(
             @PathVariable Long commentId,

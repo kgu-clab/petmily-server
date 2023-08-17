@@ -32,29 +32,7 @@ public class AnimalAdoptionBoardController {
 
     private final AnimalAdoptionBoardService animalAdoptionBoardService;
 
-    @Operation(summary = "동물 분양 게시글 생성", description = "동물 분양 게시글 생성<br>" +
-            "AnimalType: DOG | CAT | BIRD | FISH | SMALL_ANIMAL | REPTILE<br>" +
-            "String species;<br>" +
-            "String name;<br>" +
-            "String color;<br>" +
-            "String gender;<br>" +
-            "Long age;<br>" +
-            "Double weight;<br>" +
-            "String vaccine;<br>" +
-            "String isNeutered;<br>" +
-            "String birthDay;<br>" +
-            "String favoriteSnack;<br>" +
-            "String reasonForAdoption;<br>" +
-            "String areasAvailable;<br>" +
-            "Integer price;<br>" +
-            "Double leadership;<br>" +
-            "Double independence;<br>" +
-            "Double initiative;<br>" +
-            "Double positivity;<br>" +
-            "Double adaptability;<br>" +
-            "String recommendation;<br>" +
-            "String think;<br> +" +
-            "String imgUrl;")
+    @Operation(summary = "동물 분양 게시글 생성", description = "동물 분양 게시글 생성")
     @PostMapping()
     public ResponseModel createAnimalAdoptionBoard(
             @RequestBody AnimalAdoptionBoardRequestDto requestDto

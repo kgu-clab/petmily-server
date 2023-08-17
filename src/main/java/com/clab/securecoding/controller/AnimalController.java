@@ -31,19 +31,7 @@ public class AnimalController {
 
     private final AnimalService animalService;
 
-    @Operation(summary = "신규 동물 생성", description = "신규 동물 생성<br>" +
-            "AnimalType: DOG | CAT | BIRD | FISH | SMALL_ANIMAL | REPTILE<br>" +
-            "AnimalType animalType;<br>" +
-            "String species;<br>" +
-            "Long age;<br>"+
-            "String gender;<br>" +
-            "String specialNotes;<br>" +
-            "String vaccine;<br>" +
-            "String isNeutered;<br>" +
-            "String reasonForAdoption;<br>" +
-            "String previousHomeEnvironment;<br>" +
-            "String likes;<br>" +
-            "String dislikes;")
+    @Operation(summary = "신규 동물 생성", description = "신규 동물 생성")
     @PostMapping()
     public ResponseModel createAnimal(
             @RequestBody AnimalRequestDto animalResquestDto
@@ -74,19 +62,7 @@ public class AnimalController {
         return responseModel;
     }
 
-    @Operation(summary = "동물 정보 수정", description = "본인의 동물 정보 수정<br>" +
-            "AnimalType: DOG | CAT | BIRD | FISH | SMALL_ANIMAL | REPTILE<br>" +
-            "AnimalType animalType;<br>" +
-            "String species;<br>" +
-            "Long age;<br>"+
-            "String gender;<br>" +
-            "String specialNotes;<br>" +
-            "String vaccine;<br>" +
-            "String isNeutered;<br>" +
-            "String reasonForAdoption;<br>" +
-            "String previousHomeEnvironment;<br>" +
-            "String likes;<br>" +
-            "String dislikes;")
+    @Operation(summary = "동물 정보 수정", description = "본인의 동물 정보 수정")
     @PatchMapping()
     public ResponseModel updateAnimalInfoByUser(
             @RequestParam Long animalId,

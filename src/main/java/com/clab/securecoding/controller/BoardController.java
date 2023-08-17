@@ -30,9 +30,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @Operation(summary = "게시글 생성", description = "게시글 생성<br>" +
-            "String title;<br>" +
-            "String content;")
+    @Operation(summary = "게시글 생성", description = "게시글 생성")
     @PostMapping()
     public ResponseModel createBoard(
             @RequestBody BoardRequestDto boardRequestDto

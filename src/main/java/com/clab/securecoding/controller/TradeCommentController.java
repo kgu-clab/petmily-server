@@ -30,9 +30,7 @@ public class TradeCommentController {
 
     private final TradeCommentService tradeCommentService;
 
-    @Operation(summary = "댓글 생성", description = "댓글 생성<br>" +
-            "Long tradeBoard;<br>" +
-            "String content;")
+    @Operation(summary = "댓글 생성", description = "댓글 생성")
     @PostMapping("/{tradeBoardId}")
     public ResponseModel createComment(
             @RequestBody TradeCommentRequestDto tradeCommentRequestDto
@@ -53,8 +51,7 @@ public class TradeCommentController {
         return responseModel;
     }
 
-    @Operation(summary = "댓글 수정", description = "댓글 수정<br>" +
-            "String content;")
+    @Operation(summary = "댓글 수정", description = "댓글 수정")
     @PatchMapping("/{tradeCommentId}")
     public ResponseModel updateComment(
             @PathVariable Long tradeCommentId,

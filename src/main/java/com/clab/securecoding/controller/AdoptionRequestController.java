@@ -31,8 +31,7 @@ public class AdoptionRequestController {
 
     private final AdoptionRequestMapper adoptionRequestMapper;
 
-    @Operation(summary = "동물 분양 요청", description = "동물 분양 요청<br>" +
-            "Long animalAdoptionBoardId;")
+    @Operation(summary = "동물 분양 요청", description = "동물 분양 요청")
     @PostMapping()
     public ResponseModel sendAdoptionRequest(
             @RequestBody AdoptionReserveRequestDto adoptionReserveRequestDto

@@ -23,16 +23,7 @@ public class ContractController {
 
     private final ContractService contractService;
 
-    @Operation(summary = "계약서 생성", description = "계약서 생성<br>" +
-            "String content;<br>"+
-            "String gender;<br>" +
-            "Long age;<br>" +
-            "String vaccine;<br>" +
-            "String isNeutered;<br>" +
-            "String additionalProvisions;<br>" +
-            "String signature;<br>" +
-            "Long AdoptionRequestId;"
-    )
+    @Operation(summary = "계약서 생성", description = "계약서 생성")
     @PostMapping()
     public ResponseModel createContract(
             @RequestBody ContractRequestDto contractRequestDto
