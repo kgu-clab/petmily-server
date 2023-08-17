@@ -46,6 +46,12 @@ public class AdoptionRequestService {
         return adoptionRequest;
     }
 
+    public List<AdoptionRequest> getMyAdoptionRequest() {
+        User user = userService.getCurrentUser();
+        List<AdoptionRequest> adoptionRequest = getAdoptionRequestByUser(user);
+        return adoptionRequest;
+    }
+
     @Transactional
     public void approveAdoptionRequest(Long requestId) {
         List<AdoptionRequest> adoptionRequests = adoptionRequestRepository.findAll();
@@ -82,6 +88,10 @@ public class AdoptionRequestService {
 
     public List<AdoptionRequest> getAdoptionRequestByAnimalAdoptionBoard_Writer(User user) {
         return adoptionRequestRepository.findAllByAnimalAdoptionBoard_Writer(user);
+    }
+
+    public List<AdoptionRequest> getAdoptionRequestByUser(User user) {
+        return adoptionRequestRepository.findAllByUser(user);
     }
 
     private AdoptionRequest createAdoptionRequest(User user, AnimalAdoptionBoard animalAdoptionBoard) {

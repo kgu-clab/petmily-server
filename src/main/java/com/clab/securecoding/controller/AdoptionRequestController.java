@@ -41,6 +41,15 @@ public class AdoptionRequestController {
         return responseModel;
     }
 
+    @Operation(summary = "나의 동물 분양 요청 리스트", description = "내가 보낸 동물 분양 요청 리스트 조회")
+    @GetMapping("/my-request")
+    public ResponseModel getMyAdoptionRequest() {
+        List<AdoptionRequest> adoptionRequests = adoptionRequestService.getMyAdoptionRequest();
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData(adoptionRequests);
+        return responseModel;
+    }
+
     @Operation(summary = "동물 분양 요청 승인", description = "동물 분양 요청 승인")
     @PostMapping("/approve")
     public ResponseModel approveAdoptionRequest(
