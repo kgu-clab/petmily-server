@@ -38,7 +38,7 @@ public class ReportController {
     }
 
     @Operation(summary = "신고 정보", description = "모든 신고 정보 조회")
-    @PostMapping()
+    @GetMapping()
     public ResponseModel getReports() {
         List<ReportResponseDto> reports = reportService.getReports();
         ResponseModel responseModel = ResponseModel.builder().build();
