@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/login")
 @RequiredArgsConstructor
@@ -27,12 +29,13 @@ public class LoginController {
             "String paasword;")
     @PostMapping()
     public ResponseModel login(
-            @RequestBody UserLoginRequestDto userLoginRequestDto
+            @RequestBody UserLoginRequestDto userLoginRequestDto, HttpServletRequest request
     ) throws UserLockedException, LoginFaliedException {
         ResponseModel responseModel = ResponseModel.builder().build();
         String id = userLoginRequestDto.getId();
         String password = userLoginRequestDto.getPassword();
-        TokenInfo tokenInfo = loginService.login(id, password);
+        request.setAttribute("loginId",id);
+        TokenInfo tokenInfo = loginService.login(id, password, request);
         responseModel.addData(tokenInfo);
         return responseModel;
     }

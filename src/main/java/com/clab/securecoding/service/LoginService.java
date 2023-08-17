@@ -6,8 +6,10 @@ import com.clab.securecoding.exception.NotFoundException;
 import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.exception.UserLockedException;
 import com.clab.securecoding.repository.LoginFailInfoRepository;
+import com.clab.securecoding.type.dto.LogInfoRequestDto;
 import com.clab.securecoding.type.dto.TokenInfo;
 import com.clab.securecoding.type.entity.LoginFailInfo;
+import com.clab.securecoding.type.etc.LogType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,6 +18,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
@@ -32,12 +35,14 @@ public class LoginService {
 
     private final UserService userService;
 
+    private final LogInfoService logInfoService;
+
     private static final int MAX_LOGIN_FAILURES = 5;
 
     private static final int LOCK_DURATION_MINUTES = 5;
 
     @Transactional
-    public TokenInfo login(String id, String password) throws LoginFaliedException, UserLockedException {
+    public TokenInfo login(String id, String password, HttpServletRequest request) throws LoginFaliedException, UserLockedException {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, password);
 
         try {
@@ -48,6 +53,9 @@ public class LoginService {
             resetLoginFailInfo(loginFailInfo);
 
             TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+
+            LogInfoRequestDto logInfoRequestDto = new LogInfoRequestDto(LogType.LOGIN, id, null, request.getRemoteAddr(),"LOW");
+            logInfoService.createLogInfo(logInfoRequestDto, request);
             return tokenInfo;
         } catch (BadCredentialsException e) {
             updateLoginFailInfo(id);
