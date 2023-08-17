@@ -4,10 +4,7 @@ import com.clab.securecoding.type.etc.OAuthProvider;
 import com.clab.securecoding.type.etc.Role;
 import com.clab.securecoding.type.etc.UserType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,6 +21,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class User implements UserDetails {
 
     @Id
@@ -120,6 +118,18 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "seq=" + seq +
+                ", id='" + id + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                // 여기에 나머지 필드 추가
+                '}';
     }
 
 }

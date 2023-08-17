@@ -10,6 +10,7 @@ import com.clab.securecoding.type.dto.LogInfoRequestDto;
 import com.clab.securecoding.type.dto.RefreshTokenDto;
 import com.clab.securecoding.type.dto.TokenInfo;
 import com.clab.securecoding.type.entity.LoginFailInfo;
+import com.clab.securecoding.type.entity.User;
 import com.clab.securecoding.type.etc.LogType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,8 +49,16 @@ public class LoginService {
 
         try {
             Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
             LoginFailInfo loginFailInfo = getLoginFailInfoByUserIdOrThrow(authentication.getName());
+            if (loginFailInfo == null) {
+                User user = userService.getUserByUserIdOrThrow(authentication.getName());
+                loginFailInfo = LoginFailInfo.builder()
+                        .user(user)
+                        .loginFailCount(0L)
+                        .isLock(false)
+                        .build();
+                loginFailInfoRepository.save(loginFailInfo);
+            }
             checkUserLocked(loginFailInfo);
             resetLoginFailInfo(loginFailInfo);
 

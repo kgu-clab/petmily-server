@@ -116,6 +116,11 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundException("해당 유저가 없습니다."));
     }
 
+    public User getUserByUserIdOrThrow(String userId) {
+        return userRepository.findByUserId(userId)
+                .orElseThrow(() -> new NotFoundException("해당 유저가 없습니다."));
+    }
+
     public User getUserByNicknameOrThrow(String nickname) {
         return userRepository.findByNickname(nickname)
                 .orElseThrow(() -> new NotFoundException("해당 유저가 없습니다."));
