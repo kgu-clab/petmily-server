@@ -4,10 +4,7 @@ import com.clab.securecoding.exception.LoginFaliedException;
 import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.exception.UserLockedException;
 import com.clab.securecoding.service.LoginService;
-import com.clab.securecoding.type.dto.RefreshTokenDto;
-import com.clab.securecoding.type.dto.ResponseModel;
-import com.clab.securecoding.type.dto.TokenInfo;
-import com.clab.securecoding.type.dto.UserLoginRequestDto;
+import com.clab.securecoding.type.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -69,6 +66,20 @@ public class LoginController {
     ) throws PermissionDeniedException {
         loginService.unbanUserById(userId);
         ResponseModel responseModel = ResponseModel.builder().build();
+        return responseModel;
+    }
+
+    @Operation(summary = "유저 토큰 권한 검사", description = "유저 토큰 권한 검사<br>" +
+            "String token;<br>" +
+            "data: true -> admin<br>" +
+            "datq: false -> user")
+    @PostMapping("/role")
+    public ResponseModel checkTokenRole(
+            @RequestBody TokenDto tokenDto
+    ) {
+        boolean isAdminRole = loginService.checkTokenRole(tokenDto);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData(isAdminRole);
         return responseModel;
     }
 
