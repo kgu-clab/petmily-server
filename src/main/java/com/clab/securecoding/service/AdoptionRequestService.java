@@ -2,6 +2,7 @@ package com.clab.securecoding.service;
 
 import com.clab.securecoding.exception.NotFoundException;
 import com.clab.securecoding.type.dto.AdoptionReserveRequestDto;
+import com.clab.securecoding.type.dto.RequestDto;
 import com.clab.securecoding.type.entity.AdoptionRequest;
 import com.clab.securecoding.type.entity.AnimalAdoptionBoard;
 import com.clab.securecoding.type.entity.User;
@@ -21,6 +22,8 @@ public class AdoptionRequestService {
     private final UserService userService;
 
     private final AnimalAdoptionBoardService animalAdoptionBoardService;
+
+    private final SmsService smsService;
 
     public void sendAdoptionRequest(AdoptionReserveRequestDto requestDto) {
         User user = userService.getCurrentUser();
@@ -46,6 +49,11 @@ public class AdoptionRequestService {
         }
         AdoptionRequest adoptionRequest = getAdoptionRequestByRequestIdOrThrow(requestId);
         adoptionRequest.setRequestState(RequestState.APPROVE);
+        RequestDto requestDto = RequestDto.builder()
+                .recipientPhoneNumber(adoptionRequest.getUser().getContact())
+                .content("분양 요청이 승인되었습니다.\n홈페이지에서 확인 부탁드립니다.")
+                .build();
+        smsService.sendSms(requestDto);
         adoptionRequestRepository.save(adoptionRequest);
     }
 
