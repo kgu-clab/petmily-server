@@ -1,29 +1,34 @@
 package com.clab.securecoding.service;
 
 import com.clab.securecoding.exception.NotFoundException;
+import com.clab.securecoding.repository.AnimalAdoptionBoardRepository;
 import com.clab.securecoding.type.dto.AdoptionReserveRequestDto;
 import com.clab.securecoding.type.dto.RequestDto;
 import com.clab.securecoding.type.entity.AdoptionRequest;
 import com.clab.securecoding.type.entity.AnimalAdoptionBoard;
 import com.clab.securecoding.type.entity.User;
+import com.clab.securecoding.type.etc.AnimalState;
 import com.clab.securecoding.type.etc.RequestState;
 import com.clab.securecoding.repository.AdoptionRequestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AdoptionRequestService {
 
-    private final AdoptionRequestRepository adoptionRequestRepository;
-
     private final UserService userService;
 
     private final AnimalAdoptionBoardService animalAdoptionBoardService;
 
     private final SmsService smsService;
+
+    private final AdoptionRequestRepository adoptionRequestRepository;
+
+    private final AnimalAdoptionBoardRepository animalAdoptionBoardRepository;
 
     public void sendAdoptionRequest(AdoptionReserveRequestDto requestDto) {
         User user = userService.getCurrentUser();
@@ -41,6 +46,7 @@ public class AdoptionRequestService {
         return adoptionRequest;
     }
 
+    @Transactional
     public void approveAdoptionRequest(Long requestId) {
         List<AdoptionRequest> adoptionRequests = adoptionRequestRepository.findAll();
         for (AdoptionRequest adoptionRequest : adoptionRequests) {
@@ -49,12 +55,15 @@ public class AdoptionRequestService {
         }
         AdoptionRequest adoptionRequest = getAdoptionRequestByRequestIdOrThrow(requestId);
         adoptionRequest.setRequestState(RequestState.APPROVE);
+        AnimalAdoptionBoard animalAdoptionBoard = adoptionRequest.getAnimalAdoptionBoard();
+        animalAdoptionBoard.setAnimalState(AnimalState.COMPLETE);
+        animalAdoptionBoardRepository.save(animalAdoptionBoard);
+        adoptionRequestRepository.save(adoptionRequest);
         RequestDto requestDto = RequestDto.builder()
                 .recipientPhoneNumber(adoptionRequest.getUser().getContact())
                 .content("분양 요청이 승인되었습니다.\n홈페이지에서 확인 부탁드립니다.")
                 .build();
         smsService.sendSms(requestDto);
-        adoptionRequestRepository.save(adoptionRequest);
     }
 
     public void deleteAdoptionRequest(Long requestId) {

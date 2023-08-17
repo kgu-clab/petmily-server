@@ -1,7 +1,7 @@
 package com.clab.securecoding.type.entity;
 
+import com.clab.securecoding.type.etc.AnimalState;
 import com.clab.securecoding.type.etc.AnimalType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -68,6 +68,9 @@ public class AnimalAdoptionBoard {
 
     @Column(columnDefinition = "TEXT")
     private String imgUrl;
+
+    @Enumerated(EnumType.STRING)
+    private AnimalState animalState;
 
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "user")

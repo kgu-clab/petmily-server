@@ -3,6 +3,7 @@ package com.clab.securecoding.mapper;
 import com.clab.securecoding.type.dto.AnimalAdoptionBoardRequestDto;
 import com.clab.securecoding.type.dto.AnimalAdoptionBoardResponseDto;
 import com.clab.securecoding.type.entity.AnimalAdoptionBoard;
+import com.clab.securecoding.type.etc.AnimalState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +39,7 @@ public class AnimalAdoptionBoardMapper {
                 .recommendation(animalAdoptionBoardReqDto.getRecommendation())
                 .think(animalAdoptionBoardReqDto.getThink())
                 .imgUrl(animalAdoptionBoardReqDto.getImgUrl())
+                .animalState(AnimalState.FIND)
                 .build();
     }
 
@@ -67,6 +69,7 @@ public class AnimalAdoptionBoardMapper {
                 .recommendation(animalAdoptionBoard.getRecommendation())
                 .think(animalAdoptionBoard.getThink())
                 .imgUrl(animalAdoptionBoard.getImgUrl())
+                .animalState(animalAdoptionBoard.getAnimalState())
                 .writer(animalAdoptionBoard.getWriter())
                 .createdAt(animalAdoptionBoard.getCreatedAt())
                 .build();

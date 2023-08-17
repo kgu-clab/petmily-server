@@ -1,6 +1,7 @@
 package com.clab.securecoding.type.dto;
 
 import com.clab.securecoding.type.entity.*;
+import com.clab.securecoding.type.etc.AnimalState;
 import com.clab.securecoding.type.etc.AnimalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -61,6 +62,8 @@ public class AnimalAdoptionBoardResponseDto {
     private String think;
 
     private String imgUrl;
+
+    private AnimalState animalState;
 
     private User writer;
 
