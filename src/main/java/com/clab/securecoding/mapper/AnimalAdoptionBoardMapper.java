@@ -6,6 +6,9 @@ import com.clab.securecoding.type.entity.AnimalAdoptionBoard;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class AnimalAdoptionBoardMapper {
@@ -34,6 +37,7 @@ public class AnimalAdoptionBoardMapper {
                 .adaptability(animalAdoptionBoardReqDto.getAdaptability())
                 .recommendation(animalAdoptionBoardReqDto.getRecommendation())
                 .think(animalAdoptionBoardReqDto.getThink())
+                .imgUrl(animalAdoptionBoardReqDto.getImgUrl())
                 .build();
     }
 
@@ -62,9 +66,19 @@ public class AnimalAdoptionBoardMapper {
                 .adaptability(animalAdoptionBoard.getAdaptability())
                 .recommendation(animalAdoptionBoard.getRecommendation())
                 .think(animalAdoptionBoard.getThink())
+                .imgUrl(animalAdoptionBoard.getImgUrl())
                 .writer(animalAdoptionBoard.getWriter())
                 .createdAt(animalAdoptionBoard.getCreatedAt())
                 .build();
+    }
+
+    public List<AnimalAdoptionBoardResponseDto> mapEntityToDto(List<AnimalAdoptionBoard> animalAdoptionBoards) {
+        List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = new ArrayList<>();
+        for (AnimalAdoptionBoard animalAdoptionBoard : animalAdoptionBoards) {
+            AnimalAdoptionBoardResponseDto animalAdoptionBoardResponseDto = mapEntityToDto(animalAdoptionBoard);
+            animalAdoptionBoardResponseDtos.add(animalAdoptionBoardResponseDto);
+        }
+        return animalAdoptionBoardResponseDtos;
     }
 
 }

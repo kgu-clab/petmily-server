@@ -1,10 +1,7 @@
 package com.clab.securecoding.service;
 
 import com.clab.securecoding.auth.util.AuthUtil;
-import com.clab.securecoding.exception.AssociatedAccountExistsException;
-import com.clab.securecoding.exception.NotFoundException;
-import com.clab.securecoding.exception.PermissionDeniedException;
-import com.clab.securecoding.exception.SearchResultNotExistException;
+import com.clab.securecoding.exception.*;
 import com.clab.securecoding.mapper.UserMapper;
 import com.clab.securecoding.repository.*;
 import com.clab.securecoding.type.dto.UserUpdateRequestDto;
@@ -17,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,13 +26,18 @@ public class UserService {
 
     private final UserMapper userMapper;
 
+    private final LoginFailInfoRepository loginFailInfoRepository;
+
     private final PasswordEncoder passwordEncoder;
 
-    public void createUser(UserRequestDto userRequestDto) throws PermissionDeniedException {
-        checkUserAdminRole();
-        if (userRepository.findByUserId(userRequestDto.getId()).isPresent())
+    @Transactional
+    public void createUser(UserRequestDto userRequestDto) {
+        if (isExistUserId(userRequestDto.getId()))
             throw new AssociatedAccountExistsException();
+        if (isExistContact(userRequestDto.getContact()))
+            throw new DuplicateContactException();
         User user = userMapper.mapDtoToEntity(userRequestDto);
+        user.setContact(removeHyphensFromContact(user.getContact()));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         LoginFailInfo loginFailInfo = LoginFailInfo.builder()
                 .user(user)
@@ -42,6 +45,7 @@ public class UserService {
                 .isLock(false)
                 .build();
         user.setLoginFailInfo(loginFailInfo);
+        loginFailInfoRepository.save(loginFailInfo);
         userRepository.save(user);
     }
 
@@ -54,6 +58,12 @@ public class UserService {
             userResponseDtos.add(userResponseDto);
         }
         return userResponseDtos;
+    }
+
+    public UserResponseDto getMyInfo() {
+        User user = getCurrentUser();
+        UserResponseDto userResponseDto = userMapper.mapEntityToDto(user);
+        return userResponseDto;
     }
 
     public UserResponseDto searchUser(Long seq, String nickname) throws PermissionDeniedException {
@@ -115,6 +125,24 @@ public class UserService {
         String userId = AuthUtil.getAuthenticationInfoUserId();
         User user = userRepository.findByUserId(userId).get();
         return user;
+    }
+
+    public boolean isExistUserInfo(String userId, String contact) {
+        if (userId != null) return isExistUserId(userId);
+        else if (contact != null) return isExistContact(contact);
+        return false;
+    }
+
+    public boolean isExistUserId(String userId) {
+        return userRepository.existsByUserId(userId);
+    }
+
+    public boolean isExistContact(String contact) {
+        return userRepository.existsByContact(contact);
+    }
+
+    public String removeHyphensFromContact(String contact) {
+        return contact.replaceAll("-", "");
     }
 
 }

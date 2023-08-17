@@ -6,6 +6,7 @@ import com.clab.securecoding.exception.NotFoundException;
 import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.exception.UserLockedException;
 import com.clab.securecoding.repository.LoginFailInfoRepository;
+import com.clab.securecoding.type.dto.RefreshTokenDto;
 import com.clab.securecoding.type.dto.TokenInfo;
 import com.clab.securecoding.type.entity.LoginFailInfo;
 import lombok.RequiredArgsConstructor;
@@ -48,11 +49,22 @@ public class LoginService {
             resetLoginFailInfo(loginFailInfo);
 
             TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+
             return tokenInfo;
         } catch (BadCredentialsException e) {
             updateLoginFailInfo(id);
         }
 
+        return null;
+    }
+
+    public TokenInfo reissue(RefreshTokenDto refreshTokenDto) {
+        String refreshToken = refreshTokenDto.getRefreshToken();
+        if (refreshToken != null && jwtTokenProvider.validateToken(refreshToken)) {
+            Authentication authentication = jwtTokenProvider.getAuthentication(refreshToken);
+            TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+            return tokenInfo;
+        }
         return null;
     }
 

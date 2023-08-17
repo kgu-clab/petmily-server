@@ -4,16 +4,19 @@ values ('admin', '{bcrypt}$2a$10$ri5DhfHYNcqjN3HGP4oCYuZ7d8sxULvUOl4gE3OONygd4QU
         '수원시', '010-1234-5678', 'INDIVIDUAL', 'ADMIN', 'LOCAL');
 insert into user(id, password, nickname, email, address, contact, type, role, provider)
 values ('tester1', '{bcrypt}$2a$10$TA0btCubK9nayV8yJHmNo.kKTG30ECMVWQT8ed6LRl1yzZY1oZTsG', 'tester1',
-        'tester1@gmail.com', '수원시', '010-1234-5678', 'INDIVIDUAL', 'USER', 'LOCAL');
+        'tester1@gmail.com', '수원시', '01012345678', 'INDIVIDUAL', 'USER', 'LOCAL');
 insert into user(id, password, nickname, email, address, contact, type, role, provider)
 values ('tester2', '{bcrypt}$2a$10$owcdmT6My36VUzlJQin6.ujxwDPJtk32hHQWIdqiU74vSZewFgD1u', 'tester2',
-        'tester2@gmail.com', '수원시', '010-1234-5678', 'INDIVIDUAL', 'USER', 'LOCAL');
+        'tester2@gmail.com', '수원시', '01012345678', 'INDIVIDUAL', 'USER', 'LOCAL');
 insert into user(id, password, nickname, email, address, contact, type, role, provider)
 values ('tester3', '{bcrypt}$2a$10$H1olmR5kIM6Z8MrB7EtjXeO.YrhvE4OaWcujVrnAUsS2IgBKjSEDa', 'tester3',
-        'tester3@gmail.com', '수원시', '010-1234-5678', 'SHELTER', 'USER', 'LOCAL');
+        'tester3@gmail.com', '수원시', '01012345678', 'SHELTER', 'USER', 'LOCAL');
 insert into user(id, password, nickname, email, address, contact, type, role, provider)
 values ('tester4', '{bcrypt}$2a$10$UlsA3WbfmBNa99hrn4/9oejidNpvqCmm0c43GOkWcXJQanmR3CklG', 'tester4',
-        'tester4@gmail.com', '수원시', '010-1234-5678', 'SHELTER', 'USER', 'LOCAL');
+        'tester4@gmail.com', '수원시', '01012345678', 'SHELTER', 'USER', 'LOCAL');
+insert into user(id, password, nickname, email, address, contact, business_number, type, role, provider)
+values ('pro', '{bcrypt}$2a$10$nLS1otiVKm5u9ZUJJrwT3uDcfFFLWx4PA2OMpta2ex5AnkTZxODaq', 'pro',
+        'pro@pro.com', '태안군', '01021122312', '3213-321312-21', 'PROFESSIONAL', 'USER', 'LOCAL');
 
 -- LoginFailInfo
 insert into login_fail_info(user, login_fail_count, is_lock)
@@ -26,6 +29,8 @@ insert into login_fail_info(user, login_fail_count, is_lock)
 values (4, 0, false);
 insert into login_fail_info(user, login_fail_count, is_lock)
 values (5, 0, false);
+insert into login_fail_info(user, login_fail_count, is_lock)
+values (6, 0, false);
 
 -- Animal
 insert into animal(animal_type, species, age, gender, special_notes, vaccine, is_neutered, reason_for_adoption,
@@ -40,6 +45,10 @@ values ('DOG', 'animal3', 3, 'female', null, 'no', true, 'reason3', 'home', 'fox
 insert into animal(animal_type, species, age, gender, special_notes, vaccine, is_neutered, reason_for_adoption,
                    previous_home_environment, likes, dislikes, user)
 values ('BIRD', 'animal4', 4, 'female', null, 'no', false, 'reason4', 'toilet', 'tiger', 'person', 4);
+
+-- AnimalAdoptionBoard
+INSERT INTO `animal_adoption_board` VALUES
+    (5,10,3,'DOG','수원','3월 23일','갈색','2023-08-16 19:13:04.805947','고구마','여자','[\"/resources/files/animals/pro/318412576840004_318c2efa-798e-4b25-b5cc-b97cf2d69d31.png\",\"/resources/files/animals/pro/318412683656463_28660f03-4416-4152-9047-b3ee1aaf367d.jpg\"]',8.8,8.9,'무',5,'누렁이',6.7,100000,'<p><strong>참고사항은 없습니다.</strong></p>','마당이 있는 집','시고르자브종','산책을 자주 못해주는 분','2차 완료',23.5,6);
 
 -- Board
 insert into board(writer, title, content)
@@ -152,3 +161,11 @@ insert into report(writer, board, report_type, title, content)
 values (3, 3, "DISPLEASURE", "test9", "displeasure report");
 insert into report(writer, board, report_type, title, content)
 values (4, 4, "DISPLEASURE", "test10", "displeasure report");
+
+-- AdoptionRequest
+insert into adoption_request(user_seq, animal_adoption_board_id, request_state)
+values (1, 5, "WAIT");
+insert into adoption_request(user_seq, animal_adoption_board_id, request_state)
+values (2, 5, "APPROVE");
+insert into adoption_request(user_seq, animal_adoption_board_id, request_state)
+values (3, 5, "CANCEL");

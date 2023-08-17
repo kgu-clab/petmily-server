@@ -6,7 +6,7 @@ logging:
     org.springframework: info
 
 server:
-  port: 8080
+  port: 13680
   servlet:
     context-path: /
     encoding:
@@ -30,4 +30,4 @@ resource:
   file:
     url: /resources/files
     path: ${user.dir}/cloud
-    allow-extension: bmp,jpg,jpeg,png,gif
+    allow-extension: bmp,jpg,jpeg,png,gif,webp

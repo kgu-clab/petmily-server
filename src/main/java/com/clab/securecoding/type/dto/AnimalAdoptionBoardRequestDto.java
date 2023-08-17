@@ -24,11 +24,11 @@ public class AnimalAdoptionBoardRequestDto {
 
     private Long age;
 
-    private Long weight;
+    private Double weight;
 
     private String vaccine;
 
-    private Boolean isNeutered;
+    private String isNeutered;
 
     private String birthDay;
 
@@ -53,5 +53,7 @@ public class AnimalAdoptionBoardRequestDto {
     private String recommendation;
 
     private String think;
+
+    private String imgUrl;
 
 }

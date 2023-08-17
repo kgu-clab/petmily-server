@@ -29,7 +29,7 @@ public class AnimalController {
             "String gender;<br>" +
             "String specialNotes;<br>" +
             "String vaccine;<br>" +
-            "Boolean isNeutered;<br>" +
+            "String isNeutered;<br>" +
             "String reasonForAdoption;<br>" +
             "String previousHomeEnvironment;<br>" +
             "String likes;<br>" +
@@ -72,7 +72,7 @@ public class AnimalController {
             "String gender;<br>" +
             "String specialNotes;<br>" +
             "String vaccine;<br>" +
-            "Boolean isNeutered;<br>" +
+            "String isNeutered;<br>" +
             "String reasonForAdoption;<br>" +
             "String previousHomeEnvironment;<br>" +
             "String likes;<br>" +

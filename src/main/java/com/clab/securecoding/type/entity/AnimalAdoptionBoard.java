@@ -1,6 +1,7 @@
 package com.clab.securecoding.type.entity;
 
 import com.clab.securecoding.type.etc.AnimalType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,16 +35,17 @@ public class AnimalAdoptionBoard {
 
     private Long age;
 
-    private Long weight;
+    private Double weight;
 
     private String vaccine;
 
-    private Boolean isNeutered;
+    private String isNeutered;
 
     private String birthDay;
 
     private String favoriteSnack;
 
+    @Lob
     private String reasonForAdoption;
 
     private String areasAvailable;
@@ -63,6 +65,9 @@ public class AnimalAdoptionBoard {
     private String recommendation;
 
     private String think;
+
+    @Column(columnDefinition = "TEXT")
+    private String imgUrl;
 
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "user")

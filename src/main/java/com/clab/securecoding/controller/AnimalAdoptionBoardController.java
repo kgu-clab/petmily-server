@@ -15,17 +15,39 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RestController
-@RequestMapping("/adoption-board")
+@RequestMapping("/adoption-boards")
 @RequiredArgsConstructor
 @Tag(name = "AnimalAdoptionBoard")
+@Slf4j
 public class AnimalAdoptionBoardController {
 
     private final AnimalAdoptionBoardService animalAdoptionBoardService;
 
-    @Operation(summary = "동물 분양 게시글 생성", description = "동물 분양 게시글 생성")
-    @PostMapping("/create")
+    @Operation(summary = "동물 분양 게시글 생성", description = "동물 분양 게시글 생성<br>" +
+            "AnimalType: DOG | CAT | BIRD | FISH | SMALL_ANIMAL | REPTILE<br>" +
+            "String species;<br>" +
+            "String name;<br>" +
+            "String color;<br>" +
+            "String gender;<br>" +
+            "Long age;<br>" +
+            "Double weight;<br>" +
+            "String vaccine;<br>" +
+            "String isNeutered;<br>" +
+            "String birthDay;<br>" +
+            "String favoriteSnack;<br>" +
+            "String reasonForAdoption;<br>" +
+            "String areasAvailable;<br>" +
+            "Integer price;<br>" +
+            "Double leadership;<br>" +
+            "Double independence;<br>" +
+            "Double initiative;<br>" +
+            "Double positivity;<br>" +
+            "Double adaptability;<br>" +
+            "String recommendation;<br>" +
+            "String think;<br> +" +
+            "String imgUrl;")
+    @PostMapping()
     public ResponseModel createAnimalAdoptionBoard(
             @RequestBody AnimalAdoptionBoardRequestDto requestDto
     ) {
@@ -35,7 +57,7 @@ public class AnimalAdoptionBoardController {
     }
 
     @Operation(summary = "동물 분양 게시글 정보", description = "동물 분양 게시글 정보 조회")
-    @GetMapping("/list")
+    @GetMapping()
     public ResponseModel getAnimalAdoptionBoards() {
         List<AnimalAdoptionBoardResponseDto> animalAdoptionBoards = animalAdoptionBoardService.getAnimalAdoptionBoards();
         ResponseModel responseModel = ResponseModel.builder().build();
@@ -43,24 +65,42 @@ public class AnimalAdoptionBoardController {
         return responseModel;
     }
 
-    @Operation(summary = "동물 분양 게시글 검색", description = "동물 타입, 종, 성별, 나이로 검색 가능")
+    @Operation(summary = "나의 동물 분양 게시글 조회", description = "나의 동물 분양 게시글 조회")
+    @GetMapping("/my-board")
+    public ResponseModel getMyAnimalAdoptionBoard() {
+        List<AnimalAdoptionBoardResponseDto> animalAdoptionBoards = animalAdoptionBoardService.getMyAnimalAdoptionBoard();
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData(animalAdoptionBoards);
+        return responseModel;
+    }
+
+    @Operation(summary = "동물 분양 게시글 상세 정보", description = "동물 분양 게시글 상세 정보 조회")
+    @GetMapping("/info")
+    public ResponseModel getAnimalAdoptionBoard(
+            @RequestParam Long boardId
+    ) {
+        AnimalAdoptionBoardResponseDto animalAdoptionBoards = animalAdoptionBoardService.getAnimalAdoptionBoard(boardId);
+        ResponseModel responseModel = ResponseModel.builder().build();
+        responseModel.addData(animalAdoptionBoards);
+        return responseModel;
+    }
+
+    @Operation(summary = "동물 분양 게시글 검색", description = "유저 타입, 동물 타입, 종, 유저 이름으로 검색 가능")
     @GetMapping("/search")
     public ResponseModel searchAnimalAdoptionBoards(
             @RequestParam(required = false) UserType userType,
             @RequestParam(required = false) AnimalType animalType,
             @RequestParam(required = false) String species,
-            @RequestParam(required = false) String gender,
-            @RequestParam(required = false) Long age,
             @RequestParam(required = false) String nickname
     ) {
-        List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = animalAdoptionBoardService.searchAnimalAdoptionBoard(userType, animalType, species, gender, age, nickname);
+        List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = animalAdoptionBoardService.searchAnimalAdoptionBoard(userType, animalType, species, nickname);
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData(animalAdoptionBoardResponseDtos);
         return responseModel;
     }
 
     @Operation(summary = "동물 분양 게시글 수정", description = "동물 분양 게시글 수정")
-    @PatchMapping("/update/{animalAdoptionBoardId}")
+    @PatchMapping("/{animalAdoptionBoardId}")
     public ResponseModel updateAnimalAdoptionBoard(
             @PathVariable Long animalAdoptionBoardId,
             @RequestBody AnimalAdoptionBoardRequestDto requestDto
@@ -71,7 +111,7 @@ public class AnimalAdoptionBoardController {
     }
 
     @Operation(summary = "동물 분양 게시글 삭제", description = "동물 분양 게시글 삭제(본인 또는 관리자만 가능)")
-    @DeleteMapping("/delete/{animalAdoptionBoardId}")
+    @DeleteMapping("/{animalAdoptionBoardId}")
     public ResponseModel deleteAnimalAdoptionBoard(
             @PathVariable Long animalAdoptionBoardId
     ) throws PermissionDeniedException {

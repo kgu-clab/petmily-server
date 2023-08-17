@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,11 +30,11 @@ public class AnimalAdoptionBoardResponseDto {
 
     private Long age;
 
-    private Long weight;
+    private Double weight;
 
     private String vaccine;
 
-    private Boolean isNeutered;
+    private String isNeutered;
 
     private String birthDay;
 
@@ -59,8 +60,12 @@ public class AnimalAdoptionBoardResponseDto {
 
     private String think;
 
+    private String imgUrl;
+
     private User writer;
 
     private LocalDateTime createdAt;
+
+    private List<User> requestUser;
 
 }

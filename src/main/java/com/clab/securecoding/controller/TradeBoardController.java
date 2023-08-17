@@ -26,7 +26,7 @@ public class TradeBoardController {
             "String content;<br>" +
             "Long price;<br>" +
             "String location;")
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseModel createTradeBoard(
             @RequestBody TradeBoardRequestDto tradeBoardRequestDto
     ) {
@@ -36,7 +36,7 @@ public class TradeBoardController {
     }
 
     @Operation(summary = "거래 게시글 정보", description = "거래 게시글 정보 조회")
-    @GetMapping("/list")
+    @GetMapping()
     public ResponseModel getTradeBoards() {
         List<TradeBoardResponseDto> tradeBoards = tradeBoardService.getTradeBoards();
         ResponseModel responseModel = ResponseModel.builder().build();
@@ -61,7 +61,7 @@ public class TradeBoardController {
             "String content;<br>" +
             "Long price;<br>" +
             "String location;")
-    @PatchMapping("/update/{tradeBoardId}")
+    @PatchMapping("/{tradeBoardId}")
     public ResponseModel updateTradeBoard(
             @PathVariable Long tradeBoardId,
             @RequestBody TradeBoardRequestDto tradeBoardRequestDto
@@ -72,7 +72,7 @@ public class TradeBoardController {
     }
 
     @Operation(summary = "거래 게시글 삭제", description = "거래 게시글 삭제(본인 또는 관리자만 가능)")
-    @DeleteMapping("/delete/{tradeBoardId}")
+    @DeleteMapping("/{tradeBoardId}")
     public ResponseModel deleteTradeBoard(
             @PathVariable Long tradeBoardId
     ) throws PermissionDeniedException {

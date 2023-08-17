@@ -27,7 +27,7 @@ public class JwtTokenProvider {
     private final Key key;
 
     private static final long ACCESS_TOKEN_DURATION = 30L * 60L * 1000L; // 30분
-    private static final long REFRESH_TOKEN_DURATION = 60L * 60L * 24L * 7L * 1000L; // 7일
+    private static final long REFRESH_TOKEN_DURATION = 40L * 60L * 1000L; // 40분
 
     public JwtTokenProvider(@Value("${jwt.secret-key}") String secretKey) {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
@@ -53,12 +53,13 @@ public class JwtTokenProvider {
         // Refresh Token 생성
         Date refreshTokenExpiry = new Date(expiry.getTime() + (REFRESH_TOKEN_DURATION));
         String refreshToken = Jwts.builder()
+                .setSubject(authentication.getName())
+                .claim("role", authorities)
                 .setExpiration(refreshTokenExpiry)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
         return TokenInfo.builder()
-                .grantType("Bearer")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
