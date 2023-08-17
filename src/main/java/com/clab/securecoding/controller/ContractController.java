@@ -20,7 +20,10 @@ public class ContractController {
 
     @Operation(summary = "계약서 생성", description = "계약서 생성<br>" +
             "String content;<br>"+
-            "AnimalRequestDto animal;<br>" +
+            "String gender;<br>" +
+            "Long age;<br>" +
+            "String vaccine;<br>" +
+            "String isNeutered;<br>" +
             "String additionalProvisions;<br>" +
             "String signature;")
     @PostMapping()

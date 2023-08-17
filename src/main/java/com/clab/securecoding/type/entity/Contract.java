@@ -23,8 +23,13 @@ public class Contract {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @OneToOne
-    private Animal animal;
+    private String gender;
+
+    private Long age;
+
+    private String vaccine;
+
+    private String isNeutered;
 
     @OneToOne
     private User user;

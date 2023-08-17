@@ -9,12 +9,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ContractMapper {
 
-    private final AnimalMapper animalMapper;
-
     public Contract mapDtoToEntity(ContractRequestDto contractRequestDto) {
         Contract contract = Contract.builder()
                 .content(contractRequestDto.getContent())
-                .animal(animalMapper.mapDtoToEntity(contractRequestDto.getAnimal()))
+                .gender(contractRequestDto.getGender())
+                .age(contractRequestDto.getAge())
+                .vaccine(contractRequestDto.getVaccine())
+                .isNeutered(contractRequestDto.getIsNeutered())
                 .additionalProvisions(contractRequestDto.getAdditionalProvisions())
                 .signature(contractRequestDto.getSignature())
                 .build();
