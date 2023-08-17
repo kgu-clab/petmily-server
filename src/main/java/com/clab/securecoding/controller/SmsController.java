@@ -32,7 +32,7 @@ public class SmsController {
         return responseModel;
     }
 
-    @Operation(summary = "인증 코드 발송", description = "인증 코드를 발송하여 사용자를 인증합니다.")
+    @Operation(summary = "인증 코드 발송", description = "인증 코드를 발송하여 사용자를 인증")
     @PostMapping("/send-verification-code")
     public ResponseModel sendVerificationCode(
             @RequestBody SmsPhoneNumberDto smsPhoneNumberDto
