@@ -96,8 +96,6 @@ public class AdoptionRequestService {
     }
 
     public AdoptionRequest getAdoptionRequestByRequestIdOrThrow(Long requestId) {
-        log.info("requestId : {}", requestId);
-        log.info("findById : {}", adoptionRequestRepository.findById(requestId).get());
         return adoptionRequestRepository.findById(requestId)
                 .orElseThrow(() -> new NotFoundException("해당 분양 요청이 없습니다."));
     }
