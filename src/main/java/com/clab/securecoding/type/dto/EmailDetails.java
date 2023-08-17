@@ -15,6 +15,4 @@ public class EmailDetails {
 
     private String subject;
 
-    private String attachment;
-
 }
