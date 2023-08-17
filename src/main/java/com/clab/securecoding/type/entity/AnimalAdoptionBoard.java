@@ -1,6 +1,7 @@
 package com.clab.securecoding.type.entity;
 
 import com.clab.securecoding.type.etc.AnimalType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

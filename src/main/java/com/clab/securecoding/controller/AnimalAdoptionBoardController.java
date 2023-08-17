@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping("/adoption-boards")
 @RequiredArgsConstructor
 @Tag(name = "AnimalAdoptionBoard")
+@Slf4j
 public class AnimalAdoptionBoardController {
 
     private final AnimalAdoptionBoardService animalAdoptionBoardService;
