@@ -43,6 +43,8 @@ public class User implements UserDetails {
 
     private String businessNumber;
 
+    private Integer point;
+
     @Enumerated(EnumType.STRING)
     private UserType type;
 
