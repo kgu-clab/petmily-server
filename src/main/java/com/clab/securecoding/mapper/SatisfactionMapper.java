@@ -40,6 +40,7 @@ public class SatisfactionMapper {
                 .q5(satisfaction.getQ5())
                 .q6(satisfaction.getQ6())
                 .q7(satisfaction.getQ7())
+                .createdAt(satisfaction.getCreatedAt())
                 .build();
     }
 
