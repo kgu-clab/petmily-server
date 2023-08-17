@@ -34,4 +34,6 @@ public class UserResponseDto {
 
     private LocalDateTime createdAt;
 
+    private Integer point;
+
 }

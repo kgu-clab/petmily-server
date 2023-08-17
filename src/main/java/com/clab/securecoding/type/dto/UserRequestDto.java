@@ -28,4 +28,6 @@ public class UserRequestDto {
 
     private UserType type;
 
+    private Integer point;
+
 }

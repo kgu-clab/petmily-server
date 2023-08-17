@@ -22,6 +22,7 @@ public class UserMapper {
                 .type(userRequestDto.getType())
                 .role(Role.USER)
                 .provider(OAuthProvider.LOCAL)
+                .point(userRequestDto.getPoint())
                 .build();
     }
 
@@ -36,6 +37,7 @@ public class UserMapper {
                 .businessNumber(user.getBusinessNumber())
                 .type(user.getType())
                 .createdAt(user.getCreatedAt())
+                .point(user.getPoint())
                 .build();
     }
 
