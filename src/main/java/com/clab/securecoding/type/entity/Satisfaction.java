@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -22,21 +24,21 @@ public class Satisfaction {
     @JoinColumn(name = "user_id")
     private User writer;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "animal_adoption_board")
-    private AnimalAdoptionBoard animalAdoptionBoard;
+    private String q1;
 
-    private String adoptionProcessSatisfaction;
+    private String q2;
 
-    private String mostSatisfyingThing;
+    private String q3;
 
-    private String guideContentSatisfaction;
+    private String q4;
 
-    private String secondhandTransactionSatisfaction;
+    private String q5;
 
-    private String intentionToUse;
+    private String q6;
 
-    private String intentionToRecommendation;
+    private String q7;
 
-    private String suggestionsForImprovement;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
 }

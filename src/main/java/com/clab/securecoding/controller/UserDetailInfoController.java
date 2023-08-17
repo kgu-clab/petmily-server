@@ -7,6 +7,7 @@ import com.clab.securecoding.type.dto.ResponseModel;
 import com.clab.securecoding.type.dto.UserDetailInfoRequestDto;
 import com.clab.securecoding.type.dto.UserDetailInfoResponseDto;
 import com.clab.securecoding.type.entity.User;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ public class UserDetailInfoController {
 
     private final UserService userService;
 
+    @Operation(summary = "설문조사 생성", description = "설문조사 생성")
     @PostMapping()
     public ResponseModel createUserDetailInfo(
             @RequestBody UserDetailInfoRequestDto requestDto
@@ -32,6 +34,7 @@ public class UserDetailInfoController {
         return responseModel;
     }
 
+    @Operation(summary = "설문조사 조회", description = "설문조사 조회")
     @GetMapping()
     public ResponseModel getUserDetailInfos(){
         List<UserDetailInfoResponseDto> userDetailInfoResponseDtos = userDetailInfoService.getUserDetailInfos();
@@ -40,6 +43,7 @@ public class UserDetailInfoController {
         return responseModel;
     }
 
+    @Operation(summary = "설문조사 검색", description = "사용자 ID 기반 설문조사 검색")
     @GetMapping("/search")
     public ResponseModel searchUserDetailInfo(
             @RequestParam(required = true) Long userId
@@ -51,6 +55,7 @@ public class UserDetailInfoController {
         return responseModel;
     }
 
+    @Operation(summary = "설문조사 수정", description = "설문조사 수정")
     @PatchMapping("/{userDetailInfoId}")
     public ResponseModel updateUserDetailInfo(
             @PathVariable Long userDetailInfoId,

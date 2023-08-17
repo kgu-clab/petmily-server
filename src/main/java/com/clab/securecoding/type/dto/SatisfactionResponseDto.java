@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,19 +19,20 @@ public class SatisfactionResponseDto {
 
     private User writer;
 
-    private AnimalAdoptionBoard animalAdoptionBoard;
+    private String q1;
 
-    private String adoptionProcessSatisfaction;
+    private String q2;
 
-    private String mostSatisfyingThing;
+    private String q3;
 
-    private String guideContentSatisfaction;
+    private String q4;
 
-    private String secondhandTransactionSatisfaction;
+    private String q5;
 
-    private String intentionToUse;
+    private String q6;
 
-    private String intentionToRecommendation;
+    private String q7;
 
-    private String suggestionsForImprovement;
+    private LocalDateTime createdAt;
+
 }

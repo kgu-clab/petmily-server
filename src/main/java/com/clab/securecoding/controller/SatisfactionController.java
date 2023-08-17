@@ -5,6 +5,7 @@ import com.clab.securecoding.service.SatisfactionService;
 import com.clab.securecoding.type.dto.ResponseModel;
 import com.clab.securecoding.type.dto.SatisfactionRequestDto;
 import com.clab.securecoding.type.dto.SatisfactionResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ public class SatisfactionController {
 
     private final SatisfactionService satisfactionService;
 
+    @Operation(summary = "만족도 조사 생성", description = "만족도 조사 생성")
     @PostMapping()
     public ResponseModel createSatisfaction(
             @RequestBody SatisfactionRequestDto requestDto
@@ -30,6 +32,7 @@ public class SatisfactionController {
         return responseModel;
     }
 
+    @Operation(summary = "만족도 조사 조회", description = "만족도 조사 조회")
     @GetMapping()
     public ResponseModel getSatisfactions() {
         List<SatisfactionResponseDto> satisfactionResponseDtos = satisfactionService.getSatisfactions();
@@ -38,17 +41,18 @@ public class SatisfactionController {
         return responseModel;
     }
 
+    @Operation(summary = "만족도 조사 검색", description = "만족도 조사 검색")
     @GetMapping("/search")
     public ResponseModel searchSatisfactions(
-            @RequestParam(required = false) Long animalAdoptionBoardId,
             @RequestParam(required = false) Long userId
     ) {
-        List<SatisfactionResponseDto> satisfactionResponseDtos = satisfactionService.searchSatisfactions(animalAdoptionBoardId, userId);
+        List<SatisfactionResponseDto> satisfactionResponseDtos = satisfactionService.searchSatisfactions(userId);
         ResponseModel responseModel = ResponseModel.builder().build();
         responseModel.addData(satisfactionResponseDtos);
         return responseModel;
     }
 
+    @Operation(summary = "만족도 조사 삭제", description = "만족도 조사 삭제")
     @DeleteMapping("/{satisfactionId}")
     public ResponseModel deleteSatisfaction(
             @PathVariable Long satisfactionId

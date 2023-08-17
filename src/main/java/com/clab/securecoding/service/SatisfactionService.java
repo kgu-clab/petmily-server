@@ -7,7 +7,6 @@ import com.clab.securecoding.mapper.SatisfactionMapper;
 import com.clab.securecoding.repository.SatisfactionRepository;
 import com.clab.securecoding.type.dto.SatisfactionRequestDto;
 import com.clab.securecoding.type.dto.SatisfactionResponseDto;
-import com.clab.securecoding.type.entity.AnimalAdoptionBoard;
 import com.clab.securecoding.type.entity.Satisfaction;
 import com.clab.securecoding.type.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +22,12 @@ public class SatisfactionService {
     private final SatisfactionMapper satisfactionMapper;
 
     private final SatisfactionRepository satisfactionRepository;
-    private final AnimalAdoptionBoardService animalAdoptionBoardService;
+
     private final UserService userService;
 
     public void createSatisfaction(SatisfactionRequestDto requestDto) {
         Satisfaction satisfaction = satisfactionMapper.mapDtoToEntity(requestDto);
+        satisfaction.setWriter(userService.getCurrentUser());
         satisfactionRepository.save(satisfaction);
     }
 
@@ -41,14 +41,11 @@ public class SatisfactionService {
         return satisfactionResponseDtos;
     }
 
-    public List<SatisfactionResponseDto> searchSatisfactions(Long animalAdoptionBoardId, Long userId) {
+    public List<SatisfactionResponseDto> searchSatisfactions(Long userId) {
         List<Satisfaction> satisfactions = new ArrayList<>();
         List<SatisfactionResponseDto> satisfactionResponseDtos = new ArrayList<>();
 
-        if (animalAdoptionBoardId != null) {
-            AnimalAdoptionBoard animalAdoptionBoard = animalAdoptionBoardService.getAnimalAdoptionBoardByIdOrThrow(animalAdoptionBoardId);
-            satisfactions = satisfactionRepository.findByAnimalAdoptionBoard(animalAdoptionBoard);
-        } else if (userId != null) {
+        if (userId != null) {
             User user = userService.getUserByIdOrThrow(userId);
             satisfactions = satisfactionRepository.findByWriter(user);
         } else {

@@ -82,10 +82,6 @@ public class AnimalAdoptionBoard {
     @JoinColumn(name = "user")
     private User writer;
 
-    @JsonIgnore
-    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REMOVE})
-    private List<Satisfaction> satisfactions;
-
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
