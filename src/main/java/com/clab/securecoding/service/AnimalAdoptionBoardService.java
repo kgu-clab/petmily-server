@@ -40,7 +40,6 @@ public class AnimalAdoptionBoardService {
     public List<AnimalAdoptionBoardResponseDto> getAnimalAdoptionBoards() {
         List<AnimalAdoptionBoard> animalAdoptionBoards = animalAdoptionBoardRepository.findAll();
         List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = animalAdoptionBoardMapper.mapEntityToDto(animalAdoptionBoards);
-        setAdoptionRequestUser(animalAdoptionBoardResponseDtos);
         return animalAdoptionBoardResponseDtos;
     }
 
@@ -48,14 +47,12 @@ public class AnimalAdoptionBoardService {
         User user = userService.getCurrentUser();
         List<AnimalAdoptionBoard> animalAdoptionBoards = animalAdoptionBoardRepository.findByWriter(user);
         List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos = animalAdoptionBoardMapper.mapEntityToDto(animalAdoptionBoards);
-        setAdoptionRequestUser(animalAdoptionBoardResponseDtos);
         return animalAdoptionBoardResponseDtos;
     }
 
     public AnimalAdoptionBoardResponseDto getAnimalAdoptionBoard(Long boardId) {
         AnimalAdoptionBoard animalAdoptionBoard = getAnimalAdoptionBoardByIdOrThrow(boardId);
         AnimalAdoptionBoardResponseDto animalAdoptionBoardResponseDto = animalAdoptionBoardMapper.mapEntityToDto(animalAdoptionBoard);
-        animalAdoptionBoardResponseDto.setRequestUser(getAdoptionRequestUser(animalAdoptionBoardResponseDto.getId()));
         return animalAdoptionBoardResponseDto;
     }
 
@@ -135,12 +132,6 @@ public class AnimalAdoptionBoardService {
             requestUser.add(adoptionRequest.getUser());
         }
         return requestUser;
-    }
-
-    public void setAdoptionRequestUser(List<AnimalAdoptionBoardResponseDto> animalAdoptionBoardResponseDtos) {
-        for (AnimalAdoptionBoardResponseDto responseDto : animalAdoptionBoardResponseDtos) {
-            responseDto.setRequestUser(getAdoptionRequestUser(responseDto.getId()));
-        }
     }
 
     private boolean checkWriterPermission(User boardWriter) throws PermissionDeniedException {

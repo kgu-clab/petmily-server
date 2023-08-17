@@ -14,6 +14,7 @@ public class AdoptionRequestMapper {
 
     public AdoptionRequestResponseDto mapDtoToEntity(AdoptionRequest adoptionRequest) {
         return AdoptionRequestResponseDto.builder()
+                .id(adoptionRequest.getId())
                 .animalAdoptionBoard(adoptionRequest.getAnimalAdoptionBoard())
                 .requestState(adoptionRequest.getRequestState())
                 .contracts(adoptionRequest.getContracts())

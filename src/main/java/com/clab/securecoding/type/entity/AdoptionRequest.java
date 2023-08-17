@@ -24,12 +24,13 @@ public class AdoptionRequest {
     @OneToOne
     private User user;
 
-    @OneToOne(cascade = CascadeType.DETACH)
-    private AnimalAdoptionBoard animalAdoptionBoard;
-
     @JsonIgnore
     @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REMOVE})
     private List<Contract> contracts;
+
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn
+    private AnimalAdoptionBoard animalAdoptionBoard;
 
     @Enumerated(EnumType.STRING)
     private RequestState requestState;

@@ -69,6 +69,6 @@ public class AnimalAdoptionBoardResponseDto {
 
     private LocalDateTime createdAt;
 
-    private List<User> requestUser;
+    private List<AdoptionRequest> adoptionRequests;
 
 }

@@ -40,13 +40,18 @@ public class AdoptionRequestService {
 
     private final AdoptionRequestMapper adoptionRequestMapper;
 
+    @Transactional
     public void sendAdoptionRequest(AdoptionReserveRequestDto requestDto) {
         User user = userService.getCurrentUser();
         Long boardId = requestDto.getAnimalAdoptionBoardId();
         AnimalAdoptionBoard animalAdoptionBoard = animalAdoptionBoardService.getAnimalAdoptionBoardByIdOrThrow(boardId);
         if (!isExistAdoptionRequest(user, animalAdoptionBoard)) {
             AdoptionRequest adoptionRequest = createAdoptionRequest(user, animalAdoptionBoard);
+            List<AdoptionRequest> adoptionRequests = animalAdoptionBoard.getAdoptionRequests();
+            adoptionRequests.add(adoptionRequest);
             adoptionRequestRepository.save(adoptionRequest);
+            animalAdoptionBoard.setAdoptionRequests(adoptionRequests);
+            animalAdoptionBoardRepository.save(animalAdoptionBoard);
         }
     }
 

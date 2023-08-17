@@ -72,6 +72,7 @@ public class AnimalAdoptionBoardMapper {
                 .animalState(animalAdoptionBoard.getAnimalState())
                 .writer(animalAdoptionBoard.getWriter())
                 .createdAt(animalAdoptionBoard.getCreatedAt())
+                .adoptionRequests(animalAdoptionBoard.getAdoptionRequests())
                 .build();
     }
 

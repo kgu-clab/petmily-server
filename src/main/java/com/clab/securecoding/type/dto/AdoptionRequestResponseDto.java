@@ -16,6 +16,8 @@ import java.util.List;
 @Builder
 public class AdoptionRequestResponseDto {
 
+    private Long id;
+
     private AnimalAdoptionBoard animalAdoptionBoard;
 
     private RequestState requestState;
