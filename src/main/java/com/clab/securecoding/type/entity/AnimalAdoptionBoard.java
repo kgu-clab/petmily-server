@@ -1,5 +1,6 @@
 package com.clab.securecoding.type.entity;
 
+import com.clab.securecoding.type.etc.AnimalState;
 import com.clab.securecoding.type.etc.AnimalType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -68,6 +70,13 @@ public class AnimalAdoptionBoard {
 
     @Column(columnDefinition = "TEXT")
     private String imgUrl;
+
+    @Enumerated(EnumType.STRING)
+    private AnimalState animalState;
+
+    @JsonIgnore
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REMOVE})
+    private List<AdoptionRequest> adoptionRequests;
 
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "user")

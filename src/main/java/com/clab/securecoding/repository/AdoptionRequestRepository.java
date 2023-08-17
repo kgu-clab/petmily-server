@@ -17,4 +17,6 @@ public interface AdoptionRequestRepository extends JpaRepository<AdoptionRequest
 
     List<AdoptionRequest> findAllByAnimalAdoptionBoard_Id(Long boardId);
 
+    List<AdoptionRequest> findAllByUser(User user);
+
 }
