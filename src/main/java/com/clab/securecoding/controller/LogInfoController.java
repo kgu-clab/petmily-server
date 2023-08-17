@@ -27,7 +27,7 @@ public class LogInfoController {
     private final LogInfoService logInfoService;
 
     @Operation(summary = "로그 ", description = "로그 ")
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseModel createLog(@RequestBody LogInfoRequestDto logInfoRequestDto, HttpServletRequest request) {
         LogInfo logInfo = logInfoService.createLogInfo(logInfoRequestDto, request);
         log.info("create log {}",logInfo);
@@ -36,7 +36,7 @@ public class LogInfoController {
     }
 
     @Operation(summary = "로그 정보", description = "로그 정보")
-    @GetMapping("/list")
+    @GetMapping()
     public ResponseModel getLogInfos() {
         List<LogInfoResponseDto> logInfoResponseDtos = logInfoService.getLogInfos();
         ResponseModel responseModel = ResponseModel.builder().build();
@@ -60,7 +60,7 @@ public class LogInfoController {
     }
 
     @Operation(summary = "로그 삭제", description = "로그 삭제")
-    @DeleteMapping("/delete/{logInfoId}")
+    @DeleteMapping("/{logInfoId}")
     public ResponseModel deleteLogInfo(
             @PathVariable Long logInfoId
     ) throws PermissionDeniedException {

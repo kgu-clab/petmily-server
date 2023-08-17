@@ -20,6 +20,7 @@ public class LogInfoMapper {
                 .userType(logInfo.getUserType())
                 .ip(logInfo.getIp())
                 .danger(logInfo.getDanger())
+                .createdAt(logInfo.getCreatedAt())
                 .build();
     }
 }

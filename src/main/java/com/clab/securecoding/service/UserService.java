@@ -51,7 +51,7 @@ public class UserService {
 
     public List<UserResponseDto> getUsers() throws PermissionDeniedException {
         checkUserAdminRole();
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findAllByRole(Role.USER);
         List<UserResponseDto> userResponseDtos = new ArrayList<>();
         for (User user : users) {
             UserResponseDto userResponseDto = userMapper.mapEntityToDto(user);
