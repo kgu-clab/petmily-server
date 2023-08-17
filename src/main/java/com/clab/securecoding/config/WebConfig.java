@@ -37,7 +37,6 @@ public class WebConfig implements WebMvcConfigurer {
                         if (resource.exists() && resource.isReadable()) {
                             return resource;
                         } else {
-                            // Handle the resource not found case
                             throw new FileNotFoundException("Resource not found: " + resourcePath);
                         }
                     }

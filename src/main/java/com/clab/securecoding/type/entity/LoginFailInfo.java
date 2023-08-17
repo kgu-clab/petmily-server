@@ -45,7 +45,7 @@ public class LoginFailInfo {
                 ", loginFailCount=" + loginFailCount +
                 ", isLock=" + isLock +
                 ", latestTryLoginDate=" + latestTryLoginDate +
-                '}';
+                "}";
     }
 
 }
