@@ -1,13 +1,16 @@
 package com.clab.securecoding.handler;
 
 import com.clab.securecoding.exception.*;
+import com.clab.securecoding.service.ErrorDetectAdvisorService;
 import com.clab.securecoding.type.dto.ResponseModel;
 import com.google.gson.stream.MalformedJsonException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.SchedulerException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.mail.MailSendException;
@@ -28,6 +31,9 @@ import java.util.NoSuchElementException;
 @Slf4j
 public class ControllerExceptionHandler {
 
+    @Autowired
+    private ErrorDetectAdvisorService errorDetectAdvisorService;
+
     @ExceptionHandler({
             NoSuchElementException.class,
             MissingServletRequestParameterException.class,
@@ -39,7 +45,8 @@ public class ControllerExceptionHandler {
             IllegalArgumentException.class,
             FileUploadFailException.class
     })
-    public ResponseModel parameterError(HttpServletRequest request, HttpServletResponse response, Exception e) {
+    public ResponseModel parameterError(HttpServletRequest request, HttpServletResponse response, Exception e) throws Exception {
+        errorDetectAdvisorService.handleException(request, e);
         ResponseModel responseModel = ResponseModel.builder()
                 .success(false)
                 .build();
@@ -57,7 +64,8 @@ public class ControllerExceptionHandler {
             VerificationFailedException.class,
     })
     public ResponseModel unAuthorizeRequestError(HttpServletRequest request, HttpServletResponse response,
-                                                 Exception e) {
+                                                 Exception e) throws Exception {
+        errorDetectAdvisorService.handleException(request, e);
         ResponseModel responseModel = ResponseModel.builder()
                 .success(false)
                 .build();
@@ -71,7 +79,8 @@ public class ControllerExceptionHandler {
             BadCredentialsException.class
     })
     public ResponseModel LoginFailedError(HttpServletRequest request, HttpServletResponse response,
-                                                 Exception e) {
+                                                 Exception e) throws Exception {
+        errorDetectAdvisorService.handleException(request, e);
         ResponseModel responseModel = ResponseModel.builder()
                 .success(false)
                 .build();
@@ -84,7 +93,8 @@ public class ControllerExceptionHandler {
             FileNotFoundException.class
     })
     public ResponseModel searchResultNotExistError(HttpServletRequest request, HttpServletResponse response,
-                                                   Exception e) {
+                                                   Exception e)  throws Exception {
+        errorDetectAdvisorService.handleException(request, e);
         ResponseModel responseModel = ResponseModel.builder()
                 .success(false)
                 .build();
@@ -97,7 +107,8 @@ public class ControllerExceptionHandler {
             DuplicateContactException.class
     })
     public ResponseModel AssociatedAccountExistsExceptionError(HttpServletRequest request, HttpServletResponse response,
-                                                   Exception e) {
+                                                   Exception e)  throws Exception {
+        errorDetectAdvisorService.handleException(request, e);
         ResponseModel responseModel = ResponseModel.builder()
                 .success(false)
                 .build();
@@ -109,7 +120,8 @@ public class ControllerExceptionHandler {
             ApiRequestFailedException.class
     })
     public ResponseModel ApiRequestFailedExceptionError(HttpServletRequest request, HttpServletResponse response,
-                                                               Exception e) {
+                                                               Exception e) throws Exception {
+        errorDetectAdvisorService.handleException(request, e);
         ResponseModel responseModel = ResponseModel.builder()
                 .success(false)
                 .build();
@@ -125,7 +137,8 @@ public class ControllerExceptionHandler {
             MailSendException.class,
             Exception.class
     })
-    public ResponseModel unExceptedError(HttpServletRequest request, HttpServletResponse response, Exception e) {
+    public ResponseModel unExceptedError(HttpServletRequest request, HttpServletResponse response, Exception e) throws Exception {
+        errorDetectAdvisorService.handleException(request, e);
         ResponseModel responseModel = ResponseModel.builder()
                 .success(false)
                 .build();

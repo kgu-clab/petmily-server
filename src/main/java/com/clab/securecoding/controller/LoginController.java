@@ -1,6 +1,8 @@
 package com.clab.securecoding.controller;
 
+import com.clab.securecoding.exception.LoginFaliedException;
 import com.clab.securecoding.exception.PermissionDeniedException;
+import com.clab.securecoding.exception.UserLockedException;
 import com.clab.securecoding.service.LoginService;
 import com.clab.securecoding.type.dto.ResponseModel;
 import com.clab.securecoding.type.dto.TokenInfo;
@@ -26,17 +28,12 @@ public class LoginController {
     @PostMapping()
     public ResponseModel login(
             @RequestBody UserLoginRequestDto userLoginRequestDto
-    ) {
+    ) throws UserLockedException, LoginFaliedException {
         ResponseModel responseModel = ResponseModel.builder().build();
-        try {
-            String id = userLoginRequestDto.getId();
-            String password = userLoginRequestDto.getPassword();
-            TokenInfo tokenInfo = loginService.login(id, password);
-            responseModel.addData(tokenInfo);
-        } catch (Exception e) {
-            log.info("login : {}", e.getMessage());
-            responseModel.setSuccess(false);
-        }
+        String id = userLoginRequestDto.getId();
+        String password = userLoginRequestDto.getPassword();
+        TokenInfo tokenInfo = loginService.login(id, password);
+        responseModel.addData(tokenInfo);
         return responseModel;
     }
 

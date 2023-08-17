@@ -1,5 +1,6 @@
-package com.clab.securecoding.advisor;
+package com.clab.securecoding.service;
 
+import lombok.RequiredArgsConstructor;
 import net.gpedro.integrations.slack.SlackApi;
 import net.gpedro.integrations.slack.SlackAttachment;
 import net.gpedro.integrations.slack.SlackField;
@@ -7,8 +8,7 @@ import net.gpedro.integrations.slack.SlackMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -16,8 +16,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-@ControllerAdvice
-public class ErrorDetectAdvisor {
+@Service
+@RequiredArgsConstructor
+public class ErrorDetectAdvisorService {
 
     @Autowired
     private SlackApi slackApi;
@@ -32,8 +33,7 @@ public class ErrorDetectAdvisor {
     @Autowired
     private TaskExecutor taskExecutor;
 
-    @ExceptionHandler(Exception.class)
-    public void handleException(HttpServletRequest request, Exception e) throws Exception{
+    public void handleException(HttpServletRequest request, Exception e) {
         slackAttachment.setTitle("Error: " + e.getClass().getSimpleName());
         slackAttachment.setTitleLink(request.getContextPath());
         slackAttachment.setText("[Exception Stack Trace]\n" + Arrays.toString(e.getStackTrace()));
@@ -48,6 +48,5 @@ public class ErrorDetectAdvisor {
         );
         slackMessage.setAttachments(Collections.singletonList(slackAttachment));
         taskExecutor.execute(() -> slackApi.call(slackMessage));
-        throw e;
     }
 }
