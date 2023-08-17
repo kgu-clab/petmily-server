@@ -1,7 +1,5 @@
 package com.clab.securecoding.type.dto;
 
-import com.clab.securecoding.type.entity.Animal;
-import com.clab.securecoding.type.entity.User;
 import lombok.*;
 
 @Getter

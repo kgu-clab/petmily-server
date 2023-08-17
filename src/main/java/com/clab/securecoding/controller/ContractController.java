@@ -1,6 +1,5 @@
 package com.clab.securecoding.controller;
 
-import com.clab.securecoding.exception.PermissionDeniedException;
 import com.clab.securecoding.service.ContractService;
 import com.clab.securecoding.type.dto.*;
 import com.clab.securecoding.type.entity.Contract;
@@ -9,8 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/contracts")
