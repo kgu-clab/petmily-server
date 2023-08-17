@@ -33,7 +33,6 @@ public class FileHandler {
         }
         String newFilename = System.nanoTime() + "_" + UUID.randomUUID() + "." + extension;
         String destPath = filePath + File.separator + path + File.separator + newFilename;
-        log.info("destPath : {}", destPath);
         File file = new File(destPath);
         if (file != null) {
             File parentFile = file.getParentFile();
@@ -56,7 +55,6 @@ public class FileHandler {
         } catch (IOException e) {
             throw new FileUploadFailException("파일 저장 실패", e);
         }
-        log.info("file location : {}", path + "/" + newFilename);
         return path + "/" + newFilename;
     }
 

@@ -165,18 +165,16 @@ public class SmsService {
 
     public String generateVerificationCode() {
         SecureRandom secureRandom = new SecureRandom();
-        byte[] codeBytes = new byte[6]; // 6바이트 (12자리)의 난수 생성
+        byte[] codeBytes = new byte[6];
         secureRandom.nextBytes(codeBytes);
-        return Base64.encodeBase64URLSafeString(codeBytes); // URL-safe한 Base64 인코딩
+        return Base64.encodeBase64URLSafeString(codeBytes);
     }
 
     private void storeVerificationCode(String recipientPhoneNumber, String code) {
-        long expirationTime = System.currentTimeMillis() + 180000; // 인증번호 유효기간: 3분
+        long expirationTime = System.currentTimeMillis() + 180000;
 
-        // 동일한 번호로 요청된 인증번호가 존재할 경우 제거
         verificationCodeRepository.deleteByRecipientPhoneNumber(recipientPhoneNumber);
 
-        // 새로운 인증번호 저장
         VerificationCode verificationCode = VerificationCode.builder()
                 .recipientPhoneNumber(recipientPhoneNumber)
                 .code(code)

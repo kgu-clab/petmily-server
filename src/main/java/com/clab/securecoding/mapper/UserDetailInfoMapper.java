@@ -28,7 +28,6 @@ public class UserDetailInfoMapper {
     }
 
     public UserDetailInfoResponseDto mapEntityToDto(UserDetailInfo userDetailInfo) {
-        log.info("UserDetailInfoMapper.mapEntityToDto");
         return UserDetailInfoResponseDto.builder()
                 .id(userDetailInfo.getId())
                 .user(userDetailInfo.getUser())

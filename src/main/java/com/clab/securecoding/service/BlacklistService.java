@@ -24,9 +24,7 @@ public class BlacklistService {
         if (!isBlacklistedIp(ipAddress)) {
             BlacklistIp blacklistIp = BlacklistIp.builder().ipAddress(ipAddress).build();
             blacklistIpRepository.save(blacklistIp);
-            log.info("IP address {} added to the blacklist", ipAddress);
         } else {
-            log.info("IP address {} is already blacklisted", ipAddress);
         }
     }
 
@@ -41,16 +39,13 @@ public class BlacklistService {
         userService.checkUserAdminRole();
         if (isBlacklistedIp(ipAddress)) {
             blacklistIpRepository.deleteByIpAddress(ipAddress);
-            log.info("IP address {} removed from the blacklist", ipAddress);
         } else {
-            log.info("IP address {} is not blacklisted", ipAddress);
         }
     }
 
     public void clearBlacklist() throws PermissionDeniedException {
         userService.checkUserAdminRole();
         blacklistIpRepository.deleteAll();
-        log.info("Blacklist cleared");
     }
 
     public boolean isBlacklistedIp(String ipAddress) {

@@ -46,7 +46,6 @@ public final class RequestWrapper extends HttpServletRequestWrapper {
     }
 
     private String cleanXSS(String value) {
-        log.debug("XSS filter before : {}", value);
         value = value.replaceAll("<", "&lt;")
                 .replaceAll(">", "&gt;")
                 .replaceAll("\\(", "&#40;")
@@ -55,7 +54,6 @@ public final class RequestWrapper extends HttpServletRequestWrapper {
                 .replaceAll("eval\\((.*)\\)", "")
                 .replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"")
                 .replaceAll("script", "");
-        log.debug("XSS filter after : {}", value);
         return value;
     }
 }

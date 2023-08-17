@@ -36,15 +36,12 @@ public class UserDetailInfoService {
     }
 
     public List<UserDetailInfoResponseDto> getUserDetailInfos(){
-        log.info("UserDetailInfoService.getUserDetailInfos start");
         List<UserDetailInfo> userDetailInfos = userDetailInfoRepository.findAll();
-        log.info("UserDetailInfoService.getUserDetailInfos findAll End");
         List<UserDetailInfoResponseDto> userDetailInfoResponseDtos = new ArrayList<>();
         for (UserDetailInfo userDetailInfo : userDetailInfos) {
             UserDetailInfoResponseDto userDetailInfoResponseDto = userDetailInfoMapper.mapEntityToDto(userDetailInfo);
             userDetailInfoResponseDtos.add(userDetailInfoResponseDto);
         }
-        log.info("UserDetailInfoService.getUserDetailInfos end");
         return userDetailInfoResponseDtos;
     }
 

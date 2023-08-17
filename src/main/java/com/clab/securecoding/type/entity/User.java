@@ -143,7 +143,6 @@ public class User implements UserDetails {
                 ", nickname='" + nickname + '\'' +
                 ", email='" + email + '\'' +
                 ", role=" + role +
-                // 여기에 나머지 필드 추가
                 '}';
     }
 

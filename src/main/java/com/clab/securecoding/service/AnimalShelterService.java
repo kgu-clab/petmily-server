@@ -55,7 +55,6 @@ public class AnimalShelterService {
         String resultCode = (String) header.get("resultCode");
         if (!SUCCESS_CODE.equals(resultCode)) {
             String errorMsg = (String) header.get("resultMsg");
-            log.info("resultMsg : {}", errorMsg);
             throw new ApiRequestFailedException();
         }
 

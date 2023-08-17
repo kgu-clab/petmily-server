@@ -19,7 +19,6 @@ public class ShelterJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) {
-        log.info("Executing shelter job");
         try {
             animalShelterService.retrieveShelters();
         } catch (UnsupportedEncodingException e) {
@@ -29,7 +28,6 @@ public class ShelterJob implements Job {
         } catch (ParseException e) {
             throw new ApiRequestFailedException();
         }
-        log.info("Shelter job completed");
     }
 
 }
