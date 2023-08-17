@@ -24,5 +24,6 @@ public class BlacklistIp {
     private String ipAddress;
 
     @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 }

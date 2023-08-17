@@ -25,7 +25,7 @@ public class EmailController {
             "String recipient;<br>" +
             "String msgBody;<br>" +
             "String subject;")
-    @PostMapping("/sendMail")
+    @PostMapping()
     public ResponseModel sendMail(
             @RequestBody EmailDetails details
     ) {

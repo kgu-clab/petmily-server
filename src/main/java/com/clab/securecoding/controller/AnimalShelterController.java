@@ -23,7 +23,7 @@ public class AnimalShelterController {
     private final AnimalShelterService animalShelterService;
 
     @Operation(summary = "동물보호소 정보 가져오기", description = "공공데이터에 API 요청을 보내 동물보호소 정보를 가져옴")
-    @GetMapping("/retrieve")
+    @GetMapping()
     public ResponseModel retrieveShelters() {
         animalShelterService.retrieveShelters();
         ResponseModel responseModel = ResponseModel.builder().build();

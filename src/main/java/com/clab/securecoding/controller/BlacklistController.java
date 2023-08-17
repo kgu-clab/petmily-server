@@ -22,7 +22,7 @@ public class BlacklistController {
     private final BlacklistService blacklistService;
 
     @Operation(summary = "블랙리스트 IP 추가", description = "블랙리스트 IP 추가")
-    @PostMapping("/add")
+    @PostMapping()
     public ResponseModel addBlacklistedIp(
             @RequestParam String ipAddress
     ) throws PermissionDeniedException {
@@ -32,7 +32,7 @@ public class BlacklistController {
     }
 
     @Operation(summary = "블랙리스트 IP 목록 조회", description = "블랙리스트 IP 목록 조회")
-    @GetMapping("/list")
+    @GetMapping()
     public ResponseModel getBlacklistedIps() throws PermissionDeniedException {
         List<BlacklistIp> blacklistedIps = blacklistService.getBlacklistedIps();
         ResponseModel responseModel = ResponseModel.builder().build();
@@ -41,7 +41,7 @@ public class BlacklistController {
     }
 
     @Operation(summary = "블랙리스트 IP 제거", description = "블랙리스트 IP 제거")
-    @DeleteMapping("/delete")
+    @DeleteMapping()
     public ResponseModel removeBlacklistedIp(
             @RequestParam String ipAddress
     ) throws PermissionDeniedException {

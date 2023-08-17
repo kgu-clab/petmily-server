@@ -25,7 +25,7 @@ public class BoardController {
     @Operation(summary = "게시글 생성", description = "게시글 생성<br>" +
             "String title;<br>" +
             "String content;")
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseModel createBoard(
             @RequestBody BoardRequestDto boardRequestDto
     ) {
@@ -35,7 +35,7 @@ public class BoardController {
     }
 
     @Operation(summary = "게시글 정보", description = "게시글 정보 조회")
-    @GetMapping("/list")
+    @GetMapping()
     public ResponseModel getBoards() {
         List<BoardResponseDto> boards = boardService.getBoards();
         ResponseModel responseModel = ResponseModel.builder().build();
@@ -58,7 +58,7 @@ public class BoardController {
     @Operation(summary = "게시글 수정", description = "게시글 수정<br>" +
             "String title;<br>" +
             "String content;")
-    @PatchMapping("/update/{boardId}")
+    @PatchMapping("/{boardId}")
     public ResponseModel updateBoard(
             @PathVariable Long boardId,
             @RequestBody BoardRequestDto boardRequestDto
@@ -69,7 +69,7 @@ public class BoardController {
     }
 
     @Operation(summary = "게시글 삭제", description = "게시글 삭제(본인 또는 관리자만 가능)")
-    @DeleteMapping("/delete/{boardId}")
+    @DeleteMapping("/{boardId}")
     public ResponseModel deleteBoard(
             @PathVariable Long boardId
     ) throws PermissionDeniedException {
