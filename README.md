@@ -1,4 +1,5 @@
-# Petmily Server
+# Petmily Server 
+**제10회 소프트웨어 개발보안 경진대회 - 행정안전부장관상(우수상)**
 
 <img src="https://github.com/KGU-C-Lab/petmily-server/assets/85067003/85f2d281-7223-4f9a-83eb-48010824d778" width="30%" alt="행정안전부장관상(우수상)">
 
